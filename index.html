@@ -160,7 +160,10 @@ a{color:inherit;text-decoration:none}
 
 /* ============ SHELL / MAIN ============ */
 .shell{max-width:760px;margin:0 auto}
-#view-home,#view-projects,#view-articles{padding:22px 16px 200px}
+#view-home,#view-projects,#view-articles,#view-pinned{padding:22px 16px 200px}
+.unpin{flex:0 0 auto;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--gold);background:var(--gold-soft);transition:.2s}
+.unpin:hover{background:rgba(255,93,93,.15);color:var(--red)}
+.unpin svg{width:16px;height:16px}
 section{margin-bottom:30px}
 
 /* Révélation au scroll */
@@ -427,8 +430,9 @@ section{margin-bottom:30px}
 #view-article{overflow-x:hidden}
 .art-meta{color:var(--faint);font-size:12px;font-weight:600;margin:-6px 0 16px}
 .stat{cursor:pointer}
-.ed-cats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
-.ed-cat{padding:7px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;transition:.2s}
+.ed-cats{display:flex;flex-wrap:nowrap;gap:8px;margin:0 0 18px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch;padding-bottom:2px}
+.ed-cats::-webkit-scrollbar{display:none}
+.ed-cat{flex:0 0 auto;padding:7px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;transition:.2s}
 .ed-cat.is-on{background:var(--gold-soft);border-color:rgba(238,191,77,.5);color:var(--gold)}
 .ed-cat-new{border-style:dashed}
 #view-articles{padding:22px 16px 200px}
@@ -1038,7 +1042,7 @@ section{margin-bottom:30px}
       </section>
 
       <section style="margin-top:26px">
-        <div class="sec-head"><h3>Ajouts récents</h3></div>
+        <div class="sec-head"><h3>Activité récente</h3></div>
         <div class="w-list" id="wList"></div>
         <div class="p-empty" id="wEmpty" hidden>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
@@ -1191,6 +1195,24 @@ section{margin-bottom:30px}
   </button>
   <input type="file" id="importFile" accept="application/json" hidden>
   <div class="settings-meta"><span>Stockage local utilisé</span><b id="storageUsed">—</b></div>
+</div>
+
+<!-- Épinglés -->
+<div class="view" id="view-pinned" hidden>
+  <section>
+    <div class="p-head__row">
+      <h2 class="p-head__title">Épinglés</h2>
+    </div>
+    <p class="p-head__sub">Tes mondes et pages étoilés, à un tap.</p>
+    <div class="search-grp" style="margin-top:18px">Mondes</div>
+    <div class="w-list" id="pinWorlds"></div>
+    <div class="search-grp">Articles</div>
+    <div class="w-list" id="pinArts"></div>
+    <div class="p-empty" id="pinEmpty" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+      <p>Rien d'épinglé pour l'instant. Touche la ★ d'un monde ou d'un article.</p>
+    </div>
+  </section>
 </div>
 
 <!-- Mes Articles -->
@@ -1457,6 +1479,7 @@ section{margin-bottom:30px}
   var viewWorld = document.getElementById("view-world");
   var viewArticle = document.getElementById("view-article");
   var viewArticles = document.getElementById("view-articles");
+  var viewPinned = document.getElementById("view-pinned");
   var tabs = document.querySelectorAll("#tabbar .tab");
 
   function showView(name){
@@ -1465,14 +1488,15 @@ section{margin-bottom:30px}
     viewWorld.hidden = name !== "world";
     viewArticle.hidden = name !== "article";
     viewArticles.hidden = name !== "articles";
-    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : viewArticle;
+    viewPinned.hidden = name !== "pinned";
+    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : name === "pinned" ? viewPinned : viewArticle;
     v.style.animation = "none";
     void v.offsetWidth;
     v.style.animation = "";
     window.scrollTo({ top: 0 });
   }
   function syncNav(name){
-    var label = name === "home" ? "Accueil" : "Projets";
+    var label = name === "home" ? "Accueil" : name === "pinned" ? "Épinglés" : "Projets";
     tabs.forEach(function(t){ t.classList.toggle("is-active", t.getAttribute("data-name") === label); });
     document.querySelectorAll(".rail__btn").forEach(function(b){
       b.classList.toggle("is-active", b.getAttribute("data-tip") === label);
@@ -1487,10 +1511,11 @@ section{margin-bottom:30px}
       syncNav("article");
       return;
     }
-    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles") h = "home";
+    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles" && h !== "pinned") h = "home";
     showView(h);
     syncNav(h);
     if (h === "articles" && THEMES) renderArticlesView();
+    if (h === "pinned" && THEMES) renderPinned();
   }
   function gotoView(name){
     if (("#" + name) === location.hash) route();
@@ -1504,6 +1529,7 @@ section{margin-bottom:30px}
     tab.addEventListener("click", function(){
       var name = tab.getAttribute("data-name");
       if (name === "Accueil" || name === "Projets"){ gotoView(name === "Projets" ? "projects" : "home"); }
+      else if (name === "Épinglés"){ gotoView("pinned"); }
       else if (name === "Réglages"){ openSettings(); }
       else {
         tabs.forEach(function(t){ t.classList.remove("is-active"); });
@@ -1713,23 +1739,7 @@ section{margin-bottom:30px}
       el.addEventListener("click", function(){ openArticle(a.title); });
       wikiGrid.appendChild(el);
     });
-    var rec = wState.cat === "Explorer" ? wArticles : wArticles.filter(function(a){ return a.cat === wState.cat; });
-    wList.innerHTML = "";
-    rec.forEach(function(a, i){
-      var m = wCatMeta(a.cat);
-      var el = document.createElement("div");
-      el.className = "arow";
-      el.style.animationDelay = (i * 50) + "ms";
-      el.innerHTML =
-        '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + W_ICONS[m.icon] + '</span>' +
-        '<span class="arow__txt"><b>' + a.title + '</b><span>' + a.snip + '</span></span>' +
-        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + a.cat + '</span><span class="arow__time">' + a.updated + '</span></span>';
-      el.addEventListener("click", function(){ openArticle(a.title); });
-      wList.appendChild(el);
-    });
-    var isEmpty = rec.length === 0;
-    wEmpty.hidden = !isEmpty;
-    wList.style.display = isEmpty ? "none" : "";
+    renderFeed();
   }
   function buildThemeOpts(){
     var box = document.getElementById("themeOpts");
@@ -1781,13 +1791,14 @@ section{margin-bottom:30px}
       if (dbp) return dbp;
       dbp = new Promise(function(res){
         try{
-          var rq = indexedDB.open("atelier-db", 2);
+          var rq = indexedDB.open("atelier-db", 3);
           rq.onupgradeneeded = function(){
             var d = rq.result;
             if (!d.objectStoreNames.contains("meta")) d.createObjectStore("meta");
             if (!d.objectStoreNames.contains("worlds")) d.createObjectStore("worlds", { keyPath:"id" });
             if (!d.objectStoreNames.contains("pages")) d.createObjectStore("pages", { keyPath:"id" });
             if (!d.objectStoreNames.contains("assets")) d.createObjectStore("assets", { keyPath:"id" });
+            if (!d.objectStoreNames.contains("events")) d.createObjectStore("events", { keyPath:"id" });
           };
           rq.onsuccess = function(){ res(rq.result); };
           rq.onerror = function(){ res(null); };
@@ -2120,6 +2131,7 @@ section{margin-bottom:30px}
     chain.then(function(){
       e.target.value = "";
       loadGallery();
+      logEvent("image", files.length + " image(s) — galerie", "", null);
       setSaveState("saved");
       toast("Images ajoutées à la galerie");
     }).catch(function(){ toast("Image illisible"); });
@@ -2146,6 +2158,7 @@ section{margin-bottom:30px}
         }
         refreshHero();
         renderProjects();
+        logEvent("cover", "Couverture du monde", "", null);
         setSaveState("saved");
         toast("Couverture de Cieléméra mise à jour");
       });
@@ -2373,6 +2386,7 @@ section{margin-bottom:30px}
         wCats.push({ name: n, icon: "folder", color: p[0], bg: p[1] });
         DB.put("meta", JSON.stringify(wCats.map(function(c){ return c.name; })), "cats");
         renderNav();
+        updateCounts();
       }
       edCat = n;
       renderEdCats();
@@ -2395,9 +2409,15 @@ section{margin-bottom:30px}
   /* ---------- Compteurs réels ---------- */
   function updateCounts(){
     var total = wArticles.length + wImportant.length;
-    var sp = document.getElementById("statProjets"); if (sp) sp.querySelector(".stat__num").textContent = projects.length;
-    var sa = document.getElementById("statArticles"); if (sa) sa.querySelector(".stat__num").textContent = total;
-    var sc = document.getElementById("statCats"); if (sc) sc.querySelector(".stat__num").textContent = wCats.length;
+    [["statProjets", projects.length], ["statArticles", total], ["statCats", wCats.length]].forEach(function(pair){
+      var el = document.getElementById(pair[0]);
+      if (!el) return;
+      var num = el.querySelector(".stat__num");
+      if (!num) return;
+      num.setAttribute("data-count", pair[1]);
+      num.dataset.done = "1";
+      num.textContent = pair[1];
+    });
     var psub = document.getElementById("pSub");
     if (psub) psub.textContent = projects.length + " univers · " + total + " pages indexées · " + wCats.length + " catégories";
   }
@@ -2631,8 +2651,11 @@ section{margin-bottom:30px}
         });
       });
     }
+    logEvent(editTarget ? "edit" : "create", title, edCat || "", title);
     closeEditor();
     renderWiki();
+    renderFeed();
+    updateCounts();
     toast("Page « " + title + " » enregistrée");
     openArticle(title);
   });
@@ -2640,6 +2663,83 @@ section{margin-bottom:30px}
     hideOverlays();
     openEditor(null, true);
   });
+
+  /* ---------- Journal d'activité + Épinglés ---------- */
+  function logEvent(kind, title, cat, pageTitle){
+    DB.put("events", {
+      id: "ev-" + Date.now() + "-" + Math.floor(Math.random() * 1e4),
+      ts: Date.now(), worldId: "cielemara",
+      kind: kind, title: title, cat: cat || "", pageTitle: pageTitle || null
+    });
+  }
+  function timeAgo(ts){
+    var s = Math.floor((Date.now() - ts) / 1000);
+    if (s < 60) return "à l'instant";
+    var m = Math.floor(s / 60); if (m < 60) return "il y a " + m + " min";
+    var h = Math.floor(m / 60); if (h < 24) return "il y a " + h + " h";
+    var d = Math.floor(h / 24); return "il y a " + d + " j";
+  }
+  var FEED_LBL = { edit:"Page modifiée", create:"Page créée", image:"Images ajoutées à la galerie", cover:"Couverture du monde changée" };
+  function renderFeed(){
+    DB.getAll("events").then(function(evts){
+      var list = (evts || []).filter(function(e){
+        return e.worldId === "cielemara" && (wState.cat === "Explorer" || e.cat === wState.cat);
+      }).sort(function(a, b){ return b.ts - a.ts; }).slice(0, 10);
+      var box = document.getElementById("wList");
+      box.innerHTML = "";
+      list.forEach(function(e, i){
+        var el = document.createElement("div");
+        el.className = "arow";
+        el.style.animationDelay = (i * 40) + "ms";
+        el.innerHTML = '<span class="arow__ico ico-gold">' + (e.kind === "create" ? W_ICONS.gem : e.kind === "wind" ? W_ICONS.wind : PEN_SVG) + '</span>' +
+          '<span class="arow__txt"><b>' + (e.title || "") + '</b><span>' + (FEED_LBL[e.kind] || "Activité") + '</span></span>' +
+          '<span class="arow__side"><span class="arow__time">' + timeAgo(e.ts) + '</span></span>';
+        if (e.pageTitle) el.addEventListener("click", function(){ openArticle(e.pageTitle); });
+        box.appendChild(el);
+      });
+      var empty = document.getElementById("wEmpty");
+      empty.hidden = list.length > 0;
+      if (!list.length) empty.querySelector("p").textContent = "Aucune activité récente. Modifie une page pour la voir apparaître ici.";
+      box.style.display = list.length ? "" : "none";
+    });
+  }
+  function renderPinned(){
+    var wBox = document.getElementById("pinWorlds");
+    var aBox = document.getElementById("pinArts");
+    wBox.innerHTML = "";
+    var pw = projects.filter(function(p){ return p.pinned; });
+    pw.forEach(function(p){
+      var el = document.createElement("div");
+      el.className = "arow";
+      el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + p.title + '</b><span>' + p.pages + ' pages · monde</span></span>';
+      el.addEventListener("click", function(){ gotoView("world"); });
+      wBox.appendChild(el);
+    });
+    DB.keys("meta").then(function(keys){
+      var pks = (keys || []).filter(function(k){ return typeof k === "string" && k.indexOf("pin-") === 0; });
+      return Promise.all(pks.map(function(k){ return DB.get("meta", k).then(function(v){ return { t: k.slice(4), v: v }; }); }));
+    }).then(function(list){
+      var pinned = (list || []).filter(function(x){ return x.v === "1"; });
+      aBox.innerHTML = "";
+      pinned.forEach(function(x){
+        var pg = null;
+        allPages().forEach(function(a){ if (a.title === x.t) pg = a; });
+        var m = pg ? wCatMeta(pg.cat) : { bg:"rgba(238,191,77,.14)", color:"#eebf4d", icon:"folder" };
+        var el = document.createElement("div");
+        el.className = "arow";
+        el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span>' +
+          '<span class="arow__txt"><b>' + x.t + '</b><span>' + (pg ? pg.cat : "page") + '</span></span>' +
+          '<button class="unpin" aria-label="Désépingler"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.26 6.6.56-5 4.36 1.5 6.45L12 16.9 5.99 19.6l1.5-6.45-5-4.36 6.6-.56z"/></svg></button>';
+        el.querySelector(".arow__txt").addEventListener("click", function(){ openArticle(x.t); });
+        el.querySelector(".unpin").addEventListener("click", function(ev){
+          ev.stopPropagation();
+          DB.put("meta", "0", "pin-" + x.t).then(function(){ renderPinned(); toast("« " + x.t + " » désépinglé"); });
+        });
+        aBox.appendChild(el);
+      });
+      document.getElementById("pinEmpty").hidden = (pw.length + pinned.length) > 0;
+    });
+  }
 
   /* Re-route une fois toutes les données synchrones définies (rechargement direct sur un article) */
   route();
