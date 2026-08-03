@@ -1,0 +1,2649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Atelier — Vos mondes vous attendent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ============ FONDATIONS ============ */
+:root{
+  --bg:#141519;
+  --bg-deep:#101114;
+  --surface:#1c1e25;
+  --surface-2:#242731;
+  --line:rgba(255,255,255,.07);
+  --line-strong:rgba(255,255,255,.13);
+  --text:#e9e7e1;
+  --muted:#9a9ca6;
+  --faint:#6d7079;
+  --gold:#eebf4d;
+  --gold-deep:#c99a2e;
+  --gold-soft:rgba(238,191,77,.14);
+  --blue:#4da3ff;
+  --purple:#8f7bff;
+  --green:#4cc38a;
+  --red:#ff5d5d;
+  --bevel:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);
+  --bevel-sm:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px);
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --font-display:"Cinzel",serif;
+  --font-body:"Manrope",system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-body);
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  max-width:100vw;
+  font-size:15px;
+  line-height:1.5;
+  position:relative;
+}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--gold);color:#1a1405}
+
+/* Scrollbars masquées (remplacées plus tard) */
+*{scrollbar-width:none;-ms-overflow-style:none}
+::-webkit-scrollbar{width:0;height:0;display:none}
+
+/* ============ COUCHE AMBIANTE ============ */
+/* Bannière ancrée en haut du document : elle défile avec la page */
+.hero-bg{
+  position:absolute;top:0;left:0;right:0;height:118vh;z-index:-2;
+  background:url("https://i.postimg.cc/y8M5HCDh/hue-teo-king-arthur-set-12.jpg") center top/cover no-repeat;
+  filter:brightness(.82) saturate(1.08) contrast(1.04);
+}
+.hero-bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(16,17,20,.55) 0%,rgba(16,17,20,.26) 10%,rgba(20,21,25,.04) 24%,rgba(20,21,25,.2) 48%,rgba(20,21,25,.8) 78%,var(--bg) 96%);
+}
+.ambient{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.ambient__glow{
+  position:absolute;inset:0;
+  background:radial-gradient(70% 42% at 50% 6%,rgba(238,191,77,.14),transparent 70%);
+}
+.ambient__grain{
+  position:absolute;inset:0;opacity:.05;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.ember{
+  position:absolute;bottom:-12px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,224,150,.95),rgba(238,191,77,.15) 70%);
+  filter:blur(.4px);
+  animation:rise linear infinite;
+  pointer-events:none;
+}
+@keyframes rise{
+  0%{transform:translate3d(0,0,0);opacity:0}
+  8%{opacity:.55}
+  85%{opacity:.35}
+  100%{transform:translate3d(var(--drift),-108vh,0);opacity:0}
+}
+
+/* ============ RAIL DESKTOP ============ */
+.rail{
+  display:none;
+  position:fixed;left:0;top:0;bottom:0;width:68px;z-index:40;
+  flex-direction:column;align-items:center;gap:6px;
+  padding:14px 0 18px;
+  background:rgba(16,17,20,.88);
+  border-right:1px solid var(--line);
+  backdrop-filter:blur(10px);
+}
+.rail__logo{
+  width:40px;height:40px;display:grid;place-items:center;
+  background:var(--gold);color:#1a1405;
+  font-family:var(--font-display);font-weight:900;font-size:20px;
+  clip-path:var(--bevel-sm);margin-bottom:14px;
+}
+.rail__btn{
+  position:relative;width:44px;height:44px;display:grid;place-items:center;
+  color:var(--muted);border-radius:10px;transition:.2s;
+}
+.rail__btn:hover{color:var(--text);background:var(--surface)}
+.rail__btn.is-active{color:var(--gold);background:var(--gold-soft)}
+.rail__btn svg{width:21px;height:21px}
+.rail__btn::after{
+  content:attr(data-tip);
+  position:absolute;left:56px;top:50%;transform:translateY(-50%) translateX(-6px);
+  background:var(--surface-2);border:1px solid var(--line-strong);
+  padding:5px 10px;border-radius:6px;font-size:12px;font-weight:600;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:.18s;color:var(--text);
+}
+.rail__btn:hover::after{opacity:1;transform:translateY(-50%) translateX(0)}
+.rail__spacer{flex:1}
+.rail__create{
+  width:44px;height:44px;display:grid;place-items:center;
+  background:var(--gold);color:#1a1405;clip-path:var(--bevel-sm);
+  transition:.2s;margin-top:6px;
+}
+.rail__create:hover{filter:brightness(1.08);transform:translateY(-2px)}
+.rail__create svg{width:20px;height:20px}
+
+/* ============ TOPBAR ============ */
+.topbar{
+  position:sticky;top:0;z-index:30;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px;
+  background:rgba(20,21,25,.82);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.topbar__icon{
+  width:38px;height:38px;display:grid;place-items:center;
+  color:var(--muted);border-radius:10px;transition:.2s;position:relative;
+}
+.topbar__icon:hover{color:var(--text);background:var(--surface)}
+.topbar__icon svg{width:21px;height:21px}
+.topbar__right{display:flex;gap:2px}
+.notif-dot{
+  position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;
+  background:var(--red);box-shadow:0 0 0 2px var(--bg);
+  animation:pulse 2.4s infinite;
+}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.wordmark{
+  font-family:var(--font-display);font-weight:700;font-size:19px;
+  letter-spacing:.18em;display:flex;align-items:center;gap:8px;
+}
+.wordmark__dot{
+  width:7px;height:7px;border-radius:50%;background:var(--gold);
+  box-shadow:0 0 10px var(--gold);animation:pulse 2.8s infinite;
+}
+
+/* ============ SHELL / MAIN ============ */
+.shell{max-width:760px;margin:0 auto}
+#view-home,#view-projects,#view-articles{padding:22px 16px 200px}
+section{margin-bottom:30px}
+
+/* Révélation au scroll */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ---- Salutation ---- */
+.greet__hi{color:var(--muted);font-size:14px;font-weight:500;margin-bottom:6px;text-shadow:0 1px 10px rgba(0,0,0,.5)}
+.greet__title{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(26px,7vw,40px);line-height:1.12;letter-spacing:.01em;
+  text-shadow:0 2px 22px rgba(0,0,0,.6),0 1px 3px rgba(0,0,0,.4);
+}
+.greet__title em{font-style:normal;color:var(--gold)}
+
+/* ---- Carte épinglée ---- */
+.pinned{
+  position:relative;overflow:hidden;
+  background:linear-gradient(150deg,var(--surface-2),var(--surface) 55%);
+  border:1px solid var(--line-strong);
+  clip-path:var(--bevel);
+  padding:20px 20px 18px;
+  box-shadow:var(--shadow);
+  transition:transform .25s,border-color .25s;
+}
+.pinned:hover{transform:translateY(-3px);border-color:rgba(238,191,77,.35)}
+.pinned::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg,var(--gold),transparent 80%);
+}
+.pinned__rune{
+  position:absolute;right:-26px;bottom:-30px;width:170px;height:170px;
+  color:var(--gold);opacity:.05;pointer-events:none;
+}
+.pinned__badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold);color:#1a1405;
+  font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 11px;clip-path:var(--bevel-sm);margin-bottom:14px;
+}
+.pinned__badge svg{width:12px;height:12px}
+.pinned__title{
+  font-family:var(--font-display);font-weight:700;
+  font-size:clamp(22px,6vw,30px);line-height:1.15;margin-bottom:8px;
+}
+.pinned__meta{color:var(--muted);font-size:13.5px;margin-bottom:16px;max-width:46ch}
+.pinned__xp{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.xp-bar{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
+.xp-bar i{
+  display:block;height:100%;border-radius:4px;
+  background:linear-gradient(90deg,var(--gold-deep),var(--gold));
+  box-shadow:0 0 8px rgba(238,191,77,.5);
+  width:0;transition:width 1.1s cubic-bezier(.22,1,.36,1);
+}
+.xp-label{font-size:11.5px;font-weight:700;color:var(--gold);white-space:nowrap}
+.pinned__cta{
+  display:inline-flex;align-items:center;gap:8px;
+  color:var(--gold);font-weight:800;font-size:14.5px;
+}
+.pinned__cta svg{width:17px;height:17px;transition:transform .2s}
+.pinned:hover .pinned__cta svg{transform:translateX(4px)}
+
+/* ---- Stats HUD ---- */
+.stats{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none}
+.stats::-webkit-scrollbar{display:none}
+.stat{
+  flex:0 0 auto;min-width:104px;
+  background:var(--surface);border:1px solid var(--line);
+  clip-path:var(--bevel-sm);
+  padding:13px 14px 12px;
+  transition:.2s;
+}
+.stat:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.stat__num{font-size:23px;font-weight:800;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+.stat__lbl{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:11.5px;font-weight:600;margin-top:7px}
+.stat__lbl svg{width:13px;height:13px}
+.stat:nth-child(1) .stat__lbl svg{color:var(--gold)}
+.stat:nth-child(2) .stat__lbl svg{color:var(--blue)}
+.stat:nth-child(3) .stat__lbl svg{color:var(--purple)}
+.stat:nth-child(4) .stat__lbl svg{color:var(--green)}
+
+/* ---- Actions rapides ---- */
+.actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.action{
+  display:flex;flex-direction:column;align-items:center;gap:9px;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:14px;padding:15px 6px 13px;transition:.2s;
+}
+.action:hover{transform:translateY(-3px);border-color:var(--line-strong);background:var(--surface-2)}
+.action:active{transform:scale(.96)}
+.action__ico{width:42px;height:42px;border-radius:11px;display:grid;place-items:center}
+.action__ico svg{width:20px;height:20px}
+.action span{font-size:12px;font-weight:600;color:var(--muted)}
+.action:hover span{color:var(--text)}
+.ico-gold{background:rgba(255,196,32,.3);color:#ffd24a;box-shadow:0 0 16px rgba(255,196,32,.22)}
+.ico-blue{background:rgba(40,160,255,.3);color:#4db8ff;box-shadow:0 0 16px rgba(40,160,255,.22)}
+.ico-purple{background:rgba(150,120,255,.34);color:#b197ff;box-shadow:0 0 16px rgba(150,120,255,.24)}
+.ico-green{background:rgba(40,230,160,.28);color:#46e6a8;box-shadow:0 0 16px rgba(40,230,160,.2)}
+
+/* ---- En-têtes de section ---- */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:13px}
+.sec-head h3{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:.02em}
+.sec-head a{color:var(--gold);font-size:11.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+
+/* ---- Re-plongez-vous ---- */
+.resume{display:flex;gap:13px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;scrollbar-width:none}
+.resume::-webkit-scrollbar{display:none}
+.world{
+  flex:0 0 236px;scroll-snap-align:start;
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;
+  transition:.25s;cursor:pointer;
+}
+.world:hover{transform:translateY(-4px);border-color:rgba(238,191,77,.35);box-shadow:var(--shadow)}
+.world__cover{position:relative;height:118px;display:grid;place-items:center}
+.world__cover svg{width:52px;height:52px;color:rgba(255,255,255,.92);filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+.world__cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35))}
+.cover-shonen{background:linear-gradient(135deg,#ff6a3d 0%,#ffb347 48%,#3d7bff 100%)}
+.cover-tests{background:linear-gradient(150deg,#155bb5,#37b6ff)}
+.cover-marees{background:linear-gradient(150deg,#0c3336,#1f8a76)}
+.world__chip{
+  position:absolute;top:10px;left:10px;z-index:2;
+  background:rgba(10,10,12,.72);backdrop-filter:blur(4px);
+  font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:20px;
+}
+.world__body{padding:13px 14px 14px}
+.world__title{font-weight:800;font-size:15.5px;margin-bottom:5px}
+.world__desc{color:var(--muted);font-size:12.5px;line-height:1.45;margin-bottom:12px;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.world__foot{display:flex;justify-content:space-between;align-items:center;margin-top:9px;
+  color:var(--faint);font-size:11px;font-weight:600}
+
+/* ---- Prompt du jour ---- */
+.prompt{
+  position:relative;overflow:hidden;
+  border:1px solid rgba(143,123,255,.28);
+  background:linear-gradient(135deg,rgba(88,70,160,.28),rgba(28,30,37,.6) 70%);
+  border-radius:16px;padding:18px 18px 20px;
+}
+.prompt__label{
+  display:flex;align-items:center;gap:7px;
+  color:var(--purple);font-size:10.5px;font-weight:800;letter-spacing:.16em;
+  text-transform:uppercase;margin-bottom:11px;
+}
+.prompt__label svg{width:14px;height:14px}
+.prompt__quote{
+  font-family:var(--font-display);font-style:italic;font-weight:600;
+  font-size:clamp(16px,4.6vw,20px);line-height:1.4;max-width:34ch;
+  transition:opacity .3s,transform .3s;
+}
+.prompt__quote.fade{opacity:0;transform:translateY(8px)}
+.prompt__shuffle{
+  position:absolute;top:14px;right:14px;
+  width:38px;height:38px;border-radius:50%;
+  background:var(--surface-2);border:1px solid var(--line-strong);
+  display:grid;place-items:center;color:var(--muted);transition:.25s;
+}
+.prompt__shuffle:hover{color:var(--gold);border-color:rgba(238,191,77,.4)}
+.prompt__shuffle.spin svg{animation:spin .5s ease}
+.prompt__shuffle svg{width:17px;height:17px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ---- Activité récente ---- */
+.activity{display:flex;flex-direction:column;gap:2px}
+.act{
+  display:flex;align-items:center;gap:13px;
+  padding:11px 10px;border-radius:12px;transition:.18s;cursor:pointer;
+}
+.act:hover{background:var(--surface)}
+.act__ico{
+  flex:0 0 auto;width:36px;height:36px;border-radius:10px;
+  display:grid;place-items:center;background:var(--surface-2);color:var(--muted);
+}
+.act__ico svg{width:16px;height:16px}
+.act:nth-child(1) .act__ico{color:var(--gold);background:rgba(255,196,32,.13)}
+.act:nth-child(2) .act__ico{color:var(--blue);background:rgba(40,160,255,.13)}
+.act:nth-child(3) .act__ico{color:var(--green);background:rgba(40,230,160,.13)}
+.act__txt{flex:1;font-size:13.5px;color:var(--muted)}
+.act__txt b{color:var(--text);font-weight:700}
+.act__time{color:var(--faint);font-size:11px;font-weight:600;white-space:nowrap}
+
+/* ============ ÉCRAN PROJETS ============ */
+.view[hidden]{display:none}
+.view{animation:view-in .4s cubic-bezier(.22,1,.36,1)}
+@keyframes view-in{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.p-head{margin-bottom:18px}
+.p-head__row{display:flex;align-items:center;gap:10px}
+.p-head__title{font-family:var(--font-display);font-weight:900;font-size:clamp(24px,6.5vw,34px)}
+.p-head__count{min-width:30px;height:26px;padding:0 9px;display:grid;place-items:center;background:var(--gold);color:#1a1405;font-weight:800;font-size:13px;clip-path:var(--bevel-sm)}
+.p-head__sub{color:var(--muted);font-size:13.5px;margin:6px 0 16px}
+.p-search{position:relative;display:block}
+.p-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--faint);pointer-events:none}
+.p-search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:14px;padding:12px 14px 12px 40px;outline:none;transition:.2s}
+.p-search input:focus{border-color:rgba(238,191,77,.45);box-shadow:0 0 0 3px rgba(238,191,77,.12)}
+.p-search input::placeholder{color:var(--faint)}
+.p-chips{display:flex;gap:8px;overflow-x:auto;margin-top:12px;padding-bottom:2px;scrollbar-width:none}
+.p-chips::-webkit-scrollbar{display:none}
+.p-chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border-radius:20px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;transition:.2s}
+.p-chip b{color:var(--faint);font-weight:800;font-size:11px}
+.p-chip:hover{border-color:var(--line-strong);color:var(--text)}
+.p-chip.is-active{background:var(--gold-soft);border-color:rgba(238,191,77,.5);color:var(--gold)}
+.p-chip.is-active b{color:var(--gold)}
+.p-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-bottom:20px}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;cursor:pointer;transition:.25s;animation:card-in .45s both}
+.pcard:hover{transform:translateY(-4px);border-color:rgba(238,191,77,.35);box-shadow:var(--shadow)}
+@keyframes card-in{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.pcard__cover{position:relative;height:110px;display:grid;place-items:center}
+.pcard__cover svg{width:44px;height:44px;color:rgba(255,255,255,.92);filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
+.pcard__cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35))}
+.pcard__pin{position:absolute;top:10px;right:10px;z-index:2;width:26px;height:26px;border-radius:8px;background:rgba(10,10,12,.72);display:grid;place-items:center;color:var(--gold)}
+.pcard__pin svg{width:13px;height:13px;filter:none}
+.pcard__body{padding:13px 14px 14px}
+.pcard__body h3{font-family:var(--font-display);font-weight:700;font-size:16.5px;margin-bottom:5px}
+.pcard__body p{color:var(--muted);font-size:12.5px;line-height:1.45;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px}
+.pcard__foot{display:flex;justify-content:space-between;color:var(--faint);font-size:11px;font-weight:600;margin-top:9px}
+.cover-ciel{background:linear-gradient(160deg,#2f6fd6 0%,#7fd0ff 48%,#eebf4d 115%)}
+.cover-vael{background:linear-gradient(155deg,#0c3547,#6fc8dc)}
+.cover-miroirs{background:linear-gradient(150deg,#3a1220,#b0562e)}
+.p-new{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:18px;border:1.5px dashed var(--line-strong);border-radius:16px;color:var(--muted);font-weight:700;font-size:14px;transition:.2s}
+.p-new svg{width:18px;height:18px;color:var(--gold)}
+.p-new:hover{border-color:rgba(238,191,77,.5);color:var(--gold);background:var(--gold-soft)}
+.p-empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.p-empty svg{width:44px;height:44px;color:var(--faint);margin-bottom:12px}
+.p-empty b{color:var(--text)}
+.p-reset{margin-top:14px;padding:9px 16px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line-strong);color:var(--text);font-weight:700;font-size:13px;transition:.2s}
+.p-reset:hover{color:var(--gold);border-color:rgba(238,191,77,.4)}
+
+/* ============ ÉCRAN MONDE ============ */
+.w-back{display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-weight:700;font-size:13.5px;margin-bottom:12px;padding:6px 4px;transition:.2s}
+.w-back:hover{color:var(--gold)}
+.w-back svg{width:17px;height:17px}
+.w-cover{position:relative;height:132px;border-radius:18px;overflow:hidden;border:1px solid var(--line-strong)}
+.w-cover__rune{position:absolute;right:-20px;bottom:-34px;width:180px;height:180px;color:#fff;opacity:.14}
+.w-cover .pinned__badge{position:absolute;top:12px;left:12px;margin:0}
+.w-id{position:relative;margin:-36px 14px 0;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--line-strong);border-radius:16px;padding:18px 16px 16px;box-shadow:var(--shadow)}
+.w-title{font-family:var(--font-display);font-weight:900;font-size:clamp(21px,6vw,28px);margin-bottom:6px}
+.w-desc{color:var(--muted);font-size:13.5px;margin-bottom:12px}
+.w-meta{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.w-tag{font-size:11px;font-weight:800;letter-spacing:.04em;padding:4px 10px;border-radius:20px;background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--muted)}
+.w-xp{margin-bottom:14px}
+.w-crew{display:flex;align-items:center;gap:10px}
+.w-avs{display:flex}
+.w-av{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#1a1405;border:2px solid var(--surface);margin-left:-8px}
+.w-av:first-child{margin-left:0}
+.av-gold{background:linear-gradient(145deg,var(--gold),var(--gold-deep))}
+.av-blue{background:linear-gradient(145deg,#6fb8ff,#2f6fd6);color:#06121f}
+.av-green{background:linear-gradient(145deg,#6fe0b0,#1f8a5e);color:#04160d}
+.w-crew__lbl{color:var(--faint);font-size:12px;font-weight:600}
+.w-tools{margin:22px 0 18px}
+.w-list{display:flex;flex-direction:column;gap:8px}
+.arow{display:flex;align-items:center;gap:13px;padding:12px;border-radius:13px;background:var(--surface);border:1px solid var(--line);cursor:pointer;transition:.2s;animation:card-in .4s both}
+.arow:hover{border-color:var(--line-strong);transform:translateX(3px)}
+.arow__ico{flex:0 0 auto;width:38px;height:38px;border-radius:10px;display:grid;place-items:center}
+.arow__ico svg{width:17px;height:17px}
+.arow__txt{flex:1;min-width:0}
+.arow__txt b{display:block;font-size:14px;font-weight:700;margin-bottom:2px}
+.arow__txt span{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.arow__side{text-align:right;flex:0 0 auto}
+.arow__cat{display:block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.arow__time{color:var(--faint);font-size:11px;font-weight:600}
+
+/* ============ CORRECTIONS & NOUVELLES VUES ============ */
+.art-content img{max-width:100%;height:auto;display:block;border-radius:0;border:1px solid var(--line);margin:12px 0}
+#view-article{overflow-x:hidden}
+.art-meta{color:var(--faint);font-size:12px;font-weight:600;margin:-6px 0 16px}
+.stat{cursor:pointer}
+.ed-cats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.ed-cat{padding:7px 14px;border-radius:20px;background:var(--surface);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;transition:.2s}
+.ed-cat.is-on{background:var(--gold-soft);border-color:rgba(238,191,77,.5);color:var(--gold)}
+.ed-cat-new{border-style:dashed}
+#view-articles{padding:22px 16px 200px}
+.ma-head h2{display:flex;align-items:center;gap:10px}
+.search-ov{position:fixed;inset:0;z-index:55;background:var(--bg);display:none;flex-direction:column}
+.search-ov.open{display:flex}
+.search-ov__bar{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+.search-ov__bar input{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px 14px;font:inherit;font-size:15px;outline:none;transition:.2s}
+.search-ov__bar input:focus{border-color:rgba(238,191,77,.45);box-shadow:0 0 0 3px rgba(238,191,77,.12)}
+.search-ov__cancel{color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.08em}
+.search-ov__res{flex:1;overflow-y:auto;padding:8px 14px 30px}
+.search-grp{color:var(--faint);font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:16px 4px 8px}
+.js-search{cursor:pointer}
+
+/* ============ ÉDITEUR ============ */
+#view-editor{position:fixed;inset:0;z-index:50;background:var(--bg);display:none;flex-direction:column}
+#view-editor.open{display:flex}
+.ed-top{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);flex:0 0 auto}
+.ed-close{width:38px;height:38px;display:grid;place-items:center;color:var(--muted);border-radius:10px;transition:.2s}
+.ed-close:hover{color:var(--text);background:var(--surface)}
+.ed-close svg{width:20px;height:20px}
+.ed-top__title{flex:1;text-align:center;font-weight:800;font-size:15.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ed-save{display:inline-flex;align-items:center;gap:7px;color:var(--gold);font-weight:800;font-size:12px;letter-spacing:.11em;padding:8px 4px;transition:.2s}
+.ed-save:hover{filter:brightness(1.15)}
+.ed-save svg{width:15px;height:15px}
+.ed-scroll{flex:1;overflow-y:auto;padding:20px 18px 130px}
+.ed-name{display:block;width:100%;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--font-body);font-size:27px;font-weight:800;letter-spacing:-.01em;margin-bottom:16px;padding:0}
+.ed-name::placeholder{color:var(--faint)}
+.ed-body{min-height:45vh;outline:none;font-size:15.5px;line-height:1.78;color:#d6d7dc}
+.ed-body:empty::before{content:attr(data-ph);color:var(--faint)}
+.ed-body h2{font-size:21px;font-weight:800;color:#fff;margin:22px 0 10px}
+.art-content ul,.ed-body ul{list-style:none;margin:0 0 18px;padding:0}
+.art-content ul li,.ed-body ul li{position:relative;padding-left:22px;margin-bottom:14px;font-size:15px;line-height:1.68;color:#d6d7dc}
+.art-content ul li::before,.ed-body ul li::before{content:"";position:absolute;left:4px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--art-accent,var(--gold))}
+.art-content ul li b,.ed-body ul li b{color:#fff}
+.ed-body img{width:100%;border-radius:0;border:1px solid var(--line);margin:12px 0}
+.ed-body a{color:var(--gold);font-weight:600}
+.ed-toolbar{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--surface);border-top:1px solid var(--line-strong);display:flex;gap:2px;overflow-x:auto;padding:7px 10px calc(7px + env(safe-area-inset-bottom));scrollbar-width:none}
+.ed-toolbar::-webkit-scrollbar{display:none}
+.ed-btn{flex:0 0 auto;min-width:42px;height:40px;display:grid;place-items:center;color:var(--muted);border-radius:9px;font-weight:800;font-size:14px;transition:.15s}
+.ed-btn svg{width:18px;height:18px}
+.ed-btn:active{background:var(--surface-2);color:var(--gold)}
+.ed-btn b{font-family:Georgia,serif}
+.ed-btn i{font-family:Georgia,serif}
+
+/* ============ ARTICLE ============ */
+#view-article{position:relative;min-height:100vh;background:var(--bg)}
+.art-back{position:absolute;top:12px;left:12px;z-index:6;background:rgba(10,10,14,.55);backdrop-filter:blur(6px);border-radius:10px;padding:8px 12px;color:#fff;margin:0}
+.art-cover{width:100%;max-height:29vh;object-fit:cover;object-position:center 32%;display:block;border-bottom:1px solid var(--line)}
+.art-cover[hidden]{display:none}
+.art-body{padding:20px 18px 70px;max-width:780px;margin:0 auto}
+#view-article.has-cover .art-body{padding-top:14px}
+#view-article:not(.has-cover) .art-body{padding-top:56px}
+.art-title{font-size:clamp(28px,8vw,40px);font-weight:800;line-height:1.08;letter-spacing:-.01em;margin:0 0 14px}
+.art-actions{display:flex;align-items:center;gap:24px;margin:0 0 30px}
+.art-act{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;letter-spacing:.13em;color:var(--text);transition:.2s}
+.art-act svg{width:18px;height:18px}
+.art-act.pin svg{color:var(--gold);fill:var(--gold)}
+.art-act.pin.off{color:var(--faint)}
+.art-act.pin.off svg{fill:none;color:var(--faint)}
+.art-more{margin-left:auto;color:var(--muted)}
+.art-p{font-size:15.5px;line-height:1.78;color:#d6d7dc;margin:0 0 18px}
+.art-p b,.art-p strong{color:#fff}
+.art-sec{display:flex;align-items:baseline;gap:10px;margin:32px 0 6px;scroll-margin-top:74px}
+.art-sec h2{font-size:22px;font-weight:800}
+.art-secrow{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:var(--art-accent,var(--gold))}
+.art-secrow svg{width:14px;height:14px;flex:0 0 auto}
+.art-secrow i{flex:1;height:1px;background:var(--line-strong)}
+.art-ul{list-style:none;margin:0 0 18px;padding:0}
+.art-ul li{position:relative;padding-left:22px;margin-bottom:14px;font-size:15px;line-height:1.68;color:#d6d7dc}
+.art-ul li::before{content:"";position:absolute;left:4px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--art-accent,var(--gold))}
+.art-ul li b{color:#fff}
+.art-content .wiki-a{color:var(--art-accent,var(--gold));font-weight:600}
+.art-content.editing{outline:1.5px dashed var(--art-accent,var(--gold));outline-offset:10px;border-radius:6px}
+.art-tags{display:flex;flex-wrap:wrap;gap:9px;margin:28px 0 6px}
+.art-tag{border:1px solid color-mix(in srgb,var(--art-accent,var(--gold)) 55%,transparent);color:var(--art-accent,var(--gold));font-size:12.5px;font-weight:700;padding:7px 15px;border-radius:20px;background:color-mix(in srgb,var(--art-accent,var(--gold)) 9%,transparent)}
+.art-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0}
+.art-card__head{display:flex;align-items:center;gap:9px;font-size:12px;font-weight:800;letter-spacing:.13em;margin-bottom:4px;color:var(--text)}
+.art-card__head svg{width:16px;height:16px;color:var(--art-accent,var(--gold))}
+.toc-toggle{margin-left:auto;color:var(--art-accent,var(--gold));font-weight:700;letter-spacing:0;font-size:12.5px}
+.toc{list-style:none;counter-reset:toc;padding:12px 0 2px;margin:0;border-top:1px solid var(--line)}
+.toc[hidden]{display:none}
+.toc li{counter-increment:toc;padding:8px 2px;color:var(--muted);font-size:14.5px;cursor:pointer;transition:.15s}
+.toc li::before{content:counter(toc) ".";color:var(--faint);margin-right:10px}
+.toc li:hover{color:var(--text);transform:translateX(3px)}
+.art-rel{display:block;padding:7px 2px;color:var(--art-accent,var(--gold));font-weight:600;font-size:14.5px;text-decoration:none}
+.art-cats{margin:28px 0 6px;color:var(--muted);font-size:14px}
+.art-cats a{color:var(--art-accent,var(--gold));font-weight:700;margin:0 5px}
+
+/* ============ GALERIE & COUVERTURES ============ */
+.pcard__cover.has-img svg{display:none}
+.pcard__cover.has-img{background-position:center 35%}
+.wiki-gallery{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.wg-tile{scroll-snap-align:start}
+.wiki-gallery::-webkit-scrollbar{display:none}
+.wg-tile{flex:0 0 auto;width:112px;animation:card-in .4s both}
+.wg-tile img{width:112px;height:112px;object-fit:cover;display:block;border:1px solid var(--line);border-radius:0;cursor:pointer;transition:.25s;background:var(--surface-2)}
+.wg-tile img:hover{transform:translateY(-4px);border-color:var(--wiki-accent);box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.wg-tile span{display:block;margin-top:6px;font-size:10.5px;color:var(--faint);font-weight:600;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wg-add{flex:0 0 auto;width:112px;height:112px;border:1.5px dashed var(--line-strong);display:grid;place-items:center;color:var(--muted);transition:.2s;border-radius:0;background:none}
+.wg-add:hover{color:var(--wiki-accent);border-color:var(--wiki-accent);background:rgba(255,255,255,.02)}
+.wg-add svg{width:22px;height:22px}
+.wg-tile{position:relative}
+.wg-del{position:absolute;top:4px;right:4px;z-index:2;width:22px;height:22px;border-radius:0;background:rgba(10,10,14,.8);color:#ff8b8b;border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;transition:.2s}
+.wg-del:hover{background:var(--red);color:#fff}
+.wg-del svg{width:11px;height:11px}
+.g-count{color:var(--faint);font-size:13px;font-weight:600;font-family:var(--font-body)}
+.lightbox{position:fixed;inset:0;z-index:70;background:rgba(6,6,8,.95);display:none;backdrop-filter:blur(6px)}
+.lightbox.open{display:block}
+.lightbox > img{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);max-width:94vw;max-height:70vh;border:1px solid var(--line-strong);box-shadow:0 24px 70px rgba(0,0,0,.65);transition:opacity .15s}
+.lb-top{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(12px + env(safe-area-inset-top)) 14px 12px;background:linear-gradient(180deg,rgba(6,6,8,.85),transparent);z-index:3}
+.lb-name{color:var(--gold);font-weight:800;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-close{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);transition:.2s}
+.lb-close:hover{background:var(--red)}
+.lb-close svg{width:18px;height:18px}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:rgba(12,13,16,.62);border:1px solid rgba(255,255,255,.2);color:#fff;display:none;place-items:center;transition:.2s;z-index:2}
+.lb-nav:hover{background:rgba(238,191,77,.25);border-color:var(--gold)}
+.lb-nav svg{width:20px;height:20px}
+.lb-prev{left:10px}
+.lb-next{right:10px}
+.lb-bottom{position:absolute;left:0;right:0;bottom:0;padding:10px 0 calc(12px + env(safe-area-inset-bottom));background:linear-gradient(0deg,rgba(6,6,8,.92),transparent);z-index:3}
+.lb-count{text-align:center;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:9px;font-variant-numeric:tabular-nums}
+.lb-strip{display:none;gap:8px;overflow-x:auto;padding:0 16px;scrollbar-width:none}
+.lb-strip::-webkit-scrollbar{display:none}
+.lb-strip img{flex:0 0 auto;width:54px;height:54px;object-fit:cover;opacity:.45;border:2px solid transparent;border-radius:0;cursor:pointer;transition:.2s}
+.lb-strip img.active{opacity:1;border-color:var(--gold)}
+
+/* ============ AUTOSAVE & RÉGLAGES ============ */
+.save-state{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--faint);margin-right:auto}
+.save-state i{width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.save-state.saving i{background:var(--gold);animation:pulse 1s infinite}
+.save-state.saving{color:var(--muted)}
+.save-state.saved{color:var(--green)}
+.save-state.saved i{background:var(--green)}
+.wiki-welcome.editing{outline:1.5px dashed var(--wiki-accent);outline-offset:8px;border-radius:6px;background:rgba(255,255,255,.03);cursor:text}
+.settings-meta{display:flex;justify-content:space-between;align-items:center;padding:14px 8px 2px;color:var(--muted);font-size:12.5px;font-weight:600;border-top:1px solid var(--line);margin-top:10px}
+.settings-meta b{color:var(--gold);font-variant-numeric:tabular-nums}
+
+/* ============ ACCUEIL DE PROJET (WIKI) ============ */
+#view-world{
+  --wiki-accent:#7fd0ff;
+  background:var(--bg);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--wiki-accent) 13%,var(--bg)) 0%,var(--bg) 360px);
+  min-height:100vh;
+}
+.wiki-hero{position:relative;height:232px;background:center 55%/cover no-repeat var(--surface-2);overflow:hidden}
+.wiki-hero__scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,14,.35) 0%,rgba(10,10,14,.05) 35%,rgba(16,17,20,.55) 72%,rgba(16,17,20,.94) 100%)}
+.wiki-hero .w-back{position:absolute;top:12px;left:12px;z-index:3;color:#fff;background:rgba(10,10,14,.5);backdrop-filter:blur(6px);border-radius:10px;padding:8px 12px;margin:0}
+.wiki-hero__bar{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;align-items:flex-end;gap:12px;padding:14px}
+.wiki-crest{flex:0 0 auto;width:54px;height:54px;border-radius:50%;background:rgba(12,13,16,.82);border:2px solid var(--wiki-accent);display:grid;place-items:center;color:var(--wiki-accent);box-shadow:0 4px 14px rgba(0,0,0,.5);transition:border-color .3s,color .3s}
+.wiki-crest svg{width:26px;height:26px}
+.wiki-hero__id{flex:1;min-width:0}
+.wiki-hero__title{font-family:var(--font-display);font-weight:900;font-size:clamp(18px,5.4vw,26px);color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.7);line-height:1.15;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wiki-hero__pages{font-size:10.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85)}
+.wiki-hero__pages b{color:var(--wiki-accent);font-size:13px}
+.wiki-hero__acts{display:flex;gap:8px}
+.wiki-act{width:38px;height:38px;border-radius:11px;background:rgba(12,13,16,.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);color:#fff;display:grid;place-items:center;transition:.2s}
+.wiki-act:hover{border-color:var(--wiki-accent);color:var(--wiki-accent)}
+.wiki-act svg{width:17px;height:17px}
+.wiki-nav{position:sticky;top:61px;z-index:25;display:flex;gap:4px;overflow-x:auto;background:rgba(18,19,23,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:0 10px;scrollbar-width:none}
+.wiki-nav::-webkit-scrollbar{display:none}
+.wiki-nav__item{flex:0 0 auto;display:inline-flex;align-items:center;gap:6px;padding:13px 12px;color:var(--muted);font-size:13px;font-weight:700;border-bottom:2px solid transparent;transition:.2s}
+.wiki-nav__item svg{width:13px;height:13px;opacity:.7}
+.wiki-nav__item:hover{color:var(--text)}
+.wiki-nav__item.is-active{color:var(--wiki-accent);border-bottom-color:var(--wiki-accent)}
+.wiki-body{padding:18px 16px 40px}
+.wiki-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.wiki-head__title{font-family:var(--font-display);font-weight:700;font-size:24px}
+.wiki-head__acts{display:flex;gap:14px}
+.wiki-link{display:inline-flex;align-items:center;gap:6px;color:var(--wiki-accent);font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;transition:.2s}
+.wiki-link svg{width:14px;height:14px}
+.wiki-welcome{color:var(--muted);font-size:14px;line-height:1.65;margin-bottom:26px}
+.wiki-a{color:var(--wiki-accent);font-weight:600}
+.wiki-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:12px}
+.wiki-card{display:block;text-align:center;animation:card-in .45s both;cursor:pointer}
+.wiki-card__img{display:block;aspect-ratio:1;border-radius:0;background:center/cover no-repeat var(--surface-2);border:1px solid var(--line);transition:.25s}
+.wiki-card:hover .wiki-card__img{transform:translateY(-4px);border-color:var(--wiki-accent);box-shadow:0 8px 20px rgba(0,0,0,.45)}
+.wiki-card__cap{display:block;margin-top:7px;font-size:11.5px;font-weight:600;color:var(--muted)}
+.wiki-card:hover .wiki-card__cap{color:var(--text)}
+.wiki-none{color:var(--faint);font-size:13px;font-style:italic}
+.theme-swatch{flex:0 0 auto;width:46px;height:46px;border-radius:10px;background:center/cover;border:2px solid var(--sw)}
+.theme-ok{margin-left:auto;color:var(--wiki-accent);font-weight:800}
+@media(min-width:1024px){.wiki-nav{top:0}}
+
+/* ============ TAB BAR MOBILE ============ */
+.tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:35;
+  display:flex;
+  background:rgba(18,19,23,.92);
+  backdrop-filter:blur(14px);
+  border-top:1px solid var(--line);
+  padding:8px 6px calc(8px + env(safe-area-inset-bottom));
+}
+.tab{
+  flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;
+  color:var(--faint);font-size:10.5px;font-weight:700;padding:5px 0;transition:.2s;
+}
+.tab svg{width:21px;height:21px}
+.tab.is-active{color:var(--gold)}
+.tab:active{transform:scale(.92)}
+
+/* ============ FAB ============ */
+.fab{
+  position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom));z-index:36;
+  width:56px;height:56px;border-radius:50%;
+  background:linear-gradient(145deg,var(--gold),var(--gold-deep));
+  color:#1a1405;display:grid;place-items:center;
+  box-shadow:0 8px 24px rgba(238,191,77,.35),0 4px 10px rgba(0,0,0,.4);
+  transition:.25s;
+}
+.fab svg{width:24px;height:24px;transition:transform .3s}
+.fab:hover{transform:translateY(-3px)}
+.fab.open svg{transform:rotate(45deg)}
+
+/* ============ SHEET & DRAWER ============ */
+.backdrop{
+  position:fixed;inset:0;z-index:44;background:rgba(8,8,10,.6);
+  opacity:0;pointer-events:none;transition:.3s;backdrop-filter:blur(2px);
+}
+.backdrop.show{opacity:1;pointer-events:auto}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:46;
+  background:var(--surface);border-top:1px solid var(--line-strong);
+  border-radius:20px 20px 0 0;padding:10px 18px calc(20px + env(safe-area-inset-bottom));
+  transform:translateY(110%);transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.sheet.open{transform:none}
+.sheet__grab{width:40px;height:4px;border-radius:4px;background:var(--line-strong);margin:4px auto 14px}
+.sheet__title{font-family:var(--font-display);font-weight:700;font-size:16px;margin-bottom:12px}
+.sheet__opt{
+  display:flex;align-items:center;gap:14px;width:100%;
+  padding:11px 8px;border-radius:12px;text-align:left;transition:.18s;
+}
+.sheet__opt:hover{background:var(--surface-2)}
+.sheet__opt .action__ico{width:40px;height:40px}
+.sheet__opt b{display:block;font-size:14px}
+.sheet__opt small{color:var(--muted);font-size:12px}
+
+.drawer{
+  position:fixed;left:0;top:0;bottom:0;z-index:46;width:272px;
+  background:var(--surface);border-right:1px solid var(--line-strong);
+  transform:translateX(-105%);transition:transform .35s cubic-bezier(.22,1,.36,1);
+  padding:20px 14px;display:flex;flex-direction:column;
+}
+.drawer.open{transform:none}
+.drawer__head{display:flex;align-items:center;gap:12px;padding:4px 8px 18px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.drawer__ava{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(145deg,var(--gold),var(--gold-deep));
+  color:#1a1405;display:grid;place-items:center;font-weight:800;font-size:17px;
+}
+.drawer__name{font-weight:800;font-size:15px}
+.drawer__sub{color:var(--muted);font-size:12px}
+.drawer__item{
+  display:flex;align-items:center;gap:13px;padding:11px 10px;border-radius:11px;
+  color:var(--muted);font-weight:600;font-size:14px;transition:.18s;width:100%;text-align:left;
+}
+.drawer__item:hover{background:var(--surface-2);color:var(--text)}
+.drawer__item svg{width:18px;height:18px}
+.drawer__close{margin-left:auto;color:var(--faint)}
+
+/* ============ TOASTS ============ */
+.toasts{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:60;display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;width:max-content;max-width:92vw}
+.toast{
+  background:var(--surface-2);border:1px solid var(--line-strong);
+  border-left:3px solid var(--gold);
+  clip-path:var(--bevel-sm);
+  padding:10px 16px;font-size:13px;font-weight:600;
+  box-shadow:var(--shadow);
+  animation:toast-in .35s cubic-bezier(.22,1,.36,1);
+}
+.toast.out{animation:toast-out .3s forwards}
+@keyframes toast-in{from{opacity:0;transform:translateY(14px) scale(.95)}to{opacity:1;transform:none}}
+@keyframes toast-out{to{opacity:0;transform:translateY(8px)}}
+
+/* ============ DESKTOP ============ */
+@media(min-width:1024px){
+  .rail{display:flex}
+  .tabbar,.fab{display:none}
+  .topbar{display:none}
+  .desktop-bar{display:flex}
+  .shell{margin:0 0 0 68px;max-width:none}
+  #view-home,#view-projects{
+    padding:44px clamp(32px, calc((100vw - 68px - 780px) / 2), 22vw) 80px;
+  }
+  .actions{gap:13px}
+  .toasts{bottom:32px}
+}
+.desktop-bar{display:none;justify-content:flex-end;align-items:center;gap:6px;margin-bottom:26px}
+.desktop-bar .topbar__icon{position:relative}
+
+@media(max-width:360px){
+  .actions{grid-template-columns:repeat(2,1fr)}
+}
+@media(prefers-reduced-motion:reduce){
+  .ember{display:none}
+  .reveal{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Couche ambiante : paysage + scrim + grain + braises -->
+<div class="hero-bg" aria-hidden="true"></div>
+<div class="ambient" aria-hidden="true">
+  <div class="ambient__glow"></div>
+  <div class="ambient__grain"></div>
+  <div id="embers"></div>
+</div>
+
+<!-- Rail desktop -->
+<aside class="rail">
+  <div class="rail__logo">A</div>
+  <button class="rail__btn is-active" data-tip="Accueil" data-view="home">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+  </button>
+  <button class="rail__btn" data-tip="Projets" data-view="projects">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+  </button>
+  <button class="rail__btn" data-tip="Épinglés" data-toast="Bientôt : vos épinglés">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+  </button>
+  <button class="rail__btn js-search" data-tip="Rechercher">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  </button>
+  <button class="rail__btn" data-tip="Monde au hasard" data-toast="Téléportation vers « Les Marées d'Obsidienne »">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+  </button>
+  <div class="rail__spacer"></div>
+  <button class="rail__btn" data-tip="Réglages" data-toast="Bientôt : les réglages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+  </button>
+  <button class="rail__create" data-tip="Créer" id="railCreate">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+  </button>
+</aside>
+
+<!-- Topbar mobile -->
+<header class="topbar">
+  <button class="topbar__icon" id="menuBtn" aria-label="Menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+  </button>
+  <div class="wordmark">ATELIER<span class="wordmark__dot"></span></div>
+  <div class="topbar__right">
+    <button class="topbar__icon js-search" aria-label="Recherche">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </button>
+    <button class="topbar__icon" id="bellBtn" aria-label="Notifications" data-toast="3 gardiens ont commenté Cieléméra">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+  </div>
+</header>
+
+<main class="shell">
+
+  <!-- Barre desktop (recherche + cloche) -->
+  <div class="desktop-bar">
+    <button class="topbar__icon js-search" aria-label="Recherche">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    </button>
+    <button class="topbar__icon" id="bellBtn2" aria-label="Notifications" data-toast="3 gardiens ont commenté Cieléméra">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+  </div>
+
+  <div class="view" id="view-home">
+
+  <!-- Salutation -->
+  <section class="reveal">
+    <p class="greet__hi" id="greetHi">Bon après-midi, Michaz</p>
+    <h1 class="greet__title">Vos mondes vous <em>attendent</em></h1>
+  </section>
+
+  <!-- Stats HUD -->
+  <section class="reveal">
+    <div class="stats">
+      <div class="stat" id="statProjets"><div class="stat__num" data-count="6">0</div><div class="stat__lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>projets</div></div>
+      <div class="stat" id="statArticles"><div class="stat__num" data-count="253">0</div><div class="stat__lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>articles</div></div>
+      <div class="stat" id="statCats"><div class="stat__num" data-count="14">0</div><div class="stat__lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>catégories</div></div>
+      <div class="stat"><div class="stat__num" data-count="1">0</div><div class="stat__lbl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11l5-5V5a2 2 0 0 0-2-2Z"/><path d="M15 21v-4a2 2 0 0 1 2-2h4"/></svg>note</div></div>
+    </div>
+  </section>
+
+  <!-- Re-plongez-vous -->
+  <section class="reveal">
+    <div class="sec-head">
+      <h3>Re-plongez-vous</h3>
+      <a href="#" class="js-projects">Voir tout</a>
+    </div>
+    <div class="resume">
+      <article class="world" data-toast="Ouverture de « Manga Shonen »">
+        <div class="world__cover cover-shonen">
+          <span class="world__chip">Styles</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>
+        </div>
+        <div class="world__body">
+          <h4 class="world__title">Manga Shonen</h4>
+          <p class="world__desc">Grille de références visuelles et prompts associés.</p>
+          <div class="xp-bar"><i data-width="72"></i></div>
+          <div class="world__foot"><span>PixAI Arcana</span><span>il y a 3 h</span></div>
+        </div>
+      </article>
+
+      <article class="world" data-toast="Ouverture de « Test d'identité de modèle »">
+        <div class="world__cover cover-tests">
+          <span class="world__chip">Tests</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 5.4A8 8 0 0 1 20 12c0 2.2-.3 4.3-1 6.3"/><path d="M4.5 8.6A8 8 0 0 0 4 12c0 3 .6 5.7 1.6 8.2"/><path d="M12 8a4 4 0 0 1 4 4c0 2.6-.5 5.1-1.5 7.4"/><path d="M8.3 11a4 4 0 0 1 .2-1.3"/><path d="M12 12c0 3.2-.7 6.2-2 8.9"/><path d="M9.5 4.7A8 8 0 0 1 12 4.3"/></svg>
+        </div>
+        <div class="world__body">
+          <h4 class="world__title">Test d'identité de modèle</h4>
+          <p class="world__desc">Fingerprinting : les tics révélateurs des LLM.</p>
+          <div class="xp-bar"><i data-width="45"></i></div>
+          <div class="world__foot"><span>PixAI Arcana</span><span>il y a 1 j</span></div>
+        </div>
+      </article>
+
+      <article class="world" data-toast="Ouverture de « Les Marées d'Obsidienne »">
+        <div class="world__cover cover-marees">
+          <span class="world__chip">Monde</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
+        </div>
+        <div class="world__body">
+          <h4 class="world__title">Les Marées d'Obsidienne</h4>
+          <p class="world__desc">Cartographie des cités immergées du Pacte.</p>
+          <div class="xp-bar"><i data-width="18"></i></div>
+          <div class="world__foot"><span>Chroniques</span><span>il y a 4 j</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Monde épinglé -->
+  <section class="reveal">
+    <article class="pinned" id="pinnedCard">
+      <svg class="pinned__rune" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <span class="pinned__badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+        Épinglé
+      </span>
+      <h2 class="pinned__title">Chroniques de Cieléméra</h2>
+      <p class="pinned__meta">Monde · 47 pages · Un archipel d'îles flottantes tenu par les Gardiens du Vent.</p>
+      <div class="pinned__xp">
+        <div class="xp-bar"><i data-width="67"></i></div>
+        <span class="xp-label">47 / 70 pages</span>
+      </div>
+      <a class="pinned__cta" href="#" id="continueBtn">
+        Continuer
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </article>
+  </section>
+
+  <!-- Actions rapides -->
+  <section class="reveal">
+    <div class="actions">
+      <button class="action" id="qaArticle">
+        <span class="action__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg></span>
+        <span>Article</span>
+      </button>
+      <button class="action" data-toast="Nouvelle catégorie (test)">
+        <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="M9 13h6"/></svg></span>
+        <span>Catégorie</span>
+      </button>
+      <button class="action" id="surpriseBtn">
+        <span class="action__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg></span>
+        <span>Surprise</span>
+      </button>
+      <button class="action" data-toast="Idée notée dans le carnet (test)">
+        <span class="action__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+        <span>Idée</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Prompt du jour -->
+  <section class="reveal">
+    <div class="prompt">
+      <span class="prompt__label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"/></svg>
+        Prompt du jour
+      </span>
+      <p class="prompt__quote" id="promptQuote">« Ton héros perd un sens. Lequel change tout ? »</p>
+      <button class="prompt__shuffle" id="shuffleBtn" aria-label="Nouveau prompt">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Activité récente -->
+  <section class="reveal">
+    <div class="sec-head"><h3>Activité récente</h3></div>
+    <div class="activity">
+      <div class="act" data-toast="Ouverture de « Temple des Vents »">
+        <span class="act__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.17 6.81a1 1 0 0 0-3.98-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.63l4.35-1.32a2 2 0 0 0 .83-.5z"/></svg></span>
+        <span class="act__txt">Vous avez modifié <b>Temple des Vents</b> dans Cieléméra</span>
+        <span class="act__time">il y a 2 h</span>
+      </div>
+      <div class="act" data-toast="Ouverture de « Rites de l'Encre »">
+        <span class="act__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg></span>
+        <span class="act__txt">Vous avez créé <b>Rites de l'Encre</b> dans Manga Shonen</span>
+        <span class="act__time">hier</span>
+      </div>
+      <div class="act" data-toast="Profil de Nadya Vell (test)">
+        <span class="act__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <span class="act__txt"><b>Nadya Vell</b> a rejoint Cieléméra comme gardienne</span>
+        <span class="act__time">il y a 2 j</span>
+      </div>
+    </div>
+  </section>
+
+  </div>
+
+  <!-- Écran Projets -->
+  <div class="view" id="view-projects" hidden>
+    <section class="p-head">
+      <div class="p-head__row">
+        <h2 class="p-head__title">Vos mondes</h2>
+        <span class="p-head__count" id="pCount">6</span>
+      </div>
+      <p class="p-head__sub">6 univers · 128 pages écrites · 2 en cours de forge</p>
+      <div class="p-tools">
+        <label class="p-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input id="pSearch" type="search" placeholder="Chercher un monde…" autocomplete="off">
+        </label>
+      </div>
+      <div class="p-chips" id="pChips"></div>
+    </section>
+
+    <section class="p-grid" id="pGrid"></section>
+
+    <div class="p-empty" id="pEmpty" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+      <p>Aucun monde ne correspond à « <b id="pEmptyQ"></b> »</p>
+      <button id="pReset" class="p-reset">Réinitialiser les filtres</button>
+    </div>
+
+    <section>
+      <button class="p-new" id="pNew">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        Forger un nouveau monde
+      </button>
+    </section>
+  </div>
+
+  <!-- Accueil de projet (style wiki) -->
+  <div class="view" id="view-world" hidden>
+    <div class="wiki-hero" id="wikiHero">
+      <div class="wiki-hero__scrim"></div>
+      <button class="w-back" id="wBack">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Mondes
+      </button>
+      <div class="wiki-hero__bar">
+        <div class="wiki-crest">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <div class="wiki-hero__id">
+          <h2 class="wiki-hero__title">Chroniques de Cieléméra</h2>
+          <span class="wiki-hero__pages"><b>47</b> pages · 3 gardiens</span>
+        </div>
+        <div class="wiki-hero__acts">
+          <button class="wiki-act" data-toast="Carte du monde — bientôt" aria-label="Carte">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.1 5.6a2 2 0 0 0 1.8 0l3.7-1.8a1 1 0 0 1 1.4.9v12.7a1 1 0 0 1-.6.9l-4.5 2.3a2 2 0 0 1-1.8 0l-4.2-2.1a2 2 0 0 0-1.8 0l-3.7 1.8a1 1 0 0 1-1.4-.9V6.6a1 1 0 0 1 .6-.9l4.5-2.3a2 2 0 0 1 1.8 0z"/><path d="M15 5.8v15"/><path d="M9 3.2v15"/></svg>
+          </button>
+          <button class="wiki-act" id="wAdd" aria-label="Ajouter une page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+          </button>
+          <button class="wiki-act" id="wThemeBtn" aria-label="Personnaliser le monde">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <nav class="wiki-nav" id="wikiNav"></nav>
+
+    <div class="wiki-body">
+      <div class="wiki-head">
+        <h3 class="wiki-head__title">Accueil</h3>
+        <span class="save-state" id="saveState" hidden><i></i><em>Enregistré</em></span>
+        <div class="wiki-head__acts">
+          <button class="wiki-link" id="wSave">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></svg>
+            Enregistrer
+          </button>
+          <button class="wiki-link" id="wEdit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.17 6.81a1 1 0 0 0-3.98-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.63l4.35-1.32a2 2 0 0 0 .83-.5z"/></svg>
+            Modifier
+          </button>
+        </div>
+      </div>
+
+      <p class="wiki-welcome">Cieléméra fut un continent unifié porté par les <a href="#" class="wiki-a">sept vents primordiaux</a>. Après le Grand Fracture, le monde s'est brisé en centaines d'îles flottantes gravitant autour du <a href="#" class="wiki-a">Cœur d'Aether</a>, sous la garde vigilante des Gardiens du Vent.</p>
+
+      <section>
+        <div class="sec-head"><h3>Articles importants</h3></div>
+        <div class="wiki-grid" id="wikiGrid"></div>
+      </section>
+
+      <section style="margin-top:26px">
+        <div class="sec-head"><h3>Galerie <span class="g-count" id="galleryCount"></span></h3></div>
+        <div class="wiki-gallery" id="wikiGallery"></div>
+        <input type="file" id="galleryFile" accept="image/*" multiple hidden>
+      </section>
+
+      <section style="margin-top:26px">
+        <div class="sec-head"><h3>Ajouts récents</h3></div>
+        <div class="w-list" id="wList"></div>
+        <div class="p-empty" id="wEmpty" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+          <p>Aucune page dans cette catégorie pour l'instant.</p>
+        </div>
+      </section>
+    </div>
+
+  </div>
+
+  <!-- Article -->
+  <div class="view" id="view-article" hidden>
+    <button class="w-back art-back" id="artBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      Retour
+    </button>
+    <img class="art-cover" id="artCover" alt="" hidden>
+    <div class="art-body">
+      <h1 class="art-title" id="artTitle"></h1>
+      <div class="art-meta" id="artMeta"></div>
+      <div class="art-actions">
+        <button class="art-act pin" id="artPin">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.26 6.6.56-5 4.36 1.5 6.45L12 16.9 5.99 19.6l1.5-6.45-5-4.36 6.6-.56z"/></svg>
+          ÉPINGLÉ
+        </button>
+        <button class="art-act" id="artEdit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.17 6.81a1 1 0 0 0-3.98-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.63l4.35-1.32a2 2 0 0 0 .83-.5z"/></svg>
+          MODIFIER
+        </button>
+        <button class="art-act art-more" id="artMore" aria-label="Options">
+          <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
+        </button>
+      </div>
+      <div class="art-content" id="artContent"></div>
+      <div class="art-tags" id="artTags"></div>
+      <div class="art-card" id="artRelatedCard">
+        <div class="art-card__head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          PAGES LIÉES À CELLE-CI
+        </div>
+        <div id="artRelated"></div>
+      </div>
+      <div class="art-card">
+        <div class="art-card__head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          Sommaire
+          <button class="toc-toggle" id="tocToggle">[masquer]</button>
+        </div>
+        <ol class="toc" id="artToc"></ol>
+      </div>
+      <div class="art-cats" id="artCats"></div>
+    </div>
+  </div>
+
+    <!-- Sheet de personnalisation -->
+    <div class="sheet" id="themeSheet">
+      <div class="sheet__grab"></div>
+      <h4 class="sheet__title">Personnaliser Cieléméra</h4>
+      <div id="themeOpts"></div>
+      <button class="sheet__opt" id="coverBtn" style="margin-top:6px">
+        <span class="action__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>
+        <span><b>Changer la couverture</b><small>Image du monde, compressée automatiquement</small></span>
+      </button>
+      <input type="file" id="coverFile" accept="image/*" hidden>
+    </div>
+  </div>
+
+</main>
+
+<!-- Tab bar mobile -->
+<nav class="tabbar" id="tabbar">
+  <button class="tab is-active" data-name="Accueil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Accueil
+  </button>
+  <button class="tab" data-name="Projets">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+    Projets
+  </button>
+  <button class="tab" data-name="Épinglés">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+    Épinglés
+  </button>
+  <button class="tab" data-name="Réglages">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+    Réglages
+  </button>
+</nav>
+
+<!-- FAB -->
+<button class="fab" id="fab" aria-label="Créer">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+</button>
+
+<!-- Backdrop -->
+<div class="backdrop" id="backdrop"></div>
+
+<!-- Sheet de création -->
+<div class="sheet" id="sheet">
+  <div class="sheet__grab"></div>
+  <h4 class="sheet__title">Nouveau dans l'Atelier</h4>
+  <button class="sheet__opt" id="sheetNewArticle">
+    <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M12 18v-6"/><path d="M9 15h6"/></svg></span>
+    <span><b>Article</b><small>Personnage, lieu, faction, objet…</small></span>
+  </button>
+  <button class="sheet__opt" data-toast="Création d'un monde… (test)">
+    <span class="action__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
+    <span><b>Monde</b><small>Un nouvel univers à cartographier</small></span>
+  </button>
+  <button class="sheet__opt" data-toast="Création d'une catégorie… (test)">
+    <span class="action__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="M9 13h6"/></svg></span>
+    <span><b>Catégorie</b><small>Structurer un monde existant</small></span>
+  </button>
+</div>
+
+<!-- Drawer menu -->
+<div class="drawer" id="drawer">
+  <div class="drawer__head">
+    <div class="drawer__ava">M</div>
+    <div>
+      <div class="drawer__name">Michaz</div>
+      <div class="drawer__sub">Architecte de mondes</div>
+    </div>
+    <button class="drawer__close" id="drawerClose" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+  <button class="drawer__item" data-toast="Profil (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Mon profil</button>
+  <button class="drawer__item" data-toast="Thèmes & apparence (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Thème &amp; apparence</button>
+  <button class="drawer__item" data-toast="Téléportation vers « Eastwall » (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Monde au hasard</button>
+  <button class="drawer__item" data-toast="Carnet d'idées (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Carnet d'idées</button>
+  <button class="drawer__item" data-toast="À bientôt, Michaz ✦ (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Déconnexion</button>
+</div>
+
+<!-- Sheet réglages & données -->
+<div class="sheet" id="settingsSheet">
+  <div class="sheet__grab"></div>
+  <h4 class="sheet__title">Réglages &amp; données</h4>
+  <button class="sheet__opt" id="persistBtn">
+    <span class="action__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+    <span><b>Protéger le stockage</b><small>Empêcher le navigateur d'effacer tes mondes</small></span>
+  </button>
+  <button class="sheet__opt" id="exportBtn">
+    <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg></span>
+    <span><b>Exporter une sauvegarde</b><small>JSON : mondes, pages, thème, texte</small></span>
+  </button>
+  <button class="sheet__opt" id="importBtn">
+    <span class="action__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg></span>
+    <span><b>Importer une sauvegarde</b><small>Restaure un fichier exporté</small></span>
+  </button>
+  <input type="file" id="importFile" accept="application/json" hidden>
+  <div class="settings-meta"><span>Stockage local utilisé</span><b id="storageUsed">—</b></div>
+</div>
+
+<!-- Mes Articles -->
+<div class="view" id="view-articles" hidden>
+  <section>
+    <button class="w-back" id="maBack" style="position:static;display:inline-flex;margin-bottom:12px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+      Retour
+    </button>
+    <div class="p-head__row">
+      <h2 class="p-head__title">Mes Articles</h2>
+      <span class="p-head__count" id="maCount">0</span>
+    </div>
+    <p class="p-head__sub">Toutes les pages de tous tes mondes, au même endroit.</p>
+    <label class="p-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="maSearch" type="search" placeholder="Chercher un article…" autocomplete="off">
+    </label>
+    <div class="p-chips" id="maChips"></div>
+  </section>
+  <section style="margin-top:16px">
+    <div class="w-list" id="maList"></div>
+  </section>
+</div>
+
+<!-- Recherche globale -->
+<div class="search-ov" id="searchOv">
+  <div class="search-ov__bar">
+    <input id="gsInput" type="search" placeholder="Chercher un monde, une page…" autocomplete="off">
+    <button class="search-ov__cancel" id="gsCancel">FERMER</button>
+  </div>
+  <div class="search-ov__res" id="gsRes"></div>
+</div>
+
+<!-- Éditeur d'article -->
+<div id="view-editor">
+  <div class="ed-top">
+    <button class="ed-close" id="edClose" aria-label="Fermer l'éditeur">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <span class="ed-top__title" id="edMode">Nouvelle page</span>
+    <button class="ed-save" id="edSave">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7"/><path d="M7 3v4a1 1 0 0 0 1 1h7"/></svg>
+      ENREGISTRER
+    </button>
+  </div>
+  <div class="ed-scroll">
+    <input class="ed-name" id="edName" placeholder="Nom de la page…" maxlength="80" autocomplete="off">
+    <div class="ed-cats" id="edCats"></div>
+    <div class="ed-body" id="edBody" contenteditable="true" data-ph="Rédige ton article…"></div>
+  </div>
+  <div class="ed-toolbar" id="edToolbar">
+    <button class="ed-btn" data-cmd="bold" aria-label="Gras"><b>G</b></button>
+    <button class="ed-btn" data-cmd="italic" aria-label="Italique"><i>I</i></button>
+    <button class="ed-btn" data-cmd="h2" aria-label="Titre de section">H2</button>
+    <button class="ed-btn" data-cmd="link" aria-label="Lien interne">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+    </button>
+    <button class="ed-btn" data-cmd="list" aria-label="Liste à puces">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+    </button>
+    <button class="ed-btn" data-cmd="image" aria-label="Insérer une image">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+    </button>
+    <button class="ed-btn" data-cmd="undo" aria-label="Annuler">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+    </button>
+    <button class="ed-btn" data-cmd="redo" aria-label="Rétablir">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+    </button>
+  </div>
+  <input type="file" id="edImgFile" accept="image/*" hidden>
+</div>
+
+<!-- Visionneuse plein écran -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-top">
+    <span class="lb-name" id="lbName"></span>
+    <button class="lb-close" id="lbClose" aria-label="Fermer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </div>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Image précédente">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <img id="lightboxImg" alt="">
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Image suivante">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+  </button>
+  <div class="lb-bottom">
+    <div class="lb-count" id="lbCount"></div>
+    <div class="lb-strip" id="lbStrip"></div>
+  </div>
+</div>
+
+<!-- Toasts -->
+<div class="toasts" id="toasts"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- Salutation selon l'heure ---------- */
+  var h = new Date().getHours();
+  var salut = h < 5 ? "Bonne nuit" : h < 12 ? "Bonjour" : h < 18 ? "Bon après-midi" : "Bonsoir";
+  document.getElementById("greetHi").textContent = salut + ", Michaz";
+
+  /* ---------- Toasts ---------- */
+  var toastsBox = document.getElementById("toasts");
+  function toast(msg){
+    var t = document.createElement("div");
+    t.className = "toast";
+    t.textContent = msg;
+    toastsBox.appendChild(t);
+    setTimeout(function(){
+      t.classList.add("out");
+      setTimeout(function(){ t.remove(); }, 320);
+    }, 2400);
+  }
+  document.querySelectorAll("[data-toast]").forEach(function(el){
+    el.addEventListener("click", function(e){
+      if (el.tagName === "A") e.preventDefault();
+      toast(el.getAttribute("data-toast"));
+    });
+  });
+
+  /* ---------- Fond fixe : pas de parallaxe ---------- */
+
+  /* ---------- Braises ---------- */
+  var embersBox = document.getElementById("embers");
+  for (var i = 0; i < 9; i++){
+    var s = document.createElement("span");
+    s.className = "ember";
+    var size = 2 + Math.random() * 3.5;
+    s.style.width = size + "px";
+    s.style.height = size + "px";
+    s.style.left = (Math.random() * 100) + "%";
+    s.style.setProperty("--drift", (Math.random() * 80 - 40) + "px");
+    s.style.animationDuration = (9 + Math.random() * 9) + "s";
+    s.style.animationDelay = (-Math.random() * 12) + "s";
+    embersBox.appendChild(s);
+  }
+
+  /* ---------- Révélation au scroll + compteurs + barres XP ---------- */
+  function animateCount(el){
+    var target = parseInt(el.getAttribute("data-count"), 10);
+    var start = null, dur = 950;
+    function step(ts){
+      if (!start) start = ts;
+      var p = Math.min((ts - start) / dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(target * eased);
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        en.target.classList.add("in");
+        en.target.querySelectorAll("[data-count]").forEach(function(c){
+          if (!c.dataset.done){ c.dataset.done = "1"; animateCount(c); }
+        });
+        en.target.querySelectorAll(".xp-bar i[data-width]").forEach(function(b){
+          if (!b.dataset.done){ b.dataset.done = "1"; b.style.width = b.getAttribute("data-width") + "%"; }
+        });
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll(".reveal").forEach(function(el){ io.observe(el); });
+
+  /* ---------- Prompt du jour ---------- */
+  var prompts = [
+    "« Ton héros perd un sens. Lequel change tout ? »",
+    "« Une faction ment depuis le début. Laquelle, et pourquoi maintenant ? »",
+    "« La magie de ce monde a un prix. Qui vient de le payer ? »",
+    "« Deux de tes personnages se croisent sans se reconnaître. Pourquoi ? »",
+    "« Une carte de ton monde est fausse. Que cache l'erreur ? »",
+    "« Le plus vieux dieu de Cieléméra se réveille… et il a oublié son propre nom. »"
+  ];
+  var pIndex = 0;
+  var quote = document.getElementById("promptQuote");
+  var shuffleBtn = document.getElementById("shuffleBtn");
+  shuffleBtn.addEventListener("click", function(){
+    shuffleBtn.classList.remove("spin");
+    void shuffleBtn.offsetWidth;
+    shuffleBtn.classList.add("spin");
+    quote.classList.add("fade");
+    setTimeout(function(){
+      pIndex = (pIndex + 1) % prompts.length;
+      quote.textContent = prompts[pIndex];
+      quote.classList.remove("fade");
+    }, 280);
+  });
+
+  /* ---------- Surprise : monde aléatoire ---------- */
+  var worlds = ["Chroniques de Cieléméra", "Manga Shonen", "Les Marées d'Obsidienne", "Eastwall", "Hexenstein"];
+  document.getElementById("surpriseBtn").addEventListener("click", function(){
+    var w = worlds[Math.floor(Math.random() * worlds.length)];
+    toast("Téléportation vers « " + w + " »");
+  });
+
+  /* ---------- Sheet & Drawer ---------- */
+  var fab = document.getElementById("fab");
+  var sheet = document.getElementById("sheet");
+  var drawer = document.getElementById("drawer");
+  var backdrop = document.getElementById("backdrop");
+
+  /* Pile d'overlays synchronisée avec l'historique (bouton retour Android) */
+  var ovCount = 0;
+  function ovPush(){ ovCount++; try { history.pushState({ ov: 1 }, ""); } catch (e) {} }
+  function ovReplace(){ try { history.replaceState({ ov: 1 }, ""); } catch (e) {} }
+  function ovBack(){ if (ovCount > 0){ ovCount--; try { history.back(); } catch (e) {} } }
+  function hideOverlays(){
+    sheet.classList.remove("open");
+    drawer.classList.remove("open");
+    fab.classList.remove("open");
+    backdrop.classList.remove("show");
+    var ts = document.getElementById("themeSheet");
+    if (ts) ts.classList.remove("open");
+    var ss = document.getElementById("settingsSheet");
+    if (ss) ss.classList.remove("open");
+    var so = document.getElementById("searchOv");
+    if (so) so.classList.remove("open");
+    if (lbEl) lbEl.classList.remove("open");
+    if (editorOpen){ editorOpen = false; viewEditor.classList.remove("open"); }
+  }
+  function closeAll(){ hideOverlays(); ovBack(); }
+  window.addEventListener("popstate", function(){
+    if (ovCount > 0){ ovCount--; hideOverlays(); }
+  });
+  function openSheet(){
+    closeAll();
+    sheet.classList.add("open");
+    fab.classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+  }
+  function openDrawer(){
+    closeAll();
+    drawer.classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+  }
+  fab.addEventListener("click", function(){
+    sheet.classList.contains("open") ? closeAll() : openSheet();
+  });
+  document.getElementById("railCreate").addEventListener("click", openSheet);
+  document.getElementById("menuBtn").addEventListener("click", openDrawer);
+  document.getElementById("drawerClose").addEventListener("click", closeAll);
+  backdrop.addEventListener("click", closeAll);
+  sheet.querySelectorAll(".sheet__opt").forEach(function(o){
+    if (o.id === "sheetNewArticle") return;
+    o.addEventListener("click", closeAll);
+  });
+
+  /* Cache des images (déclaré tôt : utilisé par les rendus) */
+  var assetCache = {};
+
+  /* ---------- Navigation entre vues ---------- */
+  var viewHome = document.getElementById("view-home");
+  var viewProjects = document.getElementById("view-projects");
+  var viewWorld = document.getElementById("view-world");
+  var viewArticle = document.getElementById("view-article");
+  var viewArticles = document.getElementById("view-articles");
+  var tabs = document.querySelectorAll("#tabbar .tab");
+
+  function showView(name){
+    viewHome.hidden = name !== "home";
+    viewProjects.hidden = name !== "projects";
+    viewWorld.hidden = name !== "world";
+    viewArticle.hidden = name !== "article";
+    viewArticles.hidden = name !== "articles";
+    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : viewArticle;
+    v.style.animation = "none";
+    void v.offsetWidth;
+    v.style.animation = "";
+    window.scrollTo({ top: 0 });
+  }
+  function syncNav(name){
+    var label = name === "home" ? "Accueil" : "Projets";
+    tabs.forEach(function(t){ t.classList.toggle("is-active", t.getAttribute("data-name") === label); });
+    document.querySelectorAll(".rail__btn").forEach(function(b){
+      b.classList.toggle("is-active", b.getAttribute("data-tip") === label);
+    });
+  }
+  function route(){
+    var h = location.hash.replace("#", "") || "home";
+    if (h.indexOf("article/") === 0){
+      currentArt = decodeURIComponent(h.slice(8));
+      showView("article");
+      if (THEMES) renderArticle();
+      syncNav("article");
+      return;
+    }
+    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles") h = "home";
+    showView(h);
+    syncNav(h);
+    if (h === "articles" && THEMES) renderArticlesView();
+  }
+  function gotoView(name){
+    if (("#" + name) === location.hash) route();
+    else location.hash = name;
+  }
+  window.addEventListener("hashchange", route);
+  route();
+
+  /* ---------- Tabs mobiles ---------- */
+  tabs.forEach(function(tab){
+    tab.addEventListener("click", function(){
+      var name = tab.getAttribute("data-name");
+      if (name === "Accueil" || name === "Projets"){ gotoView(name === "Projets" ? "projects" : "home"); }
+      else if (name === "Réglages"){ openSettings(); }
+      else {
+        tabs.forEach(function(t){ t.classList.remove("is-active"); });
+        tab.classList.add("is-active");
+        toast("Bientôt : l'écran " + name);
+      }
+    });
+  });
+  document.querySelector(".js-projects").addEventListener("click", function(e){
+    e.preventDefault();
+    gotoView("projects");
+  });
+
+  /* ---------- Rail desktop : navigation ---------- */
+  document.querySelectorAll(".rail__btn").forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = b.getAttribute("data-view");
+      if (v){ gotoView(v); }
+      else {
+        document.querySelectorAll(".rail__btn").forEach(function(x){ x.classList.remove("is-active"); });
+        b.classList.add("is-active");
+      }
+    });
+  });
+  /* ---------- Écran Projets : données & rendu ---------- */
+  var P_ICONS = {
+    compass:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    swords:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" x2="19" y1="19" y2="13"/><line x1="16" x2="20" y1="16" y2="20"/><line x1="19" x2="21" y1="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" x2="9" y1="14" y2="18"/><line x1="7" x2="4" y1="17" y2="20"/><line x1="3" x2="5" y1="19" y2="21"/></svg>',
+    fingerprint:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 5.4A8 8 0 0 1 20 12c0 2.2-.3 4.3-1 6.3"/><path d="M4.5 8.6A8 8 0 0 0 4 12c0 3 .6 5.7 1.6 8.2"/><path d="M12 8a4 4 0 0 1 4 4c0 2.6-.5 5.1-1.5 7.4"/><path d="M12 12c0 3.2-.7 6.2-2 8.9"/><path d="M9.5 4.7A8 8 0 0 1 12 4.3"/></svg>',
+    waves:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>',
+    crown:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11.56 3.27a.5.5 0 0 1 .88 0l2.95 5.6a1 1 0 0 0 1.52.3l4.27-3.67a.5.5 0 0 1 .8.52l-2.83 10.25a1 1 0 0 1-.96.73H5.81a1 1 0 0 1-.96-.73L2.02 6.02a.5.5 0 0 1 .8-.52l4.27 3.67a1 1 0 0 0 1.52-.3z"/><path d="M5 21h14"/></svg>',
+    pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>'
+  };
+  var projects = [
+    { id:"cielemara", title:"Chroniques de Cieléméra", desc:"Un archipel d'îles flottantes tenu par les Gardiens du Vent.", cat:"Monde", pages:47, updated:"il y a 2 h", progress:67, cover:"cover-ciel", icon:"compass", pinned:true },
+    { title:"Manga Shonen", desc:"Grille de références visuelles et prompts associés.", cat:"Styles", pages:32, updated:"il y a 3 h", progress:72, cover:"cover-shonen", icon:"swords" },
+    { title:"Test d'identité de modèle", desc:"Fingerprinting : les tics révélateurs des LLM.", cat:"Tests", pages:18, updated:"il y a 1 j", progress:45, cover:"cover-tests", icon:"fingerprint" },
+    { title:"Les Marées d'Obsidienne", desc:"Cartographie des cités immergées du Pacte.", cat:"Monde", pages:11, updated:"il y a 4 j", progress:18, cover:"cover-marees", icon:"waves" },
+    { title:"Vaelgrim", desc:"Une toundra gelée où la mémoire brûle comme combustible.", cat:"Monde", pages:12, updated:"il y a 6 j", progress:23, cover:"cover-vael", icon:"compass" },
+    { title:"La Cour des Miroirs", desc:"Une cité-cour où chaque noble porte un visage emprunté.", cat:"Intrigue", pages:8, updated:"il y a 2 sem.", progress:9, cover:"cover-miroirs", icon:"crown" }
+  ];
+  var pState = { cat:"Tous", q:"" };
+  var CATS = ["Tous","Monde","Styles","Tests","Intrigue"];
+  var pGrid = document.getElementById("pGrid");
+  var pChips = document.getElementById("pChips");
+  var pEmpty = document.getElementById("pEmpty");
+  var pSearch = document.getElementById("pSearch");
+
+  function buildChips(){
+    pChips.innerHTML = "";
+    CATS.forEach(function(c){
+      var n = c === "Tous" ? projects.length : projects.filter(function(p){ return p.cat === c; }).length;
+      if (c !== "Tous" && n === 0) return;
+      var b = document.createElement("button");
+      b.className = "p-chip" + (pState.cat === c ? " is-active" : "");
+      b.innerHTML = c + " <b>" + n + "</b>";
+      b.addEventListener("click", function(){ pState.cat = c; buildChips(); renderProjects(); });
+      pChips.appendChild(b);
+    });
+  }
+  function renderProjects(){
+    var q = pState.q.toLowerCase();
+    var list = projects.filter(function(p){
+      var okCat = pState.cat === "Tous" || p.cat === pState.cat;
+      var okQ = !q || p.title.toLowerCase().indexOf(q) > -1 || p.desc.toLowerCase().indexOf(q) > -1;
+      return okCat && okQ;
+    });
+    pGrid.innerHTML = "";
+    list.forEach(function(p, i){
+      var el = document.createElement("article");
+      el.className = "pcard";
+      el.style.animationDelay = (i * 60) + "ms";
+      var cov = assetCache[p.coverAsset];
+      el.innerHTML =
+        '<div class="pcard__cover ' + p.cover + (cov ? ' has-img' : '') + '"' + (cov ? ' style="background-image:url(\'' + cov + '\')"' : '') + '>' +
+          '<span class="world__chip">' + p.cat + '</span>' +
+          (p.pinned ? '<span class="pcard__pin">' + P_ICONS.pin + '</span>' : '') +
+          P_ICONS[p.icon] +
+        '</div>' +
+        '<div class="pcard__body"><h3>' + p.title + '</h3><p>' + p.desc + '</p>' +
+        '<div class="xp-bar"><i style="width:' + p.progress + '%"></i></div>' +
+        '<div class="pcard__foot"><span>' + p.pages + ' pages</span><span>' + p.updated + '</span></div></div>';
+      el.addEventListener("click", function(){
+        if (p.id === "cielemara") gotoView("world");
+        else toast("Ouverture de « " + p.title + " » — bientôt");
+      });
+      pGrid.appendChild(el);
+    });
+    var isEmpty = list.length === 0;
+    pEmpty.hidden = !isEmpty;
+    pGrid.style.display = isEmpty ? "none" : "";
+    document.getElementById("pEmptyQ").textContent = pState.q;
+    document.getElementById("pCount").textContent = list.length;
+  }
+  pSearch.addEventListener("input", function(){ pState.q = pSearch.value; renderProjects(); });
+  document.getElementById("pReset").addEventListener("click", function(){
+    pState.cat = "Tous"; pState.q = ""; pSearch.value = "";
+    buildChips(); renderProjects();
+  });
+  document.getElementById("pNew").addEventListener("click", openSheet);
+  buildChips();
+  renderProjects();
+
+  /* ---------- Écran Monde : Cieléméra ---------- */
+  document.getElementById("continueBtn").addEventListener("click", function(e){
+    e.preventDefault();
+    gotoView("world");
+  });
+  document.getElementById("wBack").addEventListener("click", function(){ gotoView("projects"); });
+
+  var W_ICONS = {
+    "map-pin":'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+    users:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>',
+    gem:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6"/><path d="M2 9h20"/></svg>',
+    calendar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>',
+    wind:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg>',
+    folder:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>'
+  };
+  var wCats = [
+    { name:"Lieux", icon:"map-pin", color:"#4cc38a", bg:"rgba(76,195,138,.14)" },
+    { name:"Personnages", icon:"users", color:"#eebf4d", bg:"rgba(238,191,77,.14)" },
+    { name:"Factions", icon:"shield", color:"#ff7a5c", bg:"rgba(255,122,92,.14)" },
+    { name:"Objets", icon:"gem", color:"#4da3ff", bg:"rgba(77,163,255,.14)" },
+    { name:"Événements", icon:"calendar", color:"#8f7bff", bg:"rgba(143,123,255,.16)" },
+    { name:"Magie & Vents", icon:"wind", color:"#5fd4e6", bg:"rgba(95,212,230,.14)" }
+  ];
+  var wArticles = [
+    { title:"Temple des Vents", cat:"Lieux", snip:"Sanctuaire suspendu où les Gardiens captent les courants.", updated:"il y a 2 h" },
+    { title:"Nadya Vell", cat:"Personnages", snip:"Cartographe des courants, dernière née de la lignée Vell.", updated:"hier" },
+    { title:"Île-Mère d'Aérion", cat:"Lieux", snip:"Le plus grand fragment de l'archipel, siège du Conclave.", updated:"il y a 3 j" },
+    { title:"Les Éoliens", cat:"Factions", snip:"Ordre militaire des cavaliers du vent d'est.", updated:"il y a 5 j" },
+    { title:"Plume d'Ancre", cat:"Objets", snip:"Artefact capable de stabiliser une île dérivante.", updated:"il y a 1 sem." },
+    { title:"Le Grand Silence", cat:"Événements", snip:"La nuit où tous les vents se sont tus, il y a trois siècles.", updated:"il y a 2 sem." },
+    { title:"Kaelen Voss", cat:"Personnages", snip:"Gardien déchu, banni pour avoir volé une route céleste.", updated:"il y a 3 sem." },
+    { title:"Voies Célestes", cat:"Magie & Vents", snip:"Les sept courants majeurs qui portent l'archipel.", updated:"il y a 1 mois" }
+  ];
+  function wCatMeta(name){
+    for (var i = 0; i < wCats.length; i++) if (wCats[i].name === name) return wCats[i];
+    return wCats[0];
+  }
+  function px(id){ return "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&fit=crop&h=420&w=420"; }
+  var wImportant = [
+    { title:"Temple des Vents", cat:"Lieux", img:px(3840188) },
+    { title:"Île-Mère d'Aérion", cat:"Lieux", img:px(38636769) },
+    { title:"Nadya Vell", cat:"Personnages", img:px(27757179) },
+    { title:"Les Éoliens", cat:"Factions", img:px(38101248) },
+    { title:"Plume d'Ancre", cat:"Objets", img:px(8960647) },
+    { title:"Voies Célestes", cat:"Magie & Vents", img:px(35349603) }
+  ];
+  var THEMES = [
+    { label:"Ciel d'Aérion", accent:"#7fd0ff", banner:"https://images.pexels.com/photos/17012965/pexels-photo-17012965.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" },
+    { label:"Vitrail Ancien", accent:"#eebf4d", banner:"https://i.postimg.cc/y8M5HCDh/hue-teo-king-arthur-set-12.jpg" },
+    { label:"Marée d'Encre", accent:"#5fd4e6", banner:"https://images.pexels.com/photos/10956169/pexels-photo-10956169.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" }
+  ];
+  var themeIdx = 0;
+  try { themeIdx = parseInt(localStorage.getItem("atelier-theme") || "0", 10) || 0; } catch (e) {}
+  if (themeIdx < 0 || themeIdx > 2) themeIdx = 0;
+  var wState = { cat:"Explorer" };
+  var viewWorldEl = document.getElementById("view-world");
+  var wikiHero = document.getElementById("wikiHero");
+  var wikiNav = document.getElementById("wikiNav");
+  var wikiGrid = document.getElementById("wikiGrid");
+  var wList = document.getElementById("wList");
+  var wEmpty = document.getElementById("wEmpty");
+
+  function hexToRgba(h, a){
+    var n = parseInt(h.slice(1), 16);
+    return "rgba(" + (n >> 16 & 255) + "," + (n >> 8 & 255) + "," + (n & 255) + "," + a + ")";
+  }
+  function applyTheme(){
+    var t = THEMES[themeIdx];
+    wikiHero.style.backgroundImage = "url('" + t.banner + "')";
+    viewWorldEl.style.setProperty("--wiki-accent", t.accent);
+    viewWorldEl.style.background = "linear-gradient(180deg," + hexToRgba(t.accent, .17) + " 0%, var(--bg) 440px)";
+    try { localStorage.setItem("atelier-theme", String(themeIdx)); } catch (e) {}
+    if (window.DB) DB.put("meta", String(themeIdx), "theme");
+    refreshHero();
+  }
+  function refreshHero(){
+    var w = null;
+    for (var i = 0; i < projects.length; i++) if (projects[i].id === "cielemara") w = projects[i];
+    var cov = w && assetCache[w.coverAsset];
+    wikiHero.style.backgroundImage = "url('" + (cov || THEMES[themeIdx].banner) + "')";
+  }
+  function renderNav(){
+    wikiNav.innerHTML = "";
+    ["Explorer"].concat(wCats.map(function(c){ return c.name; })).forEach(function(c){
+      var b = document.createElement("button");
+      b.className = "wiki-nav__item" + (wState.cat === c ? " is-active" : "");
+      b.innerHTML = c + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+      b.addEventListener("click", function(){ wState.cat = c; renderNav(); renderWiki(); });
+      wikiNav.appendChild(b);
+    });
+  }
+  function renderWiki(){
+    var imp = wState.cat === "Explorer" ? wImportant : wImportant.filter(function(a){ return a.cat === wState.cat; });
+    wikiGrid.innerHTML = "";
+    if (imp.length === 0){
+      wikiGrid.innerHTML = '<p class="wiki-none">Aucun article important épinglé dans cette catégorie.</p>';
+    }
+    imp.forEach(function(a, i){
+      var el = document.createElement("button");
+      el.className = "wiki-card";
+      el.style.animationDelay = (i * 55) + "ms";
+      el.innerHTML = '<span class="wiki-card__img" style="background-image:url(\'' + a.img + '\')"></span><span class="wiki-card__cap">' + a.title + '</span>';
+      el.addEventListener("click", function(){ openArticle(a.title); });
+      wikiGrid.appendChild(el);
+    });
+    var rec = wState.cat === "Explorer" ? wArticles : wArticles.filter(function(a){ return a.cat === wState.cat; });
+    wList.innerHTML = "";
+    rec.forEach(function(a, i){
+      var m = wCatMeta(a.cat);
+      var el = document.createElement("div");
+      el.className = "arow";
+      el.style.animationDelay = (i * 50) + "ms";
+      el.innerHTML =
+        '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + W_ICONS[m.icon] + '</span>' +
+        '<span class="arow__txt"><b>' + a.title + '</b><span>' + a.snip + '</span></span>' +
+        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + a.cat + '</span><span class="arow__time">' + a.updated + '</span></span>';
+      el.addEventListener("click", function(){ openArticle(a.title); });
+      wList.appendChild(el);
+    });
+    var isEmpty = rec.length === 0;
+    wEmpty.hidden = !isEmpty;
+    wList.style.display = isEmpty ? "none" : "";
+  }
+  function buildThemeOpts(){
+    var box = document.getElementById("themeOpts");
+    box.innerHTML = "";
+    THEMES.forEach(function(t, i){
+      var b = document.createElement("button");
+      b.className = "sheet__opt";
+      b.innerHTML = '<span class="theme-swatch" style="background-image:url(\'' + t.banner + '\');--sw:' + t.accent + '"></span>' +
+        '<span><b>' + t.label + '</b><small>Bannière &amp; couleur d\'accent du monde</small></span>' +
+        (i === themeIdx ? '<span class="theme-ok">✓</span>' : '');
+      b.addEventListener("click", function(){
+        themeIdx = i; applyTheme(); buildThemeOpts(); closeAll();
+        toast("Thème « " + t.label + " » appliqué à Cieléméra");
+      });
+      box.appendChild(b);
+    });
+  }
+  document.getElementById("wThemeBtn").addEventListener("click", function(){
+    closeAll();
+    document.getElementById("themeSheet").classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+  });
+  document.getElementById("wAdd").addEventListener("click", openSheet);
+  wikiHero.addEventListener("click", function(e){
+    if (e.target.closest(".wiki-act") || e.target.closest(".w-back")) return;
+    var m = (wikiHero.style.backgroundImage || "").match(/url\(["']?(.*?)["']?\)/);
+    if (m && m[1]){
+      lb.list = [{ data: m[1], name: "Chroniques de Cieléméra" }];
+      lb.idx = 0;
+      showLB();
+      renderLightbox();
+    }
+  });
+  document.getElementById("wSave").addEventListener("click", function(){ toast("Cieléméra ajouté à vos épinglés"); });
+  document.getElementById("wEdit").addEventListener("click", function(){ toggleWelcomeEdit(); });
+  document.querySelectorAll(".wiki-a").forEach(function(a){
+    a.addEventListener("click", function(e){ e.preventDefault(); toast("Lien interne — bientôt"); });
+  });
+  applyTheme();
+  buildThemeOpts();
+  renderNav();
+  renderWiki();
+
+  /* ---------- Couche données : IndexedDB + autosave ---------- */
+  var DB = (function(){
+    var dbp = null;
+    function open(){
+      if (dbp) return dbp;
+      dbp = new Promise(function(res){
+        try{
+          var rq = indexedDB.open("atelier-db", 2);
+          rq.onupgradeneeded = function(){
+            var d = rq.result;
+            if (!d.objectStoreNames.contains("meta")) d.createObjectStore("meta");
+            if (!d.objectStoreNames.contains("worlds")) d.createObjectStore("worlds", { keyPath:"id" });
+            if (!d.objectStoreNames.contains("pages")) d.createObjectStore("pages", { keyPath:"id" });
+            if (!d.objectStoreNames.contains("assets")) d.createObjectStore("assets", { keyPath:"id" });
+          };
+          rq.onsuccess = function(){ res(rq.result); };
+          rq.onerror = function(){ res(null); };
+        }catch(e){ res(null); }
+      });
+      return dbp;
+    }
+    function store(s, mode){
+      return open().then(function(d){ return d ? d.transaction(s, mode).objectStore(s) : null; });
+    }
+    function reqp(r){
+      return new Promise(function(res, rej){ r.onsuccess = function(){ res(r.result); }; r.onerror = function(){ rej(r.error); }; });
+    }
+    return {
+      put: function(s, v, k){ return store(s, "readwrite").then(function(o){ return o ? reqp(k === undefined ? o.put(v) : o.put(v, k)) : null; }); },
+      get: function(s, k){ return store(s, "readonly").then(function(o){ return o ? reqp(o.get(k)) : null; }); },
+      getAll: function(s){ return store(s, "readonly").then(function(o){ return o ? reqp(o.getAll()) : []; }); },
+      keys: function(s){ return store(s, "readonly").then(function(o){ return o ? reqp(o.getAllKeys()) : []; }); },
+      del: function(s, k){ return store(s, "readwrite").then(function(o){ return o ? reqp(o.delete(k)) : null; }); }
+    };
+  })();
+  window.DB = DB;
+
+  var saveEl = document.getElementById("saveState");
+  var saveHideTimer;
+  function setSaveState(s){
+    if (!saveEl) return;
+    saveEl.hidden = false;
+    saveEl.className = "save-state " + s;
+    saveEl.querySelector("em").textContent = s === "saving" ? "Enregistrement…" : "Enregistré";
+    if (s === "saved"){
+      clearTimeout(saveHideTimer);
+      saveHideTimer = setTimeout(function(){ saveEl.hidden = true; }, 2400);
+    }
+  }
+
+  var welcomeEl = document.querySelector(".wiki-welcome");
+  var welcomeEditing = false;
+  var welcomeTimer;
+  function saveWelcome(){
+    setSaveState("saving");
+    DB.put("meta", welcomeEl.innerHTML, "welcome-cielemera").then(function(){ setSaveState("saved"); });
+  }
+  function toggleWelcomeEdit(){
+    welcomeEditing = !welcomeEditing;
+    welcomeEl.contentEditable = welcomeEditing ? "true" : "false";
+    welcomeEl.classList.toggle("editing", welcomeEditing);
+    if (welcomeEditing){
+      welcomeEl.focus();
+      toast("Mode édition — autosave actif, aucun toast");
+    } else {
+      welcomeEl.blur();
+      clearTimeout(welcomeTimer);
+      saveWelcome();
+    }
+  }
+  welcomeEl.addEventListener("input", function(){
+    if (!welcomeEditing) return;
+    setSaveState("saving");
+    clearTimeout(welcomeTimer);
+    welcomeTimer = setTimeout(saveWelcome, 800);
+  });
+
+  /* Amorçage : lecture ou seed depuis la base */
+  DB.getAll("assets").then(function(list){
+    (list || []).forEach(function(a){ assetCache[a.id] = a.data; });
+    return DB.getAll("worlds");
+  }).then(function(list){
+    if (list && list.length){
+      list.sort(function(a, b){ return (a.ord || 0) - (b.ord || 0); });
+      projects.length = 0;
+      list.forEach(function(p){ projects.push(p); });
+    } else {
+      projects.forEach(function(p, i){
+        p.id = p.id || ("w" + i);
+        p.ord = i;
+        DB.put("worlds", p);
+      });
+    }
+    buildChips();
+    renderProjects();
+    return DB.getAll("pages");
+  }).then(function(pages){
+    if (pages && pages.length){
+      pages.sort(function(a, b){ return (a.ord || 0) - (b.ord || 0); });
+      wImportant.length = 0; wArticles.length = 0;
+      var seenPg = {};
+      pages.forEach(function(pg){
+        if (seenPg[pg.title]) return;
+        seenPg[pg.title] = 1;
+        if (pg.important) wImportant.push({ title:pg.title, cat:pg.cat, img:pg.img });
+        else wArticles.push({ title:pg.title, cat:pg.cat, snip:pg.snip, updated:pg.updated });
+      });
+    } else {
+      wImportant.forEach(function(a, i){
+        DB.put("pages", { id:"imp-" + i, worldId:"cielemara", important:true, ord:i, title:a.title, cat:a.cat, img:a.img });
+      });
+      wArticles.forEach(function(a, i){
+        DB.put("pages", { id:"pg-" + i, worldId:"cielemara", important:false, ord:i, title:a.title, cat:a.cat, snip:a.snip, updated:a.updated });
+      });
+    }
+    renderWiki();
+    refreshHero();
+    loadGallery();
+    updateCounts();
+    return DB.get("meta", "welcome-cielemara");
+  }).then(function(v){
+    if (v) welcomeEl.innerHTML = v;
+    return DB.get("meta", "theme");
+  }).then(function(t){
+    if (t !== null && t !== undefined && +t !== themeIdx && +t >= 0 && +t < THEMES.length){
+      themeIdx = +t;
+      applyTheme();
+      buildThemeOpts();
+    }
+  }).catch(function(){});
+
+  /* ---------- Réglages & données ---------- */
+  function openSettings(){
+    closeAll();
+    document.getElementById("settingsSheet").classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+    if (navigator.storage && navigator.storage.estimate){
+      navigator.storage.estimate().then(function(e){
+        var used = (e.usage || 0) / 1048576;
+        var quota = (e.quota || 0) / 1048576;
+        document.getElementById("storageUsed").textContent = used.toFixed(1) + " Mo / " + Math.round(quota) + " Mo";
+      }).catch(function(){});
+    }
+    if (navigator.storage && navigator.storage.persisted){
+      navigator.storage.persisted().then(function(ok){
+        document.getElementById("persistLbl").textContent = ok ? "Stockage déjà protégé ✓" : "Empêcher le navigateur d'effacer tes mondes";
+      });
+    }
+  }
+  document.getElementById("persistBtn").addEventListener("click", function(){
+    if (navigator.storage && navigator.storage.persist){
+      navigator.storage.persist().then(function(ok){
+        toast(ok ? "Stockage protégé : tes mondes ne seront pas effacés" : "Protection refusée par le navigateur");
+      });
+    } else toast("Non supporté par ce navigateur");
+  });
+  document.getElementById("exportBtn").addEventListener("click", function(){
+    Promise.all([DB.getAll("worlds"), DB.getAll("pages"), DB.keys("meta"), DB.getAll("meta"), DB.getAll("assets")]).then(function(r){
+      var meta = {};
+      r[2].forEach(function(k, i){ meta[k] = r[3][i]; });
+      var data = { app:"atelier", version:2, exported:new Date().toISOString(), worlds:r[0], pages:r[1], meta:meta, assets:r[4] };
+      var blob = new Blob([JSON.stringify(data, null, 2)], { type:"application/json" });
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "atelier-sauvegarde.json";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function(){ URL.revokeObjectURL(a.href); }, 3000);
+      toast("Sauvegarde exportée");
+    });
+  });
+  document.getElementById("importBtn").addEventListener("click", function(){
+    document.getElementById("importFile").click();
+  });
+  document.getElementById("importFile").addEventListener("change", function(e){
+    var f = e.target.files[0];
+    if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function(){
+      try{
+        var data = JSON.parse(rd.result);
+        var jobs = [];
+        (data.worlds || []).forEach(function(w){ jobs.push(DB.put("worlds", w)); });
+        (data.pages || []).forEach(function(p){ jobs.push(DB.put("pages", p)); });
+        (data.assets || []).forEach(function(a){ jobs.push(DB.put("assets", a)); });
+        Object.keys(data.meta || {}).forEach(function(k){ jobs.push(DB.put("meta", data.meta[k], k)); });
+        Promise.all(jobs).then(function(){
+          toast("Sauvegarde restaurée — rechargement");
+          setTimeout(function(){ location.reload(); }, 900);
+        });
+      }catch(err){ toast("Fichier de sauvegarde invalide"); }
+    };
+    rd.readAsText(f);
+  });
+
+  /* ---------- Images : compression, couverture, galerie ---------- */
+  function compressFile(file, maxDim, q){
+    return new Promise(function(res, rej){
+      var url = URL.createObjectURL(file);
+      var img = new Image();
+      img.onload = function(){
+        var s = Math.min(1, maxDim / Math.max(img.width, img.height));
+        var w = Math.max(1, Math.round(img.width * s));
+        var h = Math.max(1, Math.round(img.height * s));
+        var c = document.createElement("canvas");
+        c.width = w; c.height = h;
+        c.getContext("2d").drawImage(img, 0, 0, w, h);
+        var out = c.toDataURL("image/webp", q);
+        if (!out || out.length < 100) out = c.toDataURL("image/jpeg", q);
+        URL.revokeObjectURL(url);
+        res(out);
+      };
+      img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error("lecture image")); };
+      img.src = url;
+    });
+  }
+
+  var galleryBox = document.getElementById("wikiGallery");
+  var galleryAssets = [];
+  function loadGallery(){
+    return DB.getAll("assets").then(function(list){
+      galleryAssets = (list || []).filter(function(a){ return a.kind === "gallery" && a.worldId === "cielemara"; })
+        .sort(function(a, b){ return (a.ord || 0) - (b.ord || 0); });
+      renderGallery();
+    });
+  }
+  function renderGallery(){
+    galleryBox.innerHTML = "";
+    var gc = document.getElementById("galleryCount");
+    if (gc) gc.textContent = "(" + galleryAssets.length + ")";
+    galleryAssets.forEach(function(a, i){
+      var t = document.createElement("div");
+      t.className = "wg-tile";
+      t.style.animationDelay = (i * 50) + "ms";
+      t.innerHTML = '<button class="wg-del" aria-label="Retirer cette image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><img src="' + a.data + '" alt=""><span>' + (a.name || ("Image " + (i + 1))) + '</span>';
+      t.querySelector("img").addEventListener("click", function(){ openLightbox(a); });
+      t.querySelector(".wg-del").addEventListener("click", function(ev){
+        ev.stopPropagation();
+        DB.del("assets", a.id).then(function(){
+          delete assetCache[a.id];
+          loadGallery();
+          setSaveState("saved");
+          toast("Image retirée de la galerie");
+        });
+      });
+      galleryBox.appendChild(t);
+    });
+    var add = document.createElement("button");
+    add.className = "wg-add";
+    add.setAttribute("aria-label", "Ajouter des images");
+    add.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>';
+    add.addEventListener("click", function(){ document.getElementById("galleryFile").click(); });
+    galleryBox.appendChild(add);
+  }
+  /* ---------- Visionneuse plein écran (référence : lightbox Fandom) ---------- */
+  var lb = { list: [], idx: 0, touchX: 0, touchY: 0 };
+  var lbEl = document.getElementById("lightbox");
+  var lbImg = document.getElementById("lightboxImg");
+  function showLB(){
+    if (!lbEl.classList.contains("open")){ lbEl.classList.add("open"); ovPush(); }
+  }
+  function openLightbox(a){
+    lb.list = galleryAssets;
+    lb.idx = Math.max(0, galleryAssets.indexOf(a));
+    showLB();
+    renderLightbox();
+  }
+  function renderLightbox(){
+    var a = lb.list[lb.idx];
+    if (!a) return;
+    lbImg.style.opacity = "0";
+    setTimeout(function(){ lbImg.src = a.data; lbImg.style.opacity = "1"; }, 130);
+    document.getElementById("lbName").textContent = a.name || ("Image " + (lb.idx + 1));
+    document.getElementById("lbCount").textContent = (lb.idx + 1) + " / " + lb.list.length;
+    var multi = lb.list.length > 1;
+    document.getElementById("lbPrev").style.display = multi ? "grid" : "none";
+    document.getElementById("lbNext").style.display = multi ? "grid" : "none";
+    var strip = document.getElementById("lbStrip");
+    strip.style.display = multi ? "flex" : "none";
+    strip.innerHTML = "";
+    lb.list.forEach(function(g, i){
+      var im = document.createElement("img");
+      im.src = g.data;
+      im.alt = "";
+      if (i === lb.idx) im.className = "active";
+      im.addEventListener("click", function(){ lb.idx = i; renderLightbox(); });
+      strip.appendChild(im);
+    });
+    var act = strip.querySelector(".active");
+    if (act && act.scrollIntoView) act.scrollIntoView({ inline: "center", block: "nearest" });
+  }
+  function lbGo(d){
+    if (!lb.list.length) return;
+    lb.idx = (lb.idx + d + lb.list.length) % lb.list.length;
+    renderLightbox();
+  }
+  function lbClose(){
+    if (lbEl.classList.contains("open")){ lbEl.classList.remove("open"); ovBack(); }
+  }
+  document.getElementById("lbClose").addEventListener("click", lbClose);
+  document.getElementById("lbPrev").addEventListener("click", function(e){ e.stopPropagation(); lbGo(-1); });
+  document.getElementById("lbNext").addEventListener("click", function(e){ e.stopPropagation(); lbGo(1); });
+  lbEl.addEventListener("click", function(e){ if (e.target === lbEl) lbClose(); });
+  lbEl.addEventListener("touchstart", function(e){
+    lb.touchX = e.changedTouches[0].clientX;
+    lb.touchY = e.changedTouches[0].clientY;
+  }, { passive: true });
+  lbEl.addEventListener("touchend", function(e){
+    var dx = e.changedTouches[0].clientX - lb.touchX;
+    var dy = e.changedTouches[0].clientY - lb.touchY;
+    if (Math.abs(dx) > 45 && Math.abs(dy) < 70) lbGo(dx < 0 ? 1 : -1);
+  }, { passive: true });
+  document.addEventListener("keydown", function(e){
+    if (!lbEl.classList.contains("open")) return;
+    if (e.key === "Escape") lbClose();
+    if (e.key === "ArrowRight") lbGo(1);
+    if (e.key === "ArrowLeft") lbGo(-1);
+  });
+  document.getElementById("galleryFile").addEventListener("change", function(e){
+    var files = Array.prototype.slice.call(e.target.files || []);
+    if (!files.length) return;
+    if (files.length > 10){
+      files = files.slice(0, 10);
+      toast("10 images maximum par envoi — le reste est ignoré");
+    } else {
+      toast("Compression de " + files.length + " image(s)…");
+    }
+    var base = galleryAssets.length;
+    /* Compression séquentielle : une image à la fois, pas de pic mémoire */
+    var chain = Promise.resolve();
+    files.forEach(function(f, i){
+      chain = chain.then(function(){
+        return compressFile(f, 700, .8).then(function(data){
+          var rec = {
+            id: "gal-" + Date.now() + "-" + i,
+            worldId: "cielemara", kind: "gallery", ord: base + i,
+            name: f.name.replace(/\.[^.]+$/, ""), data: data
+          };
+          assetCache[rec.id] = data;
+          return DB.put("assets", rec);
+        });
+      });
+    });
+    chain.then(function(){
+      e.target.value = "";
+      loadGallery();
+      setSaveState("saved");
+      toast("Images ajoutées à la galerie");
+    }).catch(function(){ toast("Image illisible"); });
+  });
+
+  document.getElementById("coverBtn").addEventListener("click", function(){
+    closeAll();
+    document.getElementById("coverFile").click();
+  });
+  document.getElementById("coverFile").addEventListener("change", function(e){
+    var f = e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    toast("Compression de la couverture…");
+    compressFile(f, 1600, .82).then(function(data){
+      var id = "cover-" + Date.now();
+      assetCache[id] = data;
+      return DB.put("assets", { id:id, worldId:"cielemara", kind:"cover", data:data }).then(function(){
+        for (var i = 0; i < projects.length; i++){
+          if (projects[i].id === "cielemara"){
+            projects[i].coverAsset = id;
+            DB.put("worlds", projects[i]);
+          }
+        }
+        refreshHero();
+        renderProjects();
+        setSaveState("saved");
+        toast("Couverture de Cieléméra mise à jour");
+      });
+    }).catch(function(){ toast("Image illisible"); });
+  });
+
+  /* ---------- Vue Article ---------- */
+  var PEN_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.17 6.81a1 1 0 0 0-3.98-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.63l4.35-1.32a2 2 0 0 0 .83-.5z"/></svg>';
+  var ART_CONTENT = {
+    "Temple des Vents": {
+      cover: px(3840188),
+      intro: "Le <b>Temple des Vents</b> est le sanctuaire suspendu où les Gardiens captent et canalisent les courants primordiaux. Ancré au zénith de l'<a href=\"#\" class=\"wiki-a\" data-link=\"Île-Mère d'Aérion\">Île-Mère d'Aérion</a>, il ne touche jamais le sol.",
+      secs: [
+        { h:"Architecture", ul:["<b>Sept flèches creuses</b> : chacune résonne avec un vent différent et en filtre la charge.", "<b>Cordes d'airain</b> : tendues entre les flèches, elles chantent à l'approche des tempêtes.", "<b>Le Puits silencieux</b> : unique zone d'air immobile, réservée aux méditations."] },
+        { h:"Rites", p:"Chaque aube, les Gardiens y accomplissent l'<b>Accordage</b> : un chant à trois voix qui synchronise les courants de l'archipel. Le manquer, c'est condamner une île à la dérive." }
+      ],
+      tags:["#lieu", "#cieléméra", "#gardiens"],
+      rel:["Île-Mère d'Aérion", "Voies Célestes", "Nadya Vell"],
+      cats:["Lieux", "Guide"]
+    },
+    "Île-Mère d'Aérion": {
+      cover: px(38636769),
+      intro: "Plus grand fragment de l'archipel, l'<b>Île-Mère</b> abrite le Conclave et le seul port stable de Cieléméra. Sa masse est telle qu'elle déforme les <a href=\"#\" class=\"wiki-a\" data-link=\"Voies Célestes\">Voies Célestes</a> alentour.",
+      secs: [
+        { h:"Géographie", ul:["<b>Le Port d'Ancre</b> : unique point d'amarrage des nefs voilières.", "<b>Les Terrasses du Conclave</b> : sept niveaux taillés dans le granit céleste."] },
+        { h:"Politique", p:"Le Conclave siège en permanence depuis le Grand Fracture. Chaque décision y est pesée à la <b>Balance des Vents</b>." }
+      ],
+      tags:["#lieu", "#capitale"],
+      rel:["Temple des Vents", "Les Éoliens"],
+      cats:["Lieux"]
+    },
+    "Voies Célestes": {
+      cover: px(27757179),
+      intro: "Les <b>sept courants majeurs</b> qui portent l'archipel. Chaque voie a une humeur, une vitesse et un prix — et certaines, selon <a href=\"#\" class=\"wiki-a\" data-link=\"Nadya Vell\">Nadya Vell</a>, mentent sur leur destination.",
+      secs: [
+        { h:"Les sept voies", ul:["<b>Souffle d'Aube</b> : lent, fidèle, préféré des marchands.", "<b>La Serpentine</b> : rapide et traîtresse, change de lit sans prévenir.", "<b>Le Vent Noir</b> : ne se prend qu'une fois — personne n'en revient pour en parler."] }
+      ],
+      tags:["#magie", "#navigation"],
+      rel:["Nadya Vell", "Temple des Vents", "Plume d'Ancre"],
+      cats:["Magie & Vents", "Guide"]
+    },
+    "Plume d'Ancre": {
+      cover: px(8960647),
+      intro: "Artefact taillé dans l'os d'un oiseau-tonnerre, la <b>Plume d'Ancre</b> stabilise une île dérivante le temps d'une lune. Trois seulement subsistent, gardées par le Conclave.",
+      secs: [
+        { h:"Usage", p:"Planter la plume au cœur d'une île fige sa course — mais chaque utilisation <b>raccourcit sa pointe</b>. Quand elle sera usée, Cieléméra reprendra sa dérive." }
+      ],
+      tags:["#objet", "#artefact"],
+      rel:["Île-Mère d'Aérion", "Voies Célestes"],
+      cats:["Objets"]
+    },
+    "Nadya Vell": {
+      intro: "<b>Nadya Vell</b> est la dernière cartographe des courants de la lignée Vell. Elle lit les vents comme d'autres lisent les cartes — et découvre que certaines <a href=\"#\" class=\"wiki-a\" data-link=\"Voies Célestes\">routes célestes</a> mentent.",
+      secs: [
+        { h:"Traits distinctifs", ul:["<b>Yeux d'orage</b> : perçoivent la charge électrique des courants.", "<b>Encre d'ancre</b> : ne trace que des routes qu'elle a elle-même parcourues."] }
+      ],
+      tags:["#personnage", "#cartographe"],
+      rel:["Voies Célestes", "Le Grand Silence"],
+      cats:["Personnages"]
+    },
+    "Le Grand Silence": {
+      intro: "La nuit où <b>tous les vents se sont tus</b>, il y a trois siècles. Les îles chutèrent de quelques brasses avant que le Chant du Conclave ne réveille les courants endormis.",
+      secs: [
+        { h:"Conséquences", ul:["Création de l'ordre des <b>Gardiens du Vent</b>.", "Interdiction absolue de tout vol de nuit."] }
+      ],
+      tags:["#événement", "#histoire"],
+      rel:["Nadya Vell", "Les Éoliens"],
+      cats:["Événements"]
+    },
+    "Les Éoliens": {
+      intro: "Ordre militaire des <b>cavaliers du vent d'est</b>. Ils patrouillent la Serpentine et escortent les convois contre les écumeurs de nuages.",
+      secs: [
+        { h:"Organisation", ul:["<b>Trois escadres</b> : Aube, Zénith, Crépuscule.", "Devise : <b>« Le vent nous juge »</b>."] }
+      ],
+      tags:["#faction"],
+      rel:["Île-Mère d'Aérion", "Le Grand Silence"],
+      cats:["Factions"]
+    },
+    "Kaelen Voss": {
+      intro: "<b>Gardien déchu</b>, banni pour avoir volé une route céleste interdite. On dit qu'il navigue désormais le Vent Noir — et qu'il en revient.",
+      secs: [
+        { h:"Rumeur", p:"Les Éoliens ne prononcent plus son nom. Les marchands, eux, paieraient cher pour savoir ce qu'il a vu au bout du <a href=\"#\" class=\"wiki-a\" data-link=\"Voies Célestes\">Vent Noir</a>." }
+      ],
+      tags:["#personnage", "#banni"],
+      rel:["Les Éoliens", "Voies Célestes"],
+      cats:["Personnages"]
+    }
+  };
+  function artData(title){
+    if (ART_CONTENT[title]) return ART_CONTENT[title];
+    var base = null;
+    wArticles.concat(wImportant).forEach(function(a){ if (a.title === title) base = a; });
+    return {
+      intro: base ? base.snip : "Page en cours de rédaction.",
+      secs:[{ h:"Notes", p:"Cette page n'a pas encore de contenu structuré. Touchez <b>MODIFIER</b> pour l'écrire." }],
+      tags:["#" + (base ? base.cat.toLowerCase() : "brouillon")],
+      rel:[], cats: base ? [base.cat] : []
+    };
+  }
+  var currentArt = null;
+  var artEditOn = false;
+  var artTimer;
+  function openArticle(title){
+    var target = "article/" + encodeURIComponent(title);
+    if (("#" + target) === location.hash){ currentArt = title; renderArticle(); }
+    else location.hash = target;
+  }
+  function renderArticle(){
+    var d = artData(currentArt);
+    var accent = THEMES[themeIdx].accent;
+    viewArticle.style.setProperty("--art-accent", accent);
+    viewArticle.style.backgroundColor = "var(--bg)";
+    viewArticle.style.backgroundImage = "linear-gradient(180deg," + hexToRgba(accent, .15) + " 0%, rgba(20,21,25,0) 420px)";
+    var cover = document.getElementById("artCover");
+    if (d.cover){ cover.src = d.cover; cover.hidden = false; viewArticle.classList.add("has-cover"); }
+    else { cover.hidden = true; viewArticle.classList.remove("has-cover"); }
+    document.getElementById("artTitle").textContent = currentArt;
+    var pgMeta = null;
+    wArticles.concat(wImportant).forEach(function(a){ if (a.title === currentArt) pgMeta = a; });
+    document.getElementById("artMeta").textContent = "par Michaz · " + (pgMeta ? "modifié " + (pgMeta.updated || "à l'instant") : "brouillon") + " · " + (pgMeta ? pgMeta.cat : "—");
+    var body = document.getElementById("artContent");
+    var html = '<p class="art-p">' + d.intro + '</p>';
+    (d.secs || []).forEach(function(s, i){
+      html += '<div class="art-sec" id="sec-' + i + '"><h2>' + s.h + '</h2></div>';
+      html += '<div class="art-secrow">' + PEN_SVG + '<i></i></div>';
+      if (s.ul) html += '<ul class="art-ul">' + s.ul.map(function(li){ return '<li>' + li + '</li>'; }).join("") + '</ul>';
+      if (s.p) html += '<p class="art-p">' + s.p + '</p>';
+    });
+    body.innerHTML = html;
+    body.contentEditable = "false";
+    body.classList.remove("editing");
+    artEditOn = false;
+    DB.get("meta", "artbody-" + currentArt).then(function(v){ if (v) body.innerHTML = v; });
+    document.getElementById("artTags").innerHTML = (d.tags || []).map(function(t){ return '<span class="art-tag">' + t + '</span>'; }).join("");
+    var relBox = document.getElementById("artRelated");
+    var relCard = document.getElementById("artRelatedCard");
+    if ((d.rel || []).length){
+      relCard.style.display = "";
+      relBox.innerHTML = d.rel.map(function(r){ return '<a href="#" class="art-rel" data-link="' + r + '">' + r + '</a>'; }).join("");
+    } else relCard.style.display = "none";
+    var toc = document.getElementById("artToc");
+    toc.innerHTML = (d.secs || []).map(function(s, i){ return '<li data-sec="sec-' + i + '">' + s.h + '</li>'; }).join("");
+    toc.hidden = false;
+    document.getElementById("tocToggle").textContent = "[masquer]";
+    var tocCard = toc.closest(".art-card");
+    if (tocCard) tocCard.style.display = (d.secs || []).length > 1 ? "" : "none";
+    document.getElementById("artCats").innerHTML = "dans :" + (d.cats || []).map(function(c){ return ' <a href="#">' + c + '</a>'; }).join(" ·");
+    DB.get("meta", "pin-" + currentArt).then(function(v){
+      document.getElementById("artPin").classList.toggle("off", v === "0");
+    });
+  }
+  document.getElementById("artBack").addEventListener("click", function(){ history.back(); });
+  document.getElementById("artMore").addEventListener("click", function(){ toast("Options de page — bientôt"); });
+  document.getElementById("artPin").addEventListener("click", function(){
+    var off = this.classList.toggle("off");
+    DB.put("meta", off ? "0" : "1", "pin-" + currentArt);
+    setSaveState("saved");
+  });
+  document.getElementById("artEdit").addEventListener("click", function(){ openEditor(currentArt); });
+  document.getElementById("artCover").addEventListener("click", function(){
+    if (this.hidden) return;
+    lb.list = [{ data: this.src, name: currentArt || "" }];
+    lb.idx = 0;
+    showLB();
+    renderLightbox();
+  });
+  document.getElementById("artContent").addEventListener("input", function(){
+    if (!artEditOn) return;
+    setSaveState("saving");
+    clearTimeout(artTimer);
+    artTimer = setTimeout(function(){
+      DB.put("meta", document.getElementById("artContent").innerHTML, "artbody-" + currentArt).then(function(){ setSaveState("saved"); });
+    }, 800);
+  });
+  document.getElementById("tocToggle").addEventListener("click", function(){
+    var toc = document.getElementById("artToc");
+    toc.hidden = !toc.hidden;
+    this.textContent = toc.hidden ? "[afficher]" : "[masquer]";
+  });
+  document.getElementById("artToc").addEventListener("click", function(e){
+    var li = e.target.closest("li");
+    if (!li) return;
+    var el = document.getElementById(li.getAttribute("data-sec"));
+    if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+  function handleLink(e){
+    var a = e.target.closest("a[data-link]");
+    if (!a) return;
+    e.preventDefault();
+    openArticle(a.getAttribute("data-link"));
+  }
+  document.getElementById("artContent").addEventListener("click", handleLink);
+  document.getElementById("artRelated").addEventListener("click", handleLink);
+  document.getElementById("artCats").addEventListener("click", function(e){
+    if (e.target.tagName === "A"){ e.preventDefault(); toast("Catégorie — bientôt"); }
+  });
+
+  /* ---------- Catégories (éditeur) ---------- */
+  var edCat = null;
+  var CAT_PAL = [
+    ["#4cc38a","rgba(76,195,138,.14)"], ["#4da3ff","rgba(77,163,255,.14)"],
+    ["#8f7bff","rgba(143,123,255,.16)"], ["#ff7a5c","rgba(255,122,92,.14)"],
+    ["#5fd4e6","rgba(95,212,230,.14)"], ["#eebf4d","rgba(238,191,77,.14)"]
+  ];
+  function renderEdCats(){
+    var box = document.getElementById("edCats");
+    if (!box) return;
+    box.innerHTML = "";
+    wCats.forEach(function(c){
+      var b = document.createElement("button");
+      b.className = "ed-cat" + (edCat === c.name ? " is-on" : "");
+      b.textContent = c.name;
+      b.addEventListener("click", function(){ edCat = c.name; renderEdCats(); });
+      box.appendChild(b);
+    });
+    var add = document.createElement("button");
+    add.className = "ed-cat ed-cat-new";
+    add.textContent = "+ Catégorie";
+    add.addEventListener("click", function(){
+      var n = prompt("Nom de la nouvelle catégorie :");
+      if (!n || !n.trim()) return;
+      n = n.trim();
+      if (!wCats.some(function(c){ return c.name === n; })){
+        var p = CAT_PAL[wCats.length % CAT_PAL.length];
+        wCats.push({ name: n, icon: "folder", color: p[0], bg: p[1] });
+        DB.put("meta", JSON.stringify(wCats.map(function(c){ return c.name; })), "cats");
+        renderNav();
+      }
+      edCat = n;
+      renderEdCats();
+    });
+    box.appendChild(add);
+  }
+  DB.get("meta", "cats").then(function(v){
+    if (!v) return;
+    try {
+      JSON.parse(v).forEach(function(n){
+        if (!wCats.some(function(c){ return c.name === n; })){
+          var p = CAT_PAL[wCats.length % CAT_PAL.length];
+          wCats.push({ name: n, icon: "folder", color: p[0], bg: p[1] });
+        }
+      });
+      renderNav();
+    } catch (e) {}
+  });
+
+  /* ---------- Compteurs réels ---------- */
+  function updateCounts(){
+    var total = wArticles.length + wImportant.length;
+    var sp = document.getElementById("statProjets"); if (sp) sp.querySelector(".stat__num").textContent = projects.length;
+    var sa = document.getElementById("statArticles"); if (sa) sa.querySelector(".stat__num").textContent = total;
+    var sc = document.getElementById("statCats"); if (sc) sc.querySelector(".stat__num").textContent = wCats.length;
+    var psub = document.getElementById("pSub");
+    if (psub) psub.textContent = projects.length + " univers · " + total + " pages indexées · " + wCats.length + " catégories";
+  }
+
+  /* ---------- Navigation depuis l'accueil ---------- */
+  document.getElementById("qaArticle").addEventListener("click", function(){ gotoView("articles"); });
+  document.getElementById("statProjets").addEventListener("click", function(){ gotoView("projects"); });
+  document.getElementById("statArticles").addEventListener("click", function(){ gotoView("articles"); });
+  document.getElementById("statCats").addEventListener("click", function(){ toast("Bientôt : l'écran Catégories (création & gestion)"); });
+
+  /* ---------- Mes Articles ---------- */
+  var maState = { cat: "Tous", q: "" };
+  function allPages(){
+    var seen = {};
+    return wArticles.concat(wImportant).filter(function(a){
+      if (seen[a.title]) return false;
+      seen[a.title] = 1;
+      return true;
+    });
+  }
+  function renderArticlesView(){
+    var q = maState.q.toLowerCase();
+    var list = allPages().filter(function(a){
+      var okC = maState.cat === "Tous" || a.cat === maState.cat;
+      var okQ = !q || a.title.toLowerCase().indexOf(q) > -1 || (a.snip || "").toLowerCase().indexOf(q) > -1;
+      return okC && okQ;
+    });
+    document.getElementById("maCount").textContent = list.length;
+    var chips = document.getElementById("maChips");
+    chips.innerHTML = "";
+    ["Tous"].concat(wCats.map(function(c){ return c.name; })).forEach(function(c){
+      var n = c === "Tous" ? allPages().length : allPages().filter(function(a){ return a.cat === c; }).length;
+      if (c !== "Tous" && n === 0) return;
+      var b = document.createElement("button");
+      b.className = "p-chip" + (maState.cat === c ? " is-active" : "");
+      b.innerHTML = c + " <b>" + n + "</b>";
+      b.addEventListener("click", function(){ maState.cat = c; renderArticlesView(); });
+      chips.appendChild(b);
+    });
+    var box = document.getElementById("maList");
+    box.innerHTML = "";
+    list.forEach(function(a, i){
+      var m = wCatMeta(a.cat);
+      var el = document.createElement("div");
+      el.className = "arow";
+      el.style.animationDelay = (i * 40) + "ms";
+      el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span>' +
+        '<span class="arow__txt"><b>' + a.title + '</b><span>' + (a.snip || "") + '</span></span>' +
+        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + a.cat + '</span><span class="arow__time">' + (a.updated || "") + '</span></span>';
+      el.addEventListener("click", function(){ openArticle(a.title); });
+      box.appendChild(el);
+    });
+  }
+  document.getElementById("maSearch").addEventListener("input", function(){ maState.q = this.value; renderArticlesView(); });
+  document.getElementById("maBack").addEventListener("click", function(){ history.back(); });
+
+  /* ---------- Recherche globale ---------- */
+  var searchOv = document.getElementById("searchOv");
+  function openSearch(){
+    closeAll();
+    searchOv.classList.add("open");
+    ovPush();
+    var inp = document.getElementById("gsInput");
+    inp.value = "";
+    renderSearch("");
+    setTimeout(function(){ inp.focus(); }, 250);
+  }
+  function renderSearch(q){
+    q = (q || "").toLowerCase();
+    var res = document.getElementById("gsRes");
+    res.innerHTML = "";
+    if (!q){
+      res.innerHTML = '<div class="search-grp">Recherche</div><p class="wiki-none" style="padding:6px 4px">Tape pour chercher dans ' + projects.length + ' mondes et ' + allPages().length + ' pages.</p>';
+      return;
+    }
+    var ws = projects.filter(function(p){ return p.title.toLowerCase().indexOf(q) > -1; });
+    var ps = allPages().filter(function(a){ return a.title.toLowerCase().indexOf(q) > -1; });
+    if (!ws.length && !ps.length){
+      res.innerHTML = '<p class="wiki-none" style="padding:20px 4px">Aucun résultat pour « ' + q + ' »</p>';
+      return;
+    }
+    if (ws.length){
+      var g1 = document.createElement("div"); g1.className = "search-grp"; g1.textContent = "Mondes"; res.appendChild(g1);
+      ws.forEach(function(p){
+        var el = document.createElement("div"); el.className = "arow";
+        el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + p.title + '</b><span>' + p.pages + ' pages</span></span>';
+        el.addEventListener("click", function(){ closeAll(); gotoView("world"); });
+        res.appendChild(el);
+      });
+    }
+    if (ps.length){
+      var g2 = document.createElement("div"); g2.className = "search-grp"; g2.textContent = "Articles"; res.appendChild(g2);
+      ps.forEach(function(a){
+        var m = wCatMeta(a.cat);
+        var el = document.createElement("div"); el.className = "arow";
+        el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + a.title + '</b><span>' + a.cat + '</span></span>';
+        el.addEventListener("click", function(){ closeAll(); openArticle(a.title); });
+        res.appendChild(el);
+      });
+    }
+  }
+  document.getElementById("gsInput").addEventListener("input", function(){ renderSearch(this.value); });
+  document.getElementById("gsCancel").addEventListener("click", closeAll);
+  document.querySelectorAll(".js-search").forEach(function(b){
+    b.addEventListener("click", function(e){ e.stopPropagation(); openSearch(); });
+  });
+
+  /* ---------- Éditeur d'article ---------- */
+  var viewEditor = document.getElementById("view-editor");
+  var edBody = document.getElementById("edBody");
+  var edName = document.getElementById("edName");
+  var editorOpen = false;
+  var edPushed = false;
+  var editTarget = null;
+
+  function bodyHTML(d){
+    var h = '<p>' + d.intro + '</p>';
+    (d.secs || []).forEach(function(s){
+      h += '<h2>' + s.h + '</h2>';
+      if (s.ul) h += '<ul class="art-ul">' + s.ul.map(function(x){ return '<li>' + x + '</li>'; }).join("") + '</ul>';
+      if (s.p) h += '<p>' + s.p + '</p>';
+    });
+    return h;
+  }
+  function textSnippet(html){
+    var d = document.createElement("div");
+    d.innerHTML = html;
+    var t = (d.textContent || "").trim().replace(/\s+/g, " ");
+    return t.length > 90 ? t.slice(0, 90) + "…" : (t || "Page vide");
+  }
+  function openEditor(title, replace){
+    editTarget = title || null;
+    document.getElementById("edMode").textContent = title ? "Modifier la page" : "Nouvelle page";
+    edName.value = title || "";
+    var pg0 = null;
+    wArticles.concat(wImportant).forEach(function(a){ if (a.title === (title || "")) pg0 = a; });
+    edCat = pg0 ? pg0.cat : null;
+    renderEdCats();
+    if (title){
+      DB.get("meta", "artbody-" + title).then(function(v){
+        edBody.innerHTML = v || bodyHTML(artData(title));
+      });
+    } else {
+      edBody.innerHTML = "";
+    }
+    viewEditor.classList.add("open");
+    editorOpen = true;
+    if (replace) ovReplace(); else ovPush();
+    setTimeout(function(){ edBody.focus(); setTimeout(kbFix, 150); }, 280);
+  }
+  function closeEditor(){
+    if (!editorOpen) return;
+    editorOpen = false;
+    viewEditor.classList.remove("open");
+  }
+  document.getElementById("edClose").addEventListener("click", function(){ closeAll(); });
+
+  /* Toolbar : formatage + position collée au clavier */
+  document.querySelectorAll(".ed-btn").forEach(function(btn){
+    btn.addEventListener("pointerdown", function(e){ e.preventDefault(); });
+    btn.addEventListener("click", function(){
+      var cmd = btn.getAttribute("data-cmd");
+      edBody.focus();
+      if (cmd === "bold") document.execCommand("bold");
+      else if (cmd === "italic") document.execCommand("italic");
+      else if (cmd === "h2") document.execCommand("formatBlock", false, "H2");
+      else if (cmd === "list") document.execCommand("insertUnorderedList");
+      else if (cmd === "undo") document.execCommand("undo");
+      else if (cmd === "redo") document.execCommand("redo");
+      else if (cmd === "link"){
+        var name = prompt("Nom de la page à lier :");
+        if (name && name.trim()){
+          name = name.trim();
+          document.execCommand("insertHTML", false, '<a href="#" class="wiki-a" data-link="' + name + '">' + name + '</a>&nbsp;');
+        }
+      }
+      else if (cmd === "image"){ document.getElementById("edImgFile").click(); }
+    });
+  });
+  document.getElementById("edImgFile").addEventListener("change", function(e){
+    var f = e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    toast("Compression…");
+    compressFile(f, 1200, .8).then(function(data){
+      edBody.focus();
+      document.execCommand("insertHTML", false, '<img src="' + data + '" alt="">');
+      setSaveState("saved");
+    }).catch(function(){ toast("Image illisible"); });
+  });
+  function kbFix(){
+    var tb = document.getElementById("edToolbar");
+    if (!tb) return;
+    var kb = 0;
+    if (window.visualViewport){
+      kb = Math.max(0, window.innerHeight - visualViewport.height - visualViewport.offsetTop);
+    }
+    tb.style.bottom = kb + "px";
+  }
+  if (window.visualViewport){
+    visualViewport.addEventListener("resize", kbFix);
+    visualViewport.addEventListener("scroll", kbFix);
+  }
+  window.addEventListener("resize", kbFix);
+  edBody.addEventListener("focus", function(){ setTimeout(kbFix, 150); });
+
+  /* Enregistrement (création + renommage) */
+  document.getElementById("edSave").addEventListener("click", function(){
+    var title = edName.value.trim();
+    if (!title){ toast("Donne un nom à la page"); edName.focus(); return; }
+    var html = edBody.innerHTML;
+    DB.put("meta", html, "artbody-" + title);
+    if (editTarget && editTarget !== title){
+      DB.del("meta", "artbody-" + editTarget);
+      [wArticles, wImportant].forEach(function(arr){
+        arr.forEach(function(p){ if (p.title === editTarget){ p.title = title; DB.put("pages", p); } });
+      });
+    }
+    if (!editTarget){
+      var rec = {
+        id: "pg-" + Date.now(), worldId: "cielemara", important: false,
+        ord: wArticles.length, title: title, cat: edCat || "Lieux",
+        snip: textSnippet(html), updated: "à l'instant"
+      };
+      wArticles.push(rec);
+      DB.put("pages", rec);
+    } else {
+      [wArticles, wImportant].forEach(function(arr){
+        arr.forEach(function(p){
+          if (p.title === title){ p.cat = edCat || p.cat; p.updated = "à l'instant"; DB.put("pages", p); }
+        });
+      });
+    }
+    closeEditor();
+    renderWiki();
+    toast("Page « " + title + " » enregistrée");
+    openArticle(title);
+  });
+  document.getElementById("sheetNewArticle").addEventListener("click", function(){
+    hideOverlays();
+    openEditor(null, true);
+  });
+
+  /* Re-route une fois toutes les données synchrones définies (rechargement direct sur un article) */
+  route();
+})();
+</script>
+</body>
+</html>
