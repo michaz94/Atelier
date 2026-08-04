@@ -658,6 +658,7 @@ a.missing{color:#ff6b6b!important}
 /* ============ GALERIE & COUVERTURES ============ */
 .pcard__cover.has-img svg{display:none}
 .pcard__cover.has-img{background-position:center 35%;background-size:cover;background-repeat:no-repeat}
+.pcard__cover.has-accent{background-position:center;background-size:cover;background-repeat:no-repeat}
 .wiki-gallery{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
 .wg-tile{scroll-snap-align:start}
 .wiki-gallery::-webkit-scrollbar{display:none}
@@ -1900,7 +1901,7 @@ a.missing{color:#ff6b6b!important}
     { title:"Les Marées d'Obsidienne", desc:"Cartographie des cités immergées du Pacte.", cat:"Monde", pages:11, updated:"il y a 4 j", progress:18, cover:"cover-marees", icon:"waves" },
     { title:"Vaelgrim", desc:"Une toundra gelée où la mémoire brûle comme combustible.", cat:"Monde", pages:12, updated:"il y a 6 j", progress:23, cover:"cover-vael", icon:"compass" },
     { title:"La Cour des Miroirs", desc:"Une cité-cour où chaque noble porte un visage emprunté.", cat:"Intrigue", pages:8, updated:"il y a 2 sem.", progress:9, cover:"cover-miroirs", icon:"crown" },
-    { id:"w_claude_verrenoire", title:"Verrenoire", desc:"Une cité de verre fumé bâtie sur les restes d'une comète, où la lumière du jour est une ressource qu'on rationne.", cat:"Monde", pages:4, updated:"à l'instant", progress:12, cover:"cover-verrenoire", icon:"gem" }
+    { id:"w_claude_verrenoire", title:"Verrenoire", desc:"Une cité de verre fumé bâtie sur les restes d'une comète, où la lumière du jour est une ressource qu'on rationne.", cat:"Monde", pages:4, updated:"à l'instant", progress:12, cover:"cover-verrenoire", icon:"waves" }
   ];
   var pState = { cat:"Tous", q:"" };
   var CATS = ["Tous","Monde","Styles","Tests","Intrigue"];
@@ -1936,7 +1937,7 @@ a.missing{color:#ff6b6b!important}
       var cov = assetCache[p.thumbAsset] || assetCache[p.coverAsset];
       var covStyle = cov ? 'background-image:url(\'' + cov + '\')' : (p.accent ? 'background-image:linear-gradient(160deg,' + hexToRgba(p.accent, .3) + ',' + p.accent + ')' : '');
       el.innerHTML =
-        '<div class="pcard__cover ' + (p.cover || '') + ((cov || p.accent) ? ' has-img' : '') + '"' + (covStyle ? ' style="' + covStyle + '"' : '') + '>' +
+        '<div class="pcard__cover ' + (p.cover || '') + (cov ? ' has-img' : (p.accent ? ' has-accent' : '')) + '"' + (covStyle ? ' style="' + covStyle + '"' : '') + '>' +
           '<span class="world__chip">' + p.cat + '</span>' +
           (p.pinned ? '<span class="pcard__pin">' + P_ICONS.pin + '</span>' : '') +
           P_ICONS[p.icon] +
