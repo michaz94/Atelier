@@ -1,16 +1,16 @@
 {
-  "name": "Atelier",
+  "name": "Atelier — Vos mondes vous attendent",
   "short_name": "Atelier",
-  "description": "Vos mondes vous attendent",
-  "start_url": "./index.html",
-  "scope": "./",
+  "start_url": ".",
   "display": "standalone",
-  "orientation": "portrait-primary",
   "background_color": "#141519",
   "theme_color": "#141519",
-  "lang": "fr",
+  "description": "Vos mondes vous attendent. PWA autonome hors ligne.",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+    {
+      "src": "icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
   ]
 }
