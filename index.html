@@ -3937,5 +3937,13 @@ a.missing{color:#ff6b6b!important}
   route();
 })();
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .catch(err => console.warn('SW non enregistré :', err));
+    });
+  }
+</script>
 </body>
 </html>
