@@ -1,16 +1,29 @@
 {
   "name": "Atelier — Vos mondes vous attendent",
   "short_name": "Atelier",
-  "start_url": ".",
+  "description": "Créez, organisez et explorez vos mondes, projets et wikis personnels.",
+  "id": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "portrait-primary",
   "background_color": "#141519",
   "theme_color": "#141519",
-  "description": "Vos mondes vous attendent. PWA autonome hors ligne.",
+  "lang": "fr",
+  "dir": "ltr",
   "icons": [
     {
-      "src": "icon.svg",
-      "sizes": "192x192 512x512",
-      "type": "image/svg+xml"
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }

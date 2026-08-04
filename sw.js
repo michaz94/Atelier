@@ -1,35 +1,90 @@
-// ===== Service Worker — stratégie "Cache First" =====
-const CACHE = 'atelier-v1';
+// sw.js — Service Worker pour Atelier
+// Stratégie : app shell en cache (offline complet) + cache runtime pour le reste
 
-// INSTALL : pré-cache les fichiers critiques pour l'offline
-self.addEventListener('install', e => {
-  e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(['./', './index.html']))
+const CACHE_VERSION = 'v1';
+const APP_SHELL_CACHE = `atelier-shell-${CACHE_VERSION}`;
+const RUNTIME_CACHE = `atelier-runtime-${CACHE_VERSION}`;
+
+// Fichiers indispensables au fonctionnement hors-ligne de l'app.
+// Adapte cette liste si tu ajoutes/renommes des fichiers locaux.
+const APP_SHELL_FILES = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon.svg'
+];
+
+// ---------- INSTALL : met en cache l'app shell ----------
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(APP_SHELL_CACHE)
+      .then((cache) => cache.addAll(APP_SHELL_FILES))
+      .then(() => self.skipWaiting())
   );
-  self.skipWaiting(); // prend le contrôle immédiatement
 });
 
-// ACTIVATE : purge les anciennes versions du cache
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+// ---------- ACTIVATE : nettoie les anciens caches ----------
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(
+        keys
+          .filter((key) => key !== APP_SHELL_CACHE && key !== RUNTIME_CACHE)
+          .map((key) => caches.delete(key))
+      )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-// FETCH : intercepter chaque requête
-self.addEventListener('fetch', e => {
-  // Cache First : sert le cache, sinon va sur le réseau et met en cache
-  e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(res => {
-      // met en cache les nouvelles ressources (fonts, etc.) au fil de l'eau
-      if (res && res.ok && e.request.url.startsWith(self.location.origin)) {
-        const copy = res.clone();
-        caches.open(CACHE).then(c => c.put(e.request, copy));
-      }
-      return res;
-    }))
-  );
+// ---------- FETCH ----------
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+
+  // On ne gère que les requêtes GET
+  if (req.method !== 'GET') return;
+
+  const url = new URL(req.url);
+  const isSameOrigin = url.origin === self.location.origin;
+
+  // Navigation (chargement de page) : réseau d'abord, fallback cache -> index.html
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const resClone = res.clone();
+          caches.open(APP_SHELL_CACHE).then((cache) => cache.put(req, resClone));
+          return res;
+        })
+        .catch(() =>
+          caches.match(req).then((cached) => cached || caches.match('./index.html'))
+        )
+    );
+    return;
+  }
+
+  if (isSameOrigin) {
+    // Ressources locales (CSS/JS/icônes) : cache d'abord, puis réseau
+    event.respondWith(
+      caches.match(req).then((cached) => {
+        if (cached) return cached;
+        return fetch(req).then((res) => {
+          const resClone = res.clone();
+          caches.open(APP_SHELL_CACHE).then((cache) => cache.put(req, resClone));
+          return res;
+        });
+      })
+    );
+  } else {
+    // Ressources externes (polices Google, images distantes) :
+    // réseau d'abord, mise en cache runtime, fallback cache si hors-ligne
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const resClone = res.clone();
+          caches.open(RUNTIME_CACHE).then((cache) => cache.put(req, resClone));
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+  }
 });

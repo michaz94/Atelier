@@ -1,4 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
-  <rect width="192" height="192" fill="#141519"/>
-  <text x="96" y="130" text-anchor="middle" font-size="100" fill="#eebf4d" font-family="serif">✦</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1e25"/>
+      <stop offset="100%" stop-color="#101114"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eebf4d"/>
+      <stop offset="100%" stop-color="#c99a2e"/>
+    </linearGradient>
+  </defs>
+
+  <!-- fond plein : un masque (cercle/squircle) sera appliqué par l'OS si besoin -->
+  <rect x="0" y="0" width="512" height="512" fill="url(#bg)"/>
+
+  <!-- glyphe centré dans la zone de sécurité maskable (~80% du canevas) -->
+  <path d="M256 156 L346 366 L306 366 L286 316 L226 316 L206 366 L166 366 Z
+           M256 216 L234 280 L278 280 Z"
+        fill="url(#gold)"/>
+
+  <!-- petit point lumineux -->
+  <circle cx="256" cy="128" r="10" fill="#eebf4d"/>
 </svg>
