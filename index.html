@@ -1676,6 +1676,7 @@ a.missing{color:#ff6b6b!important}
       if (en.isIntersecting){
         en.target.classList.add("in");
         en.target.querySelectorAll("[data-count]").forEach(function(c){
+          if (c.closest("#statProjets, #statArticles, #statCats")) return; // géré par updateCounts()
           if (!c.dataset.done){ c.dataset.done = "1"; animateCount(c); }
         });
         en.target.querySelectorAll(".xp-bar i[data-width]").forEach(function(b){
