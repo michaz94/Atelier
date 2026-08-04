@@ -389,6 +389,7 @@ section{margin-bottom:30px}
 .cover-ciel{background:linear-gradient(160deg,#2f6fd6 0%,#7fd0ff 48%,#eebf4d 115%)}
 .cover-vael{background:linear-gradient(155deg,#0c3547,#6fc8dc)}
 .cover-miroirs{background:linear-gradient(150deg,#3a1220,#b0562e)}
+.cover-verrenoire{background:linear-gradient(150deg,#1a1424,#c084fc 115%)}
 .p-new{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:18px;border:1.5px dashed var(--line-strong);border-radius:16px;color:var(--muted);font-weight:700;font-size:14px;transition:.2s}
 .p-new svg{width:18px;height:18px;color:var(--gold)}
 .p-new:hover{border-color:rgba(238,191,77,.5);color:var(--gold);background:var(--gold-soft)}
@@ -506,6 +507,10 @@ input[type="file"]{display:none!important}
 .ws-model span{color:var(--muted);font-size:13px}
 .ws-colors{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px}
 .ws-colors .ws-sw{width:40px;height:40px}
+.ws-icons{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px}
+.ws-ic{width:44px;height:44px;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,.06);color:var(--muted);display:flex;align-items:center;justify-content:center;transition:.2s;cursor:pointer}
+.ws-ic svg{width:20px;height:20px}
+.ws-ic.is-on{border-color:#fff;color:#fff;background:rgba(255,255,255,.14);transform:scale(1.06)}
 .wiki-card__ph{display:grid;place-items:center;aspect-ratio:1;background:color-mix(in srgb,var(--wiki-accent) 13%,#17121a);border:1px solid color-mix(in srgb,var(--wiki-accent) 35%,transparent);color:color-mix(in srgb,var(--wiki-accent) 75%,#ff7ac2);font-weight:700;font-size:13px}
 .th-bgrow{display:flex;align-items:center;gap:10px;margin-top:10px}
 .th-bgremove{padding:8px 12px;border-radius:9px;background:rgba(255,93,93,.12);border:1px solid rgba(255,93,93,.35);color:var(--red);font-size:12px;font-weight:800}
@@ -1459,6 +1464,9 @@ a.missing{color:#ff6b6b!important}
   <div class="ws-field"><span>Couleur du projet</span>
     <div class="ws-colors" id="wsSwatches"></div>
   </div>
+  <div class="ws-field"><span>Icône du projet</span>
+    <div class="ws-icons" id="wsIcons"></div>
+  </div>
   <button class="ws-create" id="wsCreate">CRÉER LE PROJET</button>
 </div>
 
@@ -1891,7 +1899,8 @@ a.missing{color:#ff6b6b!important}
     { title:"Test d'identité de modèle", desc:"Fingerprinting : les tics révélateurs des LLM.", cat:"Tests", pages:18, updated:"il y a 1 j", progress:45, cover:"cover-tests", icon:"fingerprint" },
     { title:"Les Marées d'Obsidienne", desc:"Cartographie des cités immergées du Pacte.", cat:"Monde", pages:11, updated:"il y a 4 j", progress:18, cover:"cover-marees", icon:"waves" },
     { title:"Vaelgrim", desc:"Une toundra gelée où la mémoire brûle comme combustible.", cat:"Monde", pages:12, updated:"il y a 6 j", progress:23, cover:"cover-vael", icon:"compass" },
-    { title:"La Cour des Miroirs", desc:"Une cité-cour où chaque noble porte un visage emprunté.", cat:"Intrigue", pages:8, updated:"il y a 2 sem.", progress:9, cover:"cover-miroirs", icon:"crown" }
+    { title:"La Cour des Miroirs", desc:"Une cité-cour où chaque noble porte un visage emprunté.", cat:"Intrigue", pages:8, updated:"il y a 2 sem.", progress:9, cover:"cover-miroirs", icon:"crown" },
+    { id:"w_claude_verrenoire", title:"Verrenoire", desc:"Une cité de verre fumé bâtie sur les restes d'une comète, où la lumière du jour est une ressource qu'on rationne.", cat:"Monde", pages:4, updated:"à l'instant", progress:12, cover:"cover-verrenoire", icon:"gem" }
   ];
   var pState = { cat:"Tous", q:"" };
   var CATS = ["Tous","Monde","Styles","Tests","Intrigue"];
@@ -3813,6 +3822,8 @@ a.missing{color:#ff6b6b!important}
   var WS_COLORS = ["#ffc500", "#4cc9b0", "#66c26e", "#4d9bff", "#a78bfa", "#ff6b6b", "#ff9f43", "#f25ce0"];
   var wsAccent = WS_COLORS[0];
   var wsModel = "world";
+  var WS_ICONS = ["compass", "swords", "fingerprint", "waves", "crown"];
+  var wsIcon = WS_ICONS[0];
   function buildSwatches(){
     var box = document.getElementById("wsSwatches");
     if (!box) return;
@@ -3826,6 +3837,20 @@ a.missing{color:#ff6b6b!important}
       box.appendChild(b);
     });
   }
+  function buildIconPicker(){
+    var box = document.getElementById("wsIcons");
+    if (!box) return;
+    box.innerHTML = "";
+    WS_ICONS.forEach(function(name){
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "ws-ic" + (name === wsIcon ? " is-on" : "");
+      b.innerHTML = P_ICONS[name];
+      b.setAttribute("aria-label", "Icône " + name);
+      b.addEventListener("click", function(){ wsIcon = name; buildIconPicker(); });
+      box.appendChild(b);
+    });
+  }
   document.querySelectorAll(".ws-model").forEach(function(m){
     m.addEventListener("click", function(){
       wsModel = m.getAttribute("data-model");
@@ -3836,10 +3861,12 @@ a.missing{color:#ff6b6b!important}
     hideOverlays();
     wsAccent = WS_COLORS[0];
     wsModel = "world";
+    wsIcon = WS_ICONS[0];
     document.getElementById("wsName").value = "";
     var sym = document.getElementById("wsSym"); if (sym) sym.value = "";
     document.querySelectorAll(".ws-model").forEach(function(x, i){ x.classList.toggle("is-on", i === 0); });
     buildSwatches();
+    buildIconPicker();
     document.getElementById("worldSheet").classList.add("open");
     backdrop.classList.add("show");
     ovPush();
@@ -3864,7 +3891,7 @@ a.missing{color:#ff6b6b!important}
     var rec = {
       id: newId, title: name, desc: desc, cat: "Monde", sym: sym,
       pages: 0, updated: "à l'instant", progress: 0, ord: projects.length,
-      accent: wsAccent, coverAsset: null, placeholderCover: true, pinned: false
+      accent: wsAccent, icon: (wsIcon && P_ICONS[wsIcon]) ? wsIcon : "compass", coverAsset: null, placeholderCover: true, pinned: false
     };
     projects.push(rec);
     var jobs = [DB.put("worlds", rec), DB.put("meta", preWelcome(wsModel, name, ""), "welcome-" + newId), DB.put("meta", wsAccent, "acc-" + newId), DB.put("meta", wsAccent, "coverc-" + newId), DB.put("meta", wsAccent, "lkc-" + newId), DB.put("meta", JSON.stringify(wCats.map(function(c){ return { name: c.name, parent: null }; })), "cats-" + newId)];
