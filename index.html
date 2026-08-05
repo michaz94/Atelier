@@ -12,6 +12,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <link rel="icon" type="image/svg+xml" href="./icon.svg">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Lora:ital,wght@0,600;0,700;1,600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -25,7 +26,7 @@
   --line-strong:rgba(255,255,255,.13);
   --text:#e9e7e1;
   --muted:#9a9ca6;
-  --faint:#6d7079;
+  --faint:#8f929c;
   --gold:#eebf4d;
   --gold-deep:#c99a2e;
   --gold-soft:rgba(238,191,77,.14);
@@ -168,7 +169,7 @@ a{color:inherit;text-decoration:none}
 /* ============ SHELL / MAIN ============ */
 .shell{max-width:760px;margin:0 auto}
 #view-home,#view-projects,#view-articles,#view-pinned{padding:22px 16px 200px}
-.unpin{flex:0 0 auto;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:var(--gold);background:var(--gold-soft);transition:.2s}
+.unpin{flex:0 0 auto;width:40px;height:40px;border-radius:9px;display:grid;place-items:center;color:var(--gold);background:var(--gold-soft);transition:.2s}
 .unpin:hover{background:rgba(255,93,93,.15);color:var(--red)}
 .unpin svg{width:16px;height:16px}
 section{margin-bottom:30px}
@@ -363,7 +364,7 @@ section{margin-bottom:30px}
 .p-head__sub{color:var(--muted);font-size:13.5px;margin:6px 0 16px}
 .p-search{position:relative;display:block}
 .p-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--faint);pointer-events:none}
-.p-search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:14px;padding:12px 14px 12px 40px;outline:none;transition:.2s}
+.p-search input{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);font:inherit;font-size:16px;padding:12px 14px 12px 40px;outline:none;transition:.2s}
 .p-search input:focus{border-color:rgba(238,191,77,.45);box-shadow:0 0 0 3px rgba(238,191,77,.12)}
 .p-search input::placeholder{color:var(--faint)}
 .p-chips{display:flex;gap:8px;overflow-x:auto;margin-top:12px;padding-bottom:2px;scrollbar-width:none}
@@ -380,8 +381,8 @@ section{margin-bottom:30px}
 .pcard__cover{position:relative;aspect-ratio:1;display:grid;place-items:center}
 .pcard__cover svg{width:44px;height:44px;color:rgba(255,255,255,.92);filter:drop-shadow(0 3px 8px rgba(0,0,0,.4))}
 .pcard__cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.35))}
-.pcard__pin{position:absolute;top:10px;right:10px;z-index:2;width:26px;height:26px;border-radius:8px;background:rgba(10,10,12,.72);display:grid;place-items:center;color:var(--gold)}
-.pcard__pin svg{width:13px;height:13px;filter:none}
+.pcard__pin{position:absolute;top:10px;right:10px;z-index:2;width:40px;height:40px;border-radius:10px;background:rgba(10,10,12,.72);display:grid;place-items:center;color:var(--gold)}
+.pcard__pin svg{width:16px;height:16px;filter:none}
 .pcard__body{padding:13px 14px 14px}
 .pcard__body h3{font-family:var(--font-display);font-weight:700;font-size:16.5px;margin-bottom:5px}
 .pcard__body p{color:var(--muted);font-size:12.5px;line-height:1.45;margin-bottom:12px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:36px}
@@ -449,17 +450,17 @@ section{margin-bottom:30px}
 .search-ov{position:fixed;inset:0;z-index:55;background:var(--bg);display:none;flex-direction:column}
 .search-ov.open{display:flex}
 .search-ov__bar{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
-.search-ov__bar input{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px 14px;font:inherit;font-size:15px;outline:none;transition:.2s}
+.search-ov__bar input{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:12px 14px;font:inherit;font-size:16px;outline:none;transition:.2s}
 .search-ov__bar input:focus{border-color:rgba(238,191,77,.45);box-shadow:0 0 0 3px rgba(238,191,77,.12)}
 .search-ov__cancel{color:var(--gold);font-weight:800;font-size:13px;letter-spacing:.08em}
 .search-ov__res{flex:1;overflow-y:auto;padding:8px 14px 30px}
 .search-grp{color:var(--faint);font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;margin:16px 4px 8px}
 .js-search{cursor:pointer}
 .ws-field{display:block;margin:12px 6px 4px;color:var(--muted);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
-.ws-field input{display:block;width:100%;margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--text);font:inherit;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;padding:12px 14px;outline:none;transition:.2s}
+.ws-field input{display:block;width:100%;margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--text);font:inherit;font-size:16px;font-weight:600;letter-spacing:0;text-transform:none;padding:12px 14px;outline:none;transition:.2s}
 .ws-field input:focus{border-color:rgba(238,191,77,.5);box-shadow:0 0 0 3px rgba(238,191,77,.12)}
 .ws-swatches{display:flex;gap:10px;margin-top:9px;text-transform:none}
-.ws-sw{width:32px;height:32px;border-radius:50%;border:2px solid transparent;transition:.2s;cursor:pointer}
+.ws-sw{width:40px;height:40px;border-radius:50%;border:2px solid transparent;transition:.2s;cursor:pointer}
 .ws-sw.is-on{border-color:#fff;transform:scale(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.15)}
 .ws-create{display:block;width:calc(100% - 12px);margin:16px 6px 4px;padding:14px;border-radius:12px;background:linear-gradient(145deg,var(--gold),var(--gold-deep));color:#1a1405;font-weight:800;font-size:14px;letter-spacing:.06em;transition:.2s}
 .ws-create:hover{filter:brightness(1.07)}
@@ -495,7 +496,7 @@ input[type="file"]{display:none!important}
 .ed-tabs{display:flex;border-bottom:1px solid var(--line);margin-bottom:14px}
 .ed-tab{padding:10px 16px;font-weight:800;font-size:11.5px;letter-spacing:.12em;color:var(--muted);border-bottom:2px solid transparent;transition:.2s}
 .ed-tab.is-on{color:var(--gold);border-color:var(--gold)}
-#edSource{display:none;width:100%;min-height:52vh;background:transparent;border:none;outline:none;color:#c9ccd4;font:12.5px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
+#edSource{display:none;width:100%;min-height:52vh;background:transparent;border:none;outline:none;color:#c9ccd4;font:16px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;resize:vertical}
 .ed-imgbar{position:fixed;z-index:52;display:none;gap:5px;background:var(--surface-2);border:1px solid var(--line-strong);border-radius:10px;padding:5px;box-shadow:var(--shadow)}
 .ed-imgbar.show{display:flex}
 .ed-imgbar button{padding:6px 10px;border-radius:7px;font-size:11px;font-weight:800;color:var(--muted)}
@@ -506,7 +507,7 @@ input[type="file"]{display:none!important}
 .ws-model b{display:block;font-size:16px;margin-bottom:4px}
 .ws-model span{color:var(--muted);font-size:13px}
 .ws-colors{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px}
-.ws-colors .ws-sw{width:40px;height:40px}
+.ws-colors .ws-sw{width:44px;height:44px}
 .ws-icons{display:flex;gap:12px;flex-wrap:wrap;margin-top:9px}
 .ws-ic{width:44px;height:44px;border-radius:12px;border:2px solid transparent;background:rgba(255,255,255,.06);color:var(--muted);display:flex;align-items:center;justify-content:center;transition:.2s;cursor:pointer}
 .ws-ic svg{width:20px;height:20px}
@@ -526,7 +527,7 @@ a.missing{color:#ff6b6b!important}
 .th-color{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:5px 8px}
 .th-color span{font-size:10.5px;font-weight:700;color:var(--muted);letter-spacing:.02em}
 .th-color input[type=color]{width:34px;height:30px;border:none;background:none;padding:0;cursor:pointer;flex:0 0 auto}
-.hex-in{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--line-strong);color:var(--text);font:12px ui-monospace,Menlo,monospace;padding:4px 2px;outline:none;text-transform:uppercase}
+.hex-in{flex:1;min-width:0;background:transparent;border:none;border-bottom:1px solid var(--line-strong);color:var(--text);font:16px ui-monospace,Menlo,monospace;padding:4px 2px;outline:none;text-transform:uppercase}
 .hex-in:focus{border-color:var(--gold)}
 .th-range{width:100%;margin-top:10px;accent-color:var(--gold);text-transform:none}
 .th-warn{margin:10px 6px 0;font-size:11.5px;font-weight:700;color:#ffb020;display:none}
@@ -535,7 +536,7 @@ a.missing{color:#ff6b6b!important}
 .ag-item{display:block}
 .ag-item img{width:100%;aspect-ratio:1;object-fit:cover;object-position:center 35%;border-radius:0;border:1px solid var(--line);display:block}
 .ag-item em{display:block;font-style:normal;font-size:11px;color:var(--muted);margin-top:5px;text-align:center}
-#galSearch{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--text);padding:11px 14px;font:inherit;font-size:14px;outline:none;margin:10px 0 12px}
+#galSearch{width:100%;background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--text);padding:11px 14px;font:inherit;font-size:16px;outline:none;margin:10px 0 12px}
 #galSearch:focus{border-color:rgba(238,191,77,.5)}
 .gb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-height:36vh;overflow-y:auto;padding:2px}
 .gb-thumb{position:relative;border:2px solid transparent;border-radius:0;padding:0;overflow:hidden;cursor:pointer;background:none}
@@ -543,7 +544,7 @@ a.missing{color:#ff6b6b!important}
 .gb-thumb.is-on{border-color:var(--gold)}
 .gb-sel{display:flex;align-items:center;gap:8px;margin-top:8px}
 .gb-sel img{width:44px;height:44px;object-fit:cover;flex:0 0 auto;border:1px solid var(--line)}
-.gb-sel input{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:8px 10px;font:inherit;font-size:13px;outline:none}
+.gb-sel input{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:9px;color:var(--text);padding:8px 10px;font:inherit;font-size:16px;outline:none}
 .gb-x{width:30px;height:30px;color:var(--red);font-size:18px;font-weight:800;flex:0 0 auto}
 .gb-foot{display:flex;gap:10px;margin-top:16px}
 .gb-foot button{flex:1;padding:12px;border-radius:11px;font-weight:800;font-size:13px;letter-spacing:.05em}
@@ -572,6 +573,7 @@ a.missing{color:#ff6b6b!important}
 .ed-body{min-height:45vh;outline:none;font-size:15.5px;line-height:1.78;color:#d6d7dc}
 .ed-body:empty::before{content:attr(data-ph);color:var(--faint)}
 .ed-body h2{font-size:21px;font-weight:800;color:#fff;margin:22px 0 10px}
+.ed-body h3[data-lbl]{font-family:var(--disp-font,var(--font-display));font-weight:700;font-size:25px;margin:22px 0 8px}
 .art-content ul,.ed-body ul{list-style:none;margin:0 0 18px;padding:0}
 .art-content ul li,.ed-body ul li{position:relative;padding-left:22px;margin-bottom:14px;font-size:15px;line-height:1.68;color:#d6d7dc}
 .art-content ul li::before,.ed-body ul li::before{content:"";position:absolute;left:4px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--art-accent,var(--gold))}
@@ -617,18 +619,10 @@ a.missing{color:#ff6b6b!important}
 .acm-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .acm-chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:18px;background:color-mix(in srgb,var(--art-lk,var(--gold)) 12%,transparent);border:1px solid color-mix(in srgb,var(--art-lk,var(--gold)) 40%,transparent);color:var(--art-lk,var(--gold));font-size:12.5px;font-weight:700}
 .acm-chip b{font-weight:800;opacity:.7;cursor:pointer}
-.acm-add input{width:100%;background:transparent;border:1px dashed var(--line-strong);border-radius:12px;color:var(--text);padding:10px 14px;font:inherit;font-size:13px;outline:none;margin-top:4px}
+.acm-add input{width:100%;background:transparent;border:1px dashed var(--line-strong);border-radius:12px;color:var(--text);padding:10px 14px;font:inherit;font-size:16px;outline:none;margin-top:4px}
 .acm-add input:focus{border-color:var(--art-lk,var(--gold))}
 #edProj{width:100%;margin-top:7px;background:var(--surface);border:1px solid var(--line);border-radius:11px;color:var(--text);padding:11px 12px;font:inherit;font-size:14px;font-weight:600;outline:none}
 .catpage-desc{color:var(--muted);font-size:14px;margin:6px 0 18px;cursor:pointer;font-style:italic}
-.wiki-body.editing{outline:2px dashed var(--wiki-accent,var(--gold));outline-offset:-6px;border-radius:10px}
-.wiki-body.editing .lbl-edit{display:none}
-.wiki-body.editing .wiki-grid,.wiki-body.editing .wiki-gallery,.wiki-body.editing .w-list{pointer-events:none;opacity:.5}
-#homeEditBar{position:fixed;left:0;right:0;bottom:0;z-index:45;display:none;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom));background:var(--surface);border-top:1px solid var(--line-strong)}
-#homeEditBar.show{display:flex}
-#homeEditBar button{flex:1;padding:14px;border-radius:12px;font-weight:800;font-size:13px;letter-spacing:.08em}
-#homeCancel{background:var(--surface-2);border:1px solid var(--line-strong);color:var(--text)}
-#homeSave{background:linear-gradient(145deg,var(--gold),var(--gold-deep));color:#1a1405}
 .art-sec{display:flex;align-items:baseline;gap:10px;margin:32px 0 6px;scroll-margin-top:74px}
 .art-sec h2{font-size:22px;font-weight:800}
 .art-secrow{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:var(--art-accent,var(--gold))}
@@ -639,7 +633,7 @@ a.missing{color:#ff6b6b!important}
 .art-ul li::before{content:"";position:absolute;left:4px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--art-accent,var(--gold))}
 .art-ul li b{color:#fff}
 .art-content .wiki-a{color:var(--art-accent,var(--gold));font-weight:600}
-.art-content.editing{outline:1.5px dashed var(--art-accent,var(--gold));outline-offset:10px;border-radius:6px}
+.art-content.editing{outline:none}
 .art-tags{display:flex;flex-wrap:wrap;gap:9px;margin:28px 0 6px}
 .art-tag{border:1px solid color-mix(in srgb,var(--art-accent,var(--gold)) 55%,transparent);color:var(--art-accent,var(--gold));font-size:12.5px;font-weight:700;padding:7px 15px;border-radius:20px;background:color-mix(in srgb,var(--art-accent,var(--gold)) 9%,transparent)}
 .art-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin:18px 0}
@@ -670,9 +664,9 @@ a.missing{color:#ff6b6b!important}
 .wg-add:hover{color:var(--wiki-accent);border-color:var(--wiki-accent);background:rgba(255,255,255,.02)}
 .wg-add svg{width:22px;height:22px}
 .wg-tile{position:relative}
-.wg-del{position:absolute;top:4px;right:4px;z-index:2;width:22px;height:22px;border-radius:0;background:rgba(10,10,14,.8);color:#ff8b8b;border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;transition:.2s}
+.wg-del{position:absolute;top:4px;right:4px;z-index:2;width:32px;height:32px;border-radius:0;background:rgba(10,10,14,.8);color:#ff8b8b;border:1px solid rgba(255,255,255,.16);display:grid;place-items:center;transition:.2s}
 .wg-del:hover{background:var(--red);color:#fff}
-.wg-del svg{width:11px;height:11px}
+.wg-del svg{width:12px;height:12px}
 .g-count{color:var(--faint);font-size:13px;font-weight:600;font-family:var(--font-body)}
 .lightbox{position:fixed;inset:0;z-index:70;background:rgba(6,6,8,.95);display:none;backdrop-filter:blur(6px)}
 .lightbox.open{display:block}
@@ -701,7 +695,6 @@ a.missing{color:#ff6b6b!important}
 .save-state.saving{color:var(--muted)}
 .save-state.saved{color:var(--green)}
 .save-state.saved i{background:var(--green)}
-.wiki-welcome.editing{outline:1.5px dashed var(--wiki-accent);outline-offset:8px;border-radius:6px;background:rgba(255,255,255,.03);cursor:text}
 .settings-meta{display:flex;justify-content:space-between;align-items:center;padding:14px 8px 2px;color:var(--muted);font-size:12.5px;font-weight:600;border-top:1px solid var(--line);margin-top:10px}
 .settings-meta b{color:var(--gold);font-variant-numeric:tabular-nums}
 
@@ -835,7 +828,7 @@ a.missing{color:#ff6b6b!important}
 .toast{
   background:var(--surface-2);border:1px solid var(--line-strong);
   border-left:3px solid var(--gold);
-  clip-path:var(--bevel-sm);
+  clip-path:none;border-radius:12px;
   padding:10px 16px;font-size:13px;font-weight:600;
   box-shadow:var(--shadow);
   animation:toast-in .35s cubic-bezier(.22,1,.36,1);
@@ -867,6 +860,13 @@ a.missing{color:#ff6b6b!important}
   .ember{display:none}
   .reveal{transition:none;opacity:1;transform:none}
 }
+
+/* ===== CORRECTIFS P1 ===== */
+button:focus-visible, a:focus-visible, input:focus-visible,
+textarea:focus-visible, select:focus-visible{
+  outline:2px solid var(--gold); outline-offset:2px;
+}
+/* Pas de contour visible sur la zone d'édition (contenteditable) */
 </style>
 </head>
 <body>
@@ -882,26 +882,26 @@ a.missing{color:#ff6b6b!important}
 <!-- Rail desktop -->
 <aside class="rail">
   <div class="rail__logo">A</div>
-  <button class="rail__btn is-active" data-tip="Accueil" data-view="home">
+  <button class="rail__btn is-active" data-tip="Accueil" data-view="home" aria-label="Accueil">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
   </button>
-  <button class="rail__btn" data-tip="Projets" data-view="projects">
+  <button class="rail__btn" data-tip="Projets" data-view="projects" aria-label="Projets">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
   </button>
-  <button class="rail__btn" data-tip="Épinglés" data-toast="Bientôt : vos épinglés">
+  <button class="rail__btn" data-tip="Épinglés" data-toast="Bientôt : vos épinglés" aria-label="Épinglés">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
   </button>
-  <button class="rail__btn js-search" data-tip="Rechercher">
+  <button class="rail__btn js-search" data-tip="Rechercher" aria-label="Rechercher">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
   </button>
-  <button class="rail__btn" data-tip="Monde au hasard" data-toast="Téléportation vers « Les Marées d'Obsidienne »">
+  <button class="rail__btn" data-tip="Monde au hasard" data-toast="Téléportation vers « Les Marées d'Obsidienne »" aria-label="Monde au hasard">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
   </button>
   <div class="rail__spacer"></div>
-  <button class="rail__btn" data-tip="Réglages" data-toast="Bientôt : les réglages">
+  <button class="rail__btn" data-tip="Réglages" data-toast="Bientôt : les réglages" aria-label="Réglages">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
   </button>
-  <button class="rail__create" data-tip="Créer" id="railCreate">
+  <button class="rail__create" data-tip="Créer" id="railCreate" aria-label="Créer">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
   </button>
 </aside>
@@ -1090,7 +1090,7 @@ a.missing{color:#ff6b6b!important}
         <h2 class="p-head__title">Vos mondes</h2>
         <span class="p-head__count" id="pCount">6</span>
       </div>
-      <p class="p-head__sub">6 univers · 128 pages écrites · 2 en cours de forge</p>
+      <p class="p-head__sub" id="pSub">6 univers · 128 pages écrites · 2 en cours de forge</p>
       <div class="p-tools">
         <label class="p-search">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
@@ -1136,8 +1136,8 @@ a.missing{color:#ff6b6b!important}
           <button class="wiki-act" id="wAdd" aria-label="Ajouter une page">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
           </button>
-          <button class="wiki-act" id="wThemeBtn" aria-label="Personnaliser le monde">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+          <button class="wiki-act" id="wMore" aria-label="Options du projet">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
           </button>
         </div>
       </div>
@@ -1190,7 +1190,6 @@ a.missing{color:#ff6b6b!important}
     <div class="art-body">
       <div class="art-crumb" id="artCrumb"></div>
       <h1 class="art-title" id="artTitle"></h1>
-      <button id="artBack" hidden></button>
       <div class="art-meta" id="artMeta"></div>
       <div class="art-actions">
         <button class="art-act pin" id="artPin">
@@ -1200,10 +1199,6 @@ a.missing{color:#ff6b6b!important}
         <button class="art-act" id="artEdit">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.17 6.81a1 1 0 0 0-3.98-3.99L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.63l4.35-1.32a2 2 0 0 0 .83-.5z"/></svg>
           MODIFIER
-        </button>
-        <button class="art-act" id="artTheme" aria-label="Thème du monde">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
-          THÈME
         </button>
         <button class="art-act art-more" id="artMore" aria-label="Options">
           <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="12" cy="19" r="1.8"/></svg>
@@ -1237,6 +1232,124 @@ a.missing{color:#ff6b6b!important}
     </div>
   </div>
 
+  <!-- Épinglés -->
+  <div class="view" id="view-pinned" hidden>
+    <section>
+      <div class="p-head__row">
+        <h2 class="p-head__title">Épinglés</h2>
+      </div>
+      <p class="p-head__sub">Tes mondes et pages étoilés, à un tap.</p>
+      <div class="search-grp" style="margin-top:18px">Mondes</div>
+      <div class="w-list" id="pinWorlds"></div>
+      <div class="search-grp">Articles</div>
+      <div class="w-list" id="pinArts"></div>
+      <div class="p-empty" id="pinEmpty" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
+        <p>Rien d'épinglé pour l'instant. Touche la ★ d'un monde ou d'un article.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Mes Articles -->
+  <div class="view" id="view-articles" hidden>
+    <section>
+      <button class="w-back" id="maBack" style="position:static;display:inline-flex;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Retour
+      </button>
+      <div class="p-head__row">
+        <h2 class="p-head__title">Mes Articles</h2>
+        <span class="p-head__count" id="maCount">0</span>
+      </div>
+      <p class="p-head__sub">Toutes les pages de tous tes mondes, au même endroit.</p>
+      <label class="p-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="maSearch" type="search" placeholder="Chercher un article…" autocomplete="off">
+      </label>
+      <div class="p-chips" id="maChips"></div>
+    </section>
+    <section style="margin-top:16px">
+      <div class="w-list" id="maList"></div>
+    </section>
+  </div>
+
+  <!-- Catégories -->
+  <div class="view" id="view-categories" hidden>
+    <section>
+      <button class="w-back" id="catBack" style="position:static;display:inline-flex;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Retour
+      </button>
+      <div class="p-head__row">
+        <h2 class="p-head__title">Catégories</h2>
+        <span class="p-head__count" id="catCount">0</span>
+      </div>
+      <p class="p-head__sub">Chaque catégorie regroupe ses pages. Touche pour les ouvrir.</p>
+      <button class="p-new" id="catNew" style="margin:14px 0 18px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+        Nouvelle catégorie
+      </button>
+      <div class="cat-grid" id="catGrid"></div>
+    </section>
+  </div>
+
+  <!-- Page de catégorie -->
+  <div class="view" id="view-category" hidden>
+    <section>
+      <button class="w-back" id="catPageBack" style="position:static;display:inline-flex;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Retour
+      </button>
+      <div class="art-crumb" id="catCrumb"></div>
+      <h2 class="p-head__title" id="catPageTitle"></h2>
+      <p class="catpage-desc" id="catPageDesc"></p>
+      <div class="search-grp">Sous-catégories</div>
+      <div class="w-list" id="catSubList"></div>
+      <div class="search-grp" style="margin-top:18px">Pages dans cette catégorie</div>
+      <div class="w-list" id="catPageList"></div>
+    </section>
+  </div>
+
+  <!-- Corbeille -->
+  <div class="view" id="view-trash" hidden>
+    <section>
+      <button class="w-back" id="trashBack" style="position:static;display:inline-flex;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Retour
+      </button>
+      <div class="p-head__row">
+        <h2 class="p-head__title">Corbeille</h2>
+        <span class="p-head__count" id="trashCount">0</span>
+      </div>
+      <p class="p-head__sub">Les pages supprimées attendent ici. Restaure-les ou efface-les définitivement.</p>
+      <div class="w-list" id="trashList"></div>
+      <div class="p-empty" id="trashEmpty" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        <p>La corbeille est vide.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Inbox : articles sans projet -->
+  <div class="view" id="view-inbox" hidden>
+    <section>
+      <button class="w-back" id="inboxBack" style="position:static;display:inline-flex;margin-bottom:12px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+        Retour
+      </button>
+      <div class="p-head__row">
+        <h2 class="p-head__title">Inbox</h2>
+        <span class="p-head__count" id="inboxCount">0</span>
+      </div>
+      <p class="p-head__sub">Les articles sans projet, rassemblés ici. Déplace-les vers un projet depuis le menu ⋮ d'un article.</p>
+      <div class="w-list" id="inboxList"></div>
+      <div class="p-empty" id="inboxEmpty" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+        <p>L'Inbox est vide. Les pages créées sans projet arriveront ici.</p>
+      </div>
+    </section>
+  </div>
+
     <!-- Sheet de personnalisation -->
     <div class="sheet" id="themeSheet">
       <div class="sheet__grab"></div>
@@ -1257,6 +1370,14 @@ a.missing{color:#ff6b6b!important}
           <span><b>Changer la couverture</b><small>Image du header, compressée automatiquement</small></span>
         </button>
         <input type="file" id="coverFile" accept="image/*" hidden>
+      </div>
+      <div class="ws-field" id="artCovField" style="display:none"><span>Couverture de l'article en cours</span>
+        <button class="sheet__opt" id="artCovBtn" style="margin:8px 0 0">
+          <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg></span>
+          <span><b>Changer la couverture</b><small id="artCovLbl">Image d'en-tête de la page</small></span>
+        </button>
+        <input type="file" id="artCovFile" accept="image/*" hidden>
+        <button class="th-bgremove" id="artCovRm" style="margin-top:10px">Retirer la couverture</button>
       </div>
       <div class="ws-field" style="margin-top:14px"><span>Couleur d'accent</span>
         <div class="ws-swatches" id="thSwatches"></div>
@@ -1318,7 +1439,6 @@ a.missing{color:#ff6b6b!important}
       </div>
       <button id="thReset">RÉINITIALISER LE THÈME</button>
     </div>
-  </div>
 
 </main>
 
@@ -1384,6 +1504,8 @@ a.missing{color:#ff6b6b!important}
   <button class="drawer__item" data-toast="Thèmes & apparence (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>Thème &amp; apparence</button>
   <button class="drawer__item" data-toast="Téléportation vers « Eastwall » (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>Monde au hasard</button>
   <button class="drawer__item" data-toast="Carnet d'idées (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Carnet d'idées</button>
+  <button class="drawer__item" id="drawerInbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>Inbox</button>
+  <button class="drawer__item" id="drawerTrash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Corbeille</button>
   <button class="drawer__item" data-toast="À bientôt, Michaz ✦ (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Déconnexion</button>
 </div>
 
@@ -1404,52 +1526,12 @@ a.missing{color:#ff6b6b!important}
     <span><b>Importer une sauvegarde</b><small>Restaure un fichier exporté</small></span>
   </button>
   <input type="file" id="importFile" accept="application/json" hidden>
-  <div class="settings-meta"><span>Stockage local utilisé</span><b id="storageUsed">—</b></div>
-</div>
-
-<!-- Épinglés -->
-<div class="view" id="view-pinned" hidden>
-  <section>
-    <div class="p-head__row">
-      <h2 class="p-head__title">Épinglés</h2>
-    </div>
-    <p class="p-head__sub">Tes mondes et pages étoilés, à un tap.</p>
-    <div class="search-grp" style="margin-top:18px">Mondes</div>
-    <div class="w-list" id="pinWorlds"></div>
-    <div class="search-grp">Articles</div>
-    <div class="w-list" id="pinArts"></div>
-    <div class="p-empty" id="pinEmpty" hidden>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17v5"/><path d="M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V6h1a2 2 0 0 0 0-4H8a2 2 0 0 0 0 4h1z"/></svg>
-      <p>Rien d'épinglé pour l'instant. Touche la ★ d'un monde ou d'un article.</p>
-    </div>
-  </section>
-</div>
-
-<!-- Mes Articles -->
-<div class="view" id="view-articles" hidden>
-  <section>
-    <button class="w-back" id="maBack" style="position:static;display:inline-flex;margin-bottom:12px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-      Retour
-    </button>
-    <div class="p-head__row">
-      <h2 class="p-head__title">Mes Articles</h2>
-      <span class="p-head__count" id="maCount">0</span>
-    </div>
-    <p class="p-head__sub">Toutes les pages de tous tes mondes, au même endroit.</p>
-    <label class="p-search">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-      <input id="maSearch" type="search" placeholder="Chercher un article…" autocomplete="off">
-    </label>
-    <div class="p-chips" id="maChips"></div>
-  </section>
-  <section style="margin-top:16px">
-    <div class="w-list" id="maList"></div>
-  </section>
+  <div class="settings-meta"><span>Données de sauvegarde (IndexedDB)</span><b id="storageUsed">—</b></div>
+  <div class="settings-meta" style="border-top:none;margin-top:2px;padding-top:2px;padding-bottom:2px"><span>Stockage navigateur (avec caches)</span><b id="storageTotal">—</b></div>
 </div>
 
 <!-- Création d'un monde -->
-    <div class="sheet" id="worldSheet">
+<div class="sheet" id="worldSheet">
   <div class="sheet__grab"></div>
   <h4 class="sheet__title">Nouveau projet</h4>
   <div class="ws-field"><span>Modèle</span></div>
@@ -1471,41 +1553,55 @@ a.missing{color:#ff6b6b!important}
   <button class="ws-create" id="wsCreate">CRÉER LE PROJET</button>
 </div>
 
-<!-- Catégories -->
-<div class="view" id="view-categories" hidden>
-  <section>
-    <button class="w-back" id="catBack" style="position:static;display:inline-flex;margin-bottom:12px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-      Retour
-    </button>
-    <div class="p-head__row">
-      <h2 class="p-head__title">Catégories</h2>
-      <span class="p-head__count" id="catCount">0</span>
-    </div>
-    <p class="p-head__sub">Chaque catégorie regroupe ses pages. Touche pour les ouvrir.</p>
-    <button class="p-new" id="catNew" style="margin:14px 0 18px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-      Nouvelle catégorie
-    </button>
-    <div class="cat-grid" id="catGrid"></div>
-  </section>
+<!-- Options d'article (menu 3 points) -->
+<div class="sheet" id="artSheet">
+  <div class="sheet__grab"></div>
+  <h4 class="sheet__title" id="artSheetTitle">Options de la page</h4>
+  <button class="sheet__opt" id="artOptTheme">
+    <span class="action__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+    <span><b>Thème</b><small>Personnaliser l'apparence du monde</small></span>
+  </button>
+  <button class="sheet__opt" id="artOptRename">
+    <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
+    <span><b>Renommer</b><small>Changer le titre de la page</small></span>
+  </button>
+  <button class="sheet__opt" id="artOptMove">
+    <span class="action__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><path d="M2 12h20"/><path d="M12 2v20"/></svg></span>
+    <span><b>Déplacer vers…</b><small>Changer le projet de la page</small></span>
+  </button>
+  <button class="sheet__opt" id="artOptDup">
+    <span class="action__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></span>
+    <span><b>Dupliquer vers…</b><small>Choisir où créer la copie</small></span>
+  </button>
+  <button class="sheet__opt" id="artOptDel" style="color:var(--red)">
+    <span class="action__ico ico-red" style="background:rgba(255,93,93,.12);color:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+    <span><b>Supprimer</b><small>Envoyer la page dans la corbeille</small></span>
+  </button>
 </div>
 
-<!-- Page de catégorie -->
-<div class="view" id="view-category" hidden>
-  <section>
-    <button class="w-back" id="catPageBack" style="position:static;display:inline-flex;margin-bottom:12px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
-      Retour
-    </button>
-    <div class="art-crumb" id="catCrumb"></div>
-    <h2 class="p-head__title" id="catPageTitle"></h2>
-    <p class="catpage-desc" id="catPageDesc"></p>
-    <div class="search-grp">Sous-catégories</div>
-    <div class="w-list" id="catSubList"></div>
-    <div class="search-grp" style="margin-top:18px">Pages dans cette catégorie</div>
-    <div class="w-list" id="catPageList"></div>
-  </section>
+<!-- Déplacer / Dupliquer vers un projet -->
+<div class="sheet" id="moveSheet">
+  <div class="sheet__grab"></div>
+  <h4 class="sheet__title" id="moveSheetTitle">Déplacer vers…</h4>
+  <div id="moveSheetList"></div>
+</div>
+
+<!-- Options du projet (menu 3 points de l'accueil) -->
+<div class="sheet" id="worldMoreSheet">
+  <div class="sheet__grab"></div>
+  <h4 class="sheet__title" id="wMoreTitle">Options du projet</h4>
+  <button class="sheet__opt" id="wOptTheme">
+    <span class="action__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+    <span><b>Personnaliser</b><small>Thème, couleurs, couverture du projet</small></span>
+  </button>
+  <button class="sheet__opt" id="wOptRename">
+    <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
+    <span><b>Renommer le projet</b><small>Changer le nom du monde</small></span>
+  </button>
+  <button class="sheet__opt" id="wOptDel" style="color:var(--red)">
+    <span class="action__ico ico-red" style="background:rgba(255,93,93,.12);color:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+    <span><b>Supprimer le projet</b><small>Toutes ses pages iront dans l'Inbox</small></span>
+  </button>
 </div>
 
 <!-- Recherche globale -->
@@ -1596,18 +1692,49 @@ a.missing{color:#ff6b6b!important}
 <!-- Pill aperçu page -->
 <button id="thPeekPill">↩ Reprendre l'édition</button>
 
-<!-- Barre d'édition de l'accueil -->
-<div id="homeEditBar">
-  <button id="homeCancel">ANNULER</button>
-  <button id="homeSave">ENREGISTRER</button>
-</div>
-
 <!-- Toasts -->
-<div class="toasts" id="toasts"></div>
-
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
 <script>
 (function(){
   "use strict";
+
+  /* ---- Correctifs P0/P1 (fusion Atelier) ----
+     P0-1 : sanitize() + esc() (anti-XSS import & rendu)
+     P1-10 : debounce() (recherches)
+     P0-6 : premier route() supprimé (deep-links PWA)
+     P0-2 : seed multi-monde via currentWorldId
+     P0-3 : recherche monde -> openWorld(p.id)
+     P0-4 : thPeek + ovBack, capture document supprimée
+     P1-11 : themeIdx >= THEMES.length ; .wiki-a en délégation
+  ------------------------------------------------ */
+  function sanitize(html){
+    if (!html) return "";
+    var d = document.createElement("div");
+    d.innerHTML = String(html);
+    var all = d.querySelectorAll("*");
+    for (var i = 0; i < all.length; i++){
+      var el = all[i], tag = el.tagName.toLowerCase();
+      if (tag === "script" || tag === "iframe" || tag === "object" || tag === "embed" || tag === "link" || tag === "meta" || tag === "base"){ el.remove(); i--; continue; }
+      for (var j = el.attributes.length - 1; j >= 0; j--){
+        var n = el.attributes[j].name.toLowerCase(), v = el.attributes[j].value;
+        if (n.indexOf("on") === 0 || ((n === "href" || n === "src" || n === "xlink:href") && /^\s*(javascript|vbscript|data:text\/html)/i.test(v))) el.removeAttribute(el.attributes[j].name);
+      }
+    }
+    return d.innerHTML;
+  }
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+  function debounce(fn, ms){
+    var t = null;
+    return function(){
+      var args = arguments, self = this;
+      clearTimeout(t);
+      t = setTimeout(function(){ fn.apply(self, args); }, ms || 160);
+    };
+  }
 
   /* Diagnostic discret : ne s'affiche QUE si une erreur réelle survient */
   function diag(msg){
@@ -1756,22 +1883,33 @@ a.missing{color:#ff6b6b!important}
     if (pp) pp.classList.remove("show");
     var so = document.getElementById("searchOv");
     if (so) so.classList.remove("open");
+    /* Nouveaux sheets (options article / déplacer / options projet) */
+    var as = document.getElementById("artSheet");
+    if (as) as.classList.remove("open");
+    var ms = document.getElementById("moveSheet");
+    if (ms) ms.classList.remove("open");
+    var wms = document.getElementById("worldMoreSheet");
+    if (wms) wms.classList.remove("open");
     if (lbEl) lbEl.classList.remove("open");
     if (editorOpen){ editorOpen = false; viewEditor.classList.remove("open"); }
   }
-  function closeAll(){ hideOverlays(); ovBack(); }
+  function closeAll(skipBack){
+    hideOverlays();
+    if (skipBack){ ovCount = 0; }
+    else { ovBack(); }
+  }
   window.addEventListener("popstate", function(){
     if (ovCount > 0){ ovCount--; hideOverlays(); }
   });
   function openSheet(){
-    closeAll();
+    closeAll(true);
     sheet.classList.add("open");
     fab.classList.add("open");
     backdrop.classList.add("show");
     ovPush();
   }
   function openDrawer(){
-    closeAll();
+    closeAll(true);
     drawer.classList.add("open");
     backdrop.classList.add("show");
     ovPush();
@@ -1812,13 +1950,22 @@ a.missing{color:#ff6b6b!important}
     viewPinned.hidden = name !== "pinned";
     viewCategories.hidden = name !== "categories";
     viewCategory.hidden = name !== "category";
-    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : name === "pinned" ? viewPinned : name === "categories" ? viewCategories : name === "category" ? viewCategory : viewArticle;
+    var viewTrash = document.getElementById("view-trash");
+    if (viewTrash) viewTrash.hidden = name !== "trash";
+    var viewInbox = document.getElementById("view-inbox");
+    if (viewInbox) viewInbox.hidden = name !== "inbox";
+    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : name === "pinned" ? viewPinned : name === "categories" ? viewCategories : name === "category" ? viewCategory : name === "trash" ? viewTrash : name === "inbox" ? viewInbox : viewArticle;
     v.style.animation = "none";
     void v.offsetWidth;
     v.style.animation = "";
     window.scrollTo({ top: 0 });
   }
   function syncNav(name){
+    if (name === "trash" || name === "inbox"){
+      tabs.forEach(function(t){ t.classList.remove("is-active"); });
+      document.querySelectorAll(".rail__btn").forEach(function(b){ b.classList.remove("is-active"); });
+      return;
+    }
     var label = name === "home" ? "Accueil" : name === "pinned" ? "Épinglés" : "Projets";
     tabs.forEach(function(t){ t.classList.toggle("is-active", t.getAttribute("data-name") === label); });
     document.querySelectorAll(".rail__btn").forEach(function(b){
@@ -1840,12 +1987,14 @@ a.missing{color:#ff6b6b!important}
       syncNav("article");
       return;
     }
-    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles" && h !== "pinned" && h !== "categories") h = "home";
+    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles" && h !== "pinned" && h !== "categories" && h !== "trash" && h !== "inbox") h = "home";
     showView(h);
     syncNav(h);
     if (h === "articles" && THEMES) renderArticlesView();
     if (h === "pinned" && THEMES) renderPinned();
     if (h === "categories" && THEMES) renderCategories();
+    if (h === "trash" && THEMES) renderTrash();
+    if (h === "inbox" && THEMES) renderInbox();
     if (h === "world" && THEMES) renderWorldHome();
   }
   function gotoView(name){
@@ -1853,7 +2002,6 @@ a.missing{color:#ff6b6b!important}
     else location.hash = name;
   }
   window.addEventListener("hashchange", route);
-  route();
 
   /* ---------- Tabs mobiles ---------- */
   tabs.forEach(function(tab){
@@ -1917,7 +2065,7 @@ a.missing{color:#ff6b6b!important}
       if (c !== "Tous" && n === 0) return;
       var b = document.createElement("button");
       b.className = "p-chip" + (pState.cat === c ? " is-active" : "");
-      b.innerHTML = c + " <b>" + n + "</b>";
+      b.innerHTML = esc(c) + " <b>" + n + "</b>";
       b.addEventListener("click", function(){ pState.cat = c; buildChips(); renderProjects(); });
       pChips.appendChild(b);
     });
@@ -1928,6 +2076,9 @@ a.missing{color:#ff6b6b!important}
       var okCat = pState.cat === "Tous" || p.cat === pState.cat;
       var okQ = !q || p.title.toLowerCase().indexOf(q) > -1 || p.desc.toLowerCase().indexOf(q) > -1;
       return okCat && okQ;
+    }).sort(function(a, b){
+      /* Tri par dernière modification (temps réel), du plus récent au plus vieux */
+      return (worldStats(b).latestMts || 0) - (worldStats(a).latestMts || 0);
     });
     pGrid.innerHTML = "";
     list.forEach(function(p, i){
@@ -1936,15 +2087,16 @@ a.missing{color:#ff6b6b!important}
       el.style.animationDelay = (i * 60) + "ms";
       var cov = assetCache[p.thumbAsset] || assetCache[p.coverAsset];
       var covStyle = cov ? 'background-image:url(\'' + cov + '\')' : (p.accent ? 'background-image:linear-gradient(160deg,' + hexToRgba(p.accent, .3) + ',' + p.accent + ')' : '');
+      var st = worldStats(p);
       el.innerHTML =
         '<div class="pcard__cover ' + (p.cover || '') + (cov ? ' has-img' : (p.accent ? ' has-accent' : '')) + '"' + (covStyle ? ' style="' + covStyle + '"' : '') + '>' +
-          '<span class="world__chip">' + p.cat + '</span>' +
+          '<span class="world__chip">' + esc(p.cat) + '</span>' +
           (p.pinned ? '<span class="pcard__pin">' + P_ICONS.pin + '</span>' : '') +
           P_ICONS[p.icon] +
         '</div>' +
-        '<div class="pcard__body"><h3>' + p.title + '</h3><p>' + p.desc + '</p>' +
+        '<div class="pcard__body"><h3>' + esc(p.title) + '</h3><p>' + esc(p.desc) + '</p>' +
         '<div class="xp-bar"><i style="width:' + p.progress + '%"></i></div>' +
-        '<div class="pcard__foot"><span>' + p.pages + ' pages</span><span>' + p.updated + '</span></div></div>';
+        '<div class="pcard__foot"><span>' + st.pages + ' page' + (st.pages > 1 ? "s" : "") + '</span><span>' + esc(st.updated) + '</span></div></div>';
       el.addEventListener("click", function(){ openWorld(p.id); });
       pGrid.appendChild(el);
     });
@@ -1954,7 +2106,7 @@ a.missing{color:#ff6b6b!important}
     document.getElementById("pEmptyQ").textContent = pState.q;
     document.getElementById("pCount").textContent = list.length;
   }
-  pSearch.addEventListener("input", function(){ pState.q = pSearch.value; renderProjects(); });
+  pSearch.addEventListener("input", debounce(function(){ pState.q = pSearch.value; renderProjects(); }, 160));
   document.getElementById("pReset").addEventListener("click", function(){
     pState.cat = "Tous"; pState.q = ""; pSearch.value = "";
     buildChips(); renderProjects();
@@ -2004,15 +2156,11 @@ a.missing{color:#ff6b6b!important}
     { name:"Événements", icon:"calendar", color:"#8f7bff", bg:"rgba(143,123,255,.16)" },
     { name:"Magie & Vents", icon:"wind", color:"#5fd4e6", bg:"rgba(95,212,230,.14)" }
   ];
+  /* Les 6 pages "importantes" (wImportant) ne doivent PAS être dupliquées ici :
+     chaque article existe dans UN SEUL tableau. */
   var wArticles = [
-    { title:"Temple des Vents", cat:"Lieux", snip:"Sanctuaire suspendu où les Gardiens captent les courants.", updated:"il y a 2 h" },
-    { title:"Nadya Vell", cat:"Personnages", snip:"Cartographe des courants, dernière née de la lignée Vell.", updated:"hier" },
-    { title:"Île-Mère d'Aérion", cat:"Lieux", snip:"Le plus grand fragment de l'archipel, siège du Conclave.", updated:"il y a 3 j" },
-    { title:"Les Éoliens", cat:"Factions", snip:"Ordre militaire des cavaliers du vent d'est.", updated:"il y a 5 j" },
-    { title:"Plume d'Ancre", cat:"Objets", snip:"Artefact capable de stabiliser une île dérivante.", updated:"il y a 1 sem." },
-    { title:"Le Grand Silence", cat:"Événements", snip:"La nuit où tous les vents se sont tus, il y a trois siècles.", updated:"il y a 2 sem." },
-    { title:"Kaelen Voss", cat:"Personnages", snip:"Gardien déchu, banni pour avoir volé une route céleste.", updated:"il y a 3 sem." },
-    { title:"Voies Célestes", cat:"Magie & Vents", snip:"Les sept courants majeurs qui portent l'archipel.", updated:"il y a 1 mois" }
+    { title:"Le Grand Silence", cat:"Événements", snip:"La nuit où tous les vents se sont tus, il y a trois siècles.", updated:"il y a 2 sem.", mts: Date.now() - 14*86400000 },
+    { title:"Kaelen Voss", cat:"Personnages", snip:"Gardien déchu, banni pour avoir volé une route céleste.", updated:"il y a 3 sem.", mts: Date.now() - 21*86400000 }
   ];
   function wCatMeta(name){
     for (var i = 0; i < wCats.length; i++) if (wCats[i].name === name) return wCats[i];
@@ -2020,12 +2168,12 @@ a.missing{color:#ff6b6b!important}
   }
   function px(id){ return "https://images.pexels.com/photos/" + id + "/pexels-photo-" + id + ".jpeg?auto=compress&cs=tinysrgb&fit=crop&h=420&w=420"; }
   var wImportant = [
-    { title:"Temple des Vents", cat:"Lieux", img:px(3840188) },
-    { title:"Île-Mère d'Aérion", cat:"Lieux", img:px(38636769) },
-    { title:"Nadya Vell", cat:"Personnages", img:px(27757179) },
-    { title:"Les Éoliens", cat:"Factions", img:px(38101248) },
-    { title:"Plume d'Ancre", cat:"Objets", img:px(8960647) },
-    { title:"Voies Célestes", cat:"Magie & Vents", img:px(35349603) }
+    { title:"Temple des Vents", cat:"Lieux", img:px(3840188), mts: Date.now() - 2*3600000 },
+    { title:"Île-Mère d'Aérion", cat:"Lieux", img:px(38636769), mts: Date.now() - 3*86400000 },
+    { title:"Nadya Vell", cat:"Personnages", img:px(27757179), mts: Date.now() - 1*86400000 },
+    { title:"Les Éoliens", cat:"Factions", img:px(38101248), mts: Date.now() - 5*86400000 },
+    { title:"Plume d'Ancre", cat:"Objets", img:px(8960647), mts: Date.now() - 7*86400000 },
+    { title:"Voies Célestes", cat:"Magie & Vents", img:px(35349603), mts: Date.now() - 30*86400000 }
   ];
   var THEMES = [
     { label:"Ciel d'Aérion", accent:"#7fd0ff", banner:"https://images.pexels.com/photos/17012965/pexels-photo-17012965.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200" },
@@ -2034,7 +2182,7 @@ a.missing{color:#ff6b6b!important}
   ];
   var themeIdx = 0;
   try { themeIdx = parseInt(localStorage.getItem("atelier-theme") || "0", 10) || 0; } catch (e) {}
-  if (themeIdx < 0 || themeIdx > 2) themeIdx = 0;
+  if (themeIdx < 0 || themeIdx >= THEMES.length) themeIdx = 0;
   var wState = { cat:"Explorer" };
   var viewWorldEl = document.getElementById("view-world");
   var wikiHero = document.getElementById("wikiHero");
@@ -2071,7 +2219,7 @@ a.missing{color:#ff6b6b!important}
     ["Explorer"].concat(catsNow().map(function(c){ return c.name; })).forEach(function(c){
       var b = document.createElement("button");
       b.className = "wiki-nav__item" + (wState.cat === c ? " is-active" : "");
-      b.innerHTML = c + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+      b.innerHTML = esc(c) + ' <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
       b.addEventListener("click", function(){ wState.cat = c; renderNav(); renderWiki(); });
       wikiNav.appendChild(b);
     });
@@ -2087,7 +2235,7 @@ a.missing{color:#ff6b6b!important}
         var el = document.createElement("button");
         el.className = "wiki-card";
         el.style.animationDelay = (i * 55) + "ms";
-        el.innerHTML = '<span class="wiki-card__img wiki-card__ph">Placeholder</span><span class="wiki-card__cap">' + t + '</span>';
+        el.innerHTML = '<span class="wiki-card__img wiki-card__ph">Placeholder</span><span class="wiki-card__cap">' + esc(t) + '</span>';
         el.addEventListener("click", function(){ openArticle(t); });
         wikiGrid.appendChild(el);
       });
@@ -2096,7 +2244,12 @@ a.missing{color:#ff6b6b!important}
       var el = document.createElement("button");
       el.className = "wiki-card";
       el.style.animationDelay = (i * 55) + "ms";
-      el.innerHTML = '<span class="wiki-card__img" style="background-image:url(\'' + a.img + '\')"></span><span class="wiki-card__cap">' + a.title + '</span>';
+      /* Couverture : personnalisée (coverAsset) sinon img du seed, sinon placeholder.
+         coverRemoved force le placeholder. */
+      var cov = (!a.coverRemoved) && (assetCache[a.coverAsset] || a.img);
+      el.innerHTML = cov
+        ? '<span class="wiki-card__img" style="background-image:url(\'' + cov + '\')"></span><span class="wiki-card__cap">' + esc(a.title) + '</span>'
+        : '<span class="wiki-card__img wiki-card__ph">Placeholder</span><span class="wiki-card__cap">' + esc(a.title) + '</span>';
       el.addEventListener("click", function(){ openArticle(a.title); });
       wikiGrid.appendChild(el);
     });
@@ -2110,7 +2263,7 @@ a.missing{color:#ff6b6b!important}
       var b = document.createElement("button");
       b.className = "sheet__opt";
       b.innerHTML = '<span class="theme-swatch" style="background-image:url(\'' + t.banner + '\');--sw:' + t.accent + '"></span>' +
-        '<span><b>' + t.label + '</b><small>Bannière &amp; couleur d\'accent du monde</small></span>' +
+        '<span><b>' + esc(t.label) + '</b><small>Bannière &amp; couleur d\'accent du monde</small></span>' +
         (i === themeIdx ? '<span class="theme-ok">✓</span>' : '');
       b.addEventListener("click", function(){
         themeIdx = i; applyTheme(); buildThemeOpts(); closeAll();
@@ -2137,7 +2290,7 @@ a.missing{color:#ff6b6b!important}
     var crest = document.getElementById("wikiCrest");
     crest.style.borderColor = accent;
     crest.style.color = accent;
-    if (w.sym){ crest.innerHTML = '<span style="font-family:var(--font-display);font-weight:900;font-size:22px">' + w.sym.toUpperCase() + '</span>'; }
+    if (w.sym){ crest.innerHTML = '<span style="font-family:var(--font-display);font-weight:900;font-size:22px">' + esc(w.sym.toUpperCase()) + '</span>'; }
     var cov = w.coverAsset && assetCache[w.coverAsset];
     var fallback = w.placeholderCover ? coverSVG(r[14] || accent) : THEMES[themeIdx].banner;
     wikiHero.style.backgroundImage = "url('" + (cov || fallback) + "')";
@@ -2201,6 +2354,7 @@ a.missing{color:#ff6b6b!important}
       var b = document.createElement("button");
       b.className = "ws-sw" + (p[0] === accent ? " is-on" : "");
       b.style.background = p[0];
+      b.setAttribute("aria-label", "Couleur " + p[0]);
       b.addEventListener("click", function(){ putTh(w, "acc", p[0]); });
       sw.appendChild(b);
     });
@@ -2252,7 +2406,7 @@ a.missing{color:#ff6b6b!important}
         b.style.display = "inline-flex";
         b.style.alignItems = "center";
         b.style.gap = "7px";
-        b.innerHTML = '<span style="width:24px;height:24px;border-radius:7px;background:center/cover;border:1px solid var(--line-strong);background-image:url(\'' + t.banner + '\')"></span>' + t.label;
+        b.innerHTML = '<span style="width:24px;height:24px;border-radius:7px;background:center/cover;border:1px solid var(--line-strong);background-image:url(\'' + t.banner + '\')"></span>' + esc(t.label);
         b.addEventListener("click", function(){
           themeIdx = i;
           try { localStorage.setItem("atelier-theme", String(i)); DB.put("meta", String(i), "theme"); } catch (e) {}
@@ -2314,6 +2468,15 @@ a.missing{color:#ff6b6b!important}
     thDraft[TH_KEYS.indexOf(key)] = val;
     applyThemeObj(w, thDraft);
     syncThUI(w);
+    /* L'accent fait partie de l'identité du projet : on le synchronise
+       avec le record du monde + la grille « Vos mondes » en direct. */
+    if (key === "acc" && w && w.id !== "inbox"){
+      w.accent = val;
+      w.mts = Date.now();
+      w.updated = "à l'instant";
+      DB.put("worlds", w);
+      renderProjects();
+    }
   }
   function buildThControls(w){
     themeFromDB(w, function(r){ thDraft = r.slice(); syncThUI(w); });
@@ -2322,6 +2485,55 @@ a.missing{color:#ff6b6b!important}
   document.getElementById("thBgRemove").addEventListener("click", function(){
     var w = worldById(currentWorldId);
     if (w) putTh(w, "bg", "");
+  });
+  /* ---- Couverture d'article : ajouter / remplacer / retirer ---- */
+  document.getElementById("artCovBtn").addEventListener("click", function(){
+    closeAll(true);
+    document.getElementById("artCovFile").click();
+  });
+  document.getElementById("artCovFile").addEventListener("change", function(e){
+    var f = e.target.files[0];
+    e.target.value = "";
+    if (!f) return;
+    var pg = findPage(currentArt);
+    if (!pg) return;
+    toast("Compression de la couverture…");
+    compressFile(f, 1200, .82).then(function(data){
+      /* Remplace l'ancienne couverture : on supprime l'asset précédent */
+      if (pg.coverAsset){ DB.del("assets", pg.coverAsset); delete assetCache[pg.coverAsset]; }
+      var id = "artcov-" + Date.now();
+      assetCache[id] = data;
+      var wid = pg.worldId || "inbox";
+      return DB.put("assets", { id: id, worldId: wid, kind: "artcover", pageTitle: pg.title, data: data }).then(function(){
+        pg.coverAsset = id;
+        pg.img = null;               /* la perso prime sur le seed */
+        pg.coverRemoved = false;     /* on force l'affichage de la couverture */
+        pg.updated = "à l'instant";
+        pg.mts = Date.now();
+        DB.put("pages", pg);
+        renderAll();
+        renderArticle();
+        /* Ferme directement le menu après le choix */
+        closeAll(true);
+        toast("Couverture de l'article mise à jour");
+      });
+    }).catch(function(){ toast("Image illisible"); });
+  });
+  document.getElementById("artCovRm").addEventListener("click", function(){
+    var pg = findPage(currentArt);
+    if (!pg) return;
+    if (!window.confirm("Retirer la couverture de « " + currentArt + " » ?")) return;
+    if (pg.coverAsset){ DB.del("assets", pg.coverAsset); delete assetCache[pg.coverAsset]; }
+    pg.coverAsset = null;
+    pg.img = null;
+    pg.coverRemoved = true;          /* bloque AUSSI la couverture codée en dur */
+    pg.updated = "à l'instant";
+    pg.mts = Date.now();
+    DB.put("pages", pg);
+    closeAll(true);
+    renderAll();
+    renderArticle();
+    toast("Couverture retirée");
   });
   document.getElementById("thCovRemove").addEventListener("click", function(){
     var w = worldById(currentWorldId);
@@ -2348,14 +2560,53 @@ a.missing{color:#ff6b6b!important}
       putTh(w, "bg", id);
     }).catch(function(){ toast("Image illisible"); });
   });
-  document.getElementById("wThemeBtn").addEventListener("click", function(){
-    closeAll();
+  /* ---- Menu 3 points de l'accueil de projet ---- */
+  function openWorldMenu(){
     var w = worldById(currentWorldId) || {};
-    document.getElementById("thSheetTitle").textContent = "Personnaliser " + (w.title || "");
-    buildThControls(w);
-    document.getElementById("themeSheet").classList.add("open");
+    document.getElementById("wMoreTitle").textContent = "Options — " + (w.title || "Projet");
+    closeAll(true);
+    document.getElementById("worldMoreSheet").classList.add("open");
     backdrop.classList.add("show");
     ovPush();
+  }
+  document.getElementById("wMore").addEventListener("click", openWorldMenu);
+  document.getElementById("wOptTheme").addEventListener("click", function(){ openThemeSheet(false); });
+  document.getElementById("wOptRename").addEventListener("click", function(){
+    closeAll(true);
+    var w = worldById(currentWorldId);
+    if (!w || w.id === "inbox") return;
+    var n = prompt("Nouveau nom du projet :", w.title);
+    if (n === null || !n.trim() || n.trim() === w.title) return;
+    w.title = n.trim();
+    w.updated = "à l'instant";
+    w.mts = Date.now();
+    DB.put("worlds", w);
+    renderProjects();
+    renderWorldHome();
+    toast("Projet renommé : " + w.title);
+  });
+  document.getElementById("wOptDel").addEventListener("click", function(){
+    closeAll(true);
+    var w = worldById(currentWorldId);
+    if (!w || w.id === "inbox") return;
+    if (!window.confirm("Supprimer « " + w.title + " » ?\nLe projet et ses pages iront dans la corbeille.")) return;
+    /* Envoie le projet ET ses pages dans la corbeille (restaurables) */
+    var now = Date.now();
+    w.trashed = true;
+    w.trashedAt = now;
+    DB.put("worlds", w);
+    allPages().forEach(function(p){
+      if ((p.worldId || "inbox") !== w.id) return;
+      p.trashed = true;
+      p.trashedAt = now;
+      DB.put("pages", p);
+    });
+    var idx = projects.indexOf(w);
+    if (idx > -1) projects.splice(idx, 1);
+    currentWorldId = "inbox";
+    renderAll();
+    gotoView("projects");
+    toast("Projet envoyé dans la corbeille");
   });
   document.getElementById("thSave").addEventListener("click", function(){
     var w = worldById(currentWorldId);
@@ -2363,6 +2614,15 @@ a.missing{color:#ff6b6b!important}
     Promise.all(TH_KEYS.map(function(k, i){
       return thDraft[i] != null ? DB.put("meta", thDraft[i], k + "-" + w.id) : null;
     })).then(function(){
+      /* Le thème est une modification du projet : accent synchronisé,
+         le projet remonte dans le tri, la grille se met à jour. */
+      if (w.id !== "inbox"){
+        w.accent = thDraft[0] || w.accent;
+        w.mts = Date.now();
+        w.updated = "à l'instant";
+        DB.put("worlds", w);
+        renderProjects();
+      }
       toast("Thème enregistré");
       closeAll();
     });
@@ -2387,13 +2647,23 @@ a.missing{color:#ff6b6b!important}
     syncThUI(w);
     Promise.all(TH_KEYS.map(function(k, i){
       return DB.put("meta", thDraft[i] == null ? "" : thDraft[i], k + "-" + w.id);
-    })).then(function(){ toast("Thème réinitialisé"); });
+    })).then(function(){
+      if (w.id !== "inbox"){
+        w.accent = accent;
+        w.mts = Date.now();
+        w.updated = "à l'instant";
+        DB.put("worlds", w);
+        renderProjects();
+      }
+      toast("Thème réinitialisé");
+    });
   });
   document.getElementById("thPeek").addEventListener("click", function(e){
     e.stopPropagation();
     document.getElementById("themeSheet").classList.remove("open");
     backdrop.classList.remove("show");
     document.getElementById("thPeekPill").classList.add("show");
+    ovBack();
   });
   function resumeThemeEdit(){
     document.getElementById("thPeekPill").classList.remove("show");
@@ -2404,13 +2674,6 @@ a.missing{color:#ff6b6b!important}
     e.stopPropagation();
     resumeThemeEdit();
   });
-  document.addEventListener("click", function(e){
-    var pill = document.getElementById("thPeekPill");
-    if (pill && pill.classList.contains("show") && !e.target.closest("#thPeekPill")){
-      e.stopPropagation();
-      resumeThemeEdit();
-    }
-  }, true);
   document.getElementById("wAdd").addEventListener("click", function(){ openEditor(null); });
   wikiHero.addEventListener("click", function(e){
     if (e.target.closest(".wiki-act") || e.target.closest(".w-back")) return;
@@ -2432,59 +2695,29 @@ a.missing{color:#ff6b6b!important}
     document.getElementById("edMode").textContent = "Modifier l'accueil";
     edName.value = "Accueil — " + (w.title || "");
     document.getElementById("edProjWrap").style.display = "none";
-    edBody.innerHTML = document.getElementById("homeBody").innerHTML;
     edCat = null;
     renderEdCats();
+    DB.get("meta", "lbls-" + w.id).then(function(v){
+      var o = {}; try { o = JSON.parse(v || "{}"); } catch (err) {}
+      var lblImp = o.imp || "Articles importants";
+      var lblGal = o.gal || "Galerie";
+      var lblAct = o.act || "Activité récente";
+      edBody.innerHTML = sanitize(document.getElementById("homeBody").innerHTML +
+        '<h3 data-lbl="imp">' + esc(lblImp) + '</h3>' +
+        '<h3 data-lbl="gal">' + esc(lblGal) + '</h3>' +
+        '<h3 data-lbl="act">' + esc(lblAct) + '</h3>');
+    });
     viewEditor.classList.add("open");
     editorOpen = true;
     ovPush();
     setTimeout(function(){ edBody.focus(); setTimeout(kbFix, 150); }, 280);
   }
-  var homeEditing = false;
-  function startHomeEdit(){
-    if (homeEditing) return;
-    homeEditing = true;
-    var body = document.querySelector("#view-world .wiki-body");
-    body.contentEditable = "true";
-    body.classList.add("editing");
-    ["wikiGrid", "wikiGallery", "wList"].forEach(function(id){
-      var el = document.getElementById(id);
-      if (el) el.setAttribute("contenteditable", "false");
-    });
-    document.getElementById("wikiActions").style.display = "none";
-    var ssEl = document.getElementById("saveState");
-    if (ssEl) ssEl.hidden = true;
-    document.getElementById("homeEditBar").classList.add("show");
-    setTimeout(function(){ body.focus(); }, 120);
-  }
-  function stopHomeEdit(save){
-    var body = document.querySelector("#view-world .wiki-body");
-    var w = worldById(currentWorldId);
-    if (save && w){
-      var grab = function(id){
-        var el = document.getElementById(id);
-        return el && el.firstChild ? el.firstChild.nodeValue.trim() : "";
-      };
-      var o = { home: grab("wikiHomeTitle"), imp: grab("lblImp"), gal: grab("lblGal"), act: grab("lblAct") };
-      DB.put("meta", JSON.stringify(o), "lbls-" + w.id);
-      DB.put("meta", document.getElementById("wikiWelcome").innerHTML, "welcome-" + w.id);
-      logEvent("edit", "Accueil de « " + w.title + " »", "", null);
-      setSaveState("saved");
-      toast("Accueil enregistré");
-    } else {
-      renderWorldHome();
-    }
-    body.contentEditable = "false";
-    body.classList.remove("editing");
-    document.getElementById("wikiActions").style.display = "";
-    document.getElementById("homeEditBar").classList.remove("show");
-    homeEditing = false;
-  }
   document.getElementById("wEdit").addEventListener("click", openHomeEditor);
-  document.getElementById("homeSave").addEventListener("click", function(){ stopHomeEdit(true); });
-  document.getElementById("homeCancel").addEventListener("click", function(){ stopHomeEdit(false); });
-  document.querySelectorAll(".wiki-a").forEach(function(a){
-    a.addEventListener("click", function(e){ e.preventDefault(); toast("Lien interne — bientôt"); });
+  document.addEventListener("click", function(e){
+    var a = e.target.closest(".wiki-a");
+    if (!a) return;
+    e.preventDefault();
+    toast("Lien interne — bientôt");
   });
   applyTheme();
   renderNav();
@@ -2527,6 +2760,7 @@ a.missing{color:#ff6b6b!important}
     };
   })();
   window.DB = DB;
+  purgeTrash();
   renderFeed();
 
   var saveEl = document.getElementById("saveState");
@@ -2542,34 +2776,6 @@ a.missing{color:#ff6b6b!important}
     }
   }
 
-  var welcomeEl = document.querySelector(".wiki-welcome");
-  var welcomeEditing = false;
-  var welcomeTimer;
-  function saveWelcome(){
-    setSaveState("saving");
-    DB.put("meta", welcomeEl.innerHTML, "welcome-" + currentWorldId).then(function(){ setSaveState("saved"); });
-  }
-  function toggleWelcomeEdit(){
-    if (!welcomeEl) return;
-    welcomeEditing = !welcomeEditing;
-    welcomeEl.contentEditable = welcomeEditing ? "true" : "false";
-    welcomeEl.classList.toggle("editing", welcomeEditing);
-    if (welcomeEditing){
-      welcomeEl.focus();
-      toast("Mode édition — autosave actif, aucun toast");
-    } else {
-      welcomeEl.blur();
-      clearTimeout(welcomeTimer);
-      saveWelcome();
-    }
-  }
-  if (welcomeEl) welcomeEl.addEventListener("input", function(){
-    if (!welcomeEditing) return;
-    setSaveState("saving");
-    clearTimeout(welcomeTimer);
-    welcomeTimer = setTimeout(saveWelcome, 800);
-  });
-
   /* Amorçage : lecture ou seed depuis la base */
   DB.getAll("assets").then(function(list){
     (list || []).forEach(function(a){ assetCache[a.id] = a.data; });
@@ -2578,7 +2784,7 @@ a.missing{color:#ff6b6b!important}
     if (list && list.length){
       list.sort(function(a, b){ return (a.ord || 0) - (b.ord || 0); });
       projects.length = 0;
-      list.forEach(function(p){ projects.push(p); });
+      list.forEach(function(p){ if (!p.trashed) projects.push(p); });
     } else {
       projects.forEach(function(p, i){
         p.id = p.id || ("w" + i);
@@ -2595,32 +2801,52 @@ a.missing{color:#ff6b6b!important}
       wImportant.length = 0; wArticles.length = 0;
       var seenPg = {};
       pages.forEach(function(pg){
-        if (seenPg[pg.title]) return;
-        seenPg[pg.title] = 1;
-        if (pg.important) wImportant.push({ id:pg.id, title:pg.title, cat:pg.cat, img:pg.img, worldId:pg.worldId || "cielemara", cats:pg.cats, mts:pg.mts, important:true });
-        else wArticles.push({ id:pg.id, title:pg.title, cat:pg.cat, snip:pg.snip, updated:pg.updated, worldId:pg.worldId || "cielemara", cats:pg.cats, mts:pg.mts });
+        if (pg.trashed) return;
+        /* Fusion par (monde :: titre) : une page peut exister en double
+           (copie importante + copie normale avec des ids différents).
+           On garde UNE entrée, et la version "importante" prime. */
+        var key = (pg.worldId || "inbox") + "::" + (pg.title || "");
+        if (seenPg[key]){
+          var ex = seenPg[key];
+          if (pg.important && !ex.important){
+            ex.important = true;
+            if (pg.img) ex.img = pg.img;
+            /* Déplacement vers wImportant : sinon l'article "important"
+               resterait invisible dans la grille des articles importants */
+            var ai = wArticles.indexOf(ex);
+            if (ai > -1){ wArticles.splice(ai, 1); wImportant.push(ex); }
+          }
+          if (pg.mts && (!ex.mts || pg.mts > ex.mts)) ex.mts = pg.mts;
+          if (pg.updated) ex.updated = pg.updated;
+          return;
+        }
+        var item = { id:pg.id, title:pg.title, cat:pg.cat, snip:pg.snip, updated:pg.updated, worldId:pg.worldId || "cielemara", cats:pg.cats, mts:pg.mts, important: !!pg.important };
+        if (pg.important){ item.img = pg.img; wImportant.push(item); }
+        else wArticles.push(item);
+        seenPg[key] = item;
       });
     } else {
       wImportant.forEach(function(a, i){
         a.id = a.id || ("imp-" + i);
-        a.worldId = "cielemara";
-        DB.put("pages", { id:a.id, worldId:"cielemara", important:true, ord:i, title:a.title, cat:a.cat, img:a.img, cats:a.cats, mts:a.mts });
+        a.worldId = currentWorldId;
+        DB.put("pages", { id:a.id, worldId:currentWorldId, important:true, ord:i, title:a.title, cat:a.cat, img:a.img, cats:a.cats, mts:a.mts });
       });
       wArticles.forEach(function(a, i){
         a.id = a.id || ("pg-" + i);
-        a.worldId = "cielemara";
-        DB.put("pages", { id:a.id, worldId:"cielemara", important:false, ord:i, title:a.title, cat:a.cat, snip:a.snip, updated:a.updated, cats:a.cats, mts:a.mts });
+        a.worldId = currentWorldId;
+        DB.put("pages", { id:a.id, worldId:currentWorldId, important:false, ord:i, title:a.title, cat:a.cat, snip:a.snip, updated:a.updated, cats:a.cats, mts:a.mts });
       });
     }
     renderWiki();
     refreshHero();
     loadGallery();
     updateCounts();
+    renderProjects();
     return DB.get("meta", "welcome-cielemara");
   }).then(function(v){
     if (v){
       var hb = document.getElementById("homeBody");
-      if (hb && !hb.innerHTML) hb.innerHTML = '<h3 class="hb-title">Accueil</h3>' + v;
+      if (hb && !hb.innerHTML) hb.innerHTML = '<h3 class="hb-title">Accueil</h3>' + sanitize(v);
     }
     return DB.get("meta", "theme");
   }).then(function(t){
@@ -2631,16 +2857,41 @@ a.missing{color:#ff6b6b!important}
   }).catch(function(){});
 
   /* ---------- Réglages & données ---------- */
+  /* Taille réelle des données de sauvegarde : IndexedDB SEUL (pas les caches).
+     Approximation UTF-16 (2 octets/caractère) pour les valeurs JSON,
+     taille exacte pour les Blobs. */
+  function idbUsage(){
+    if (!DB || !DB.getAll) return Promise.resolve(0);
+    var stores = ["meta", "worlds", "pages", "assets", "events"];
+    return Promise.all(stores.map(function(s){ return DB.getAll(s); })).then(function(lists){
+      var total = 0;
+      lists.forEach(function(list){
+        (list || []).forEach(function(v){
+          if (!v) return;
+          if (v instanceof Blob){ total += v.size; return; }
+          try { total += JSON.stringify(v).length * 2; } catch (e) { total += 64; }
+        });
+      });
+      return total;
+    }).catch(function(){ return 0; });
+  }
   function openSettings(){
-    closeAll();
+    closeAll(true);
     document.getElementById("settingsSheet").classList.add("open");
     backdrop.classList.add("show");
     ovPush();
+    /* Vrai total des données de sauvegarde (IndexedDB seul) */
+    idbUsage().then(function(bytes){
+      var el = document.getElementById("storageUsed");
+      if (el) el.textContent = (bytes / 1048576).toFixed(1) + " Mo";
+    }).catch(function(){});
+    /* Total navigateur (IndexedDB + caches du service worker + local) */
     if (navigator.storage && navigator.storage.estimate){
       navigator.storage.estimate().then(function(e){
         var used = (e.usage || 0) / 1048576;
         var quota = (e.quota || 0) / 1048576;
-        document.getElementById("storageUsed").textContent = used.toFixed(1) + " Mo / " + Math.round(quota) + " Mo";
+        var el = document.getElementById("storageTotal");
+        if (el) el.textContent = used.toFixed(1) + " Mo / " + Math.round(quota) + " Mo";
       }).catch(function(){});
     }
     if (navigator.storage && navigator.storage.persisted){
@@ -2681,11 +2932,15 @@ a.missing{color:#ff6b6b!important}
     rd.onload = function(){
       try{
         var data = JSON.parse(rd.result);
+        if (!data || typeof data !== "object") throw new Error("bad");
         var jobs = [];
         (data.worlds || []).forEach(function(w){ jobs.push(DB.put("worlds", w)); });
         (data.pages || []).forEach(function(p){ jobs.push(DB.put("pages", p)); });
         (data.assets || []).forEach(function(a){ jobs.push(DB.put("assets", a)); });
-        Object.keys(data.meta || {}).forEach(function(k){ jobs.push(DB.put("meta", data.meta[k], k)); });
+        Object.keys(data.meta || {}).forEach(function(k){
+          var v = data.meta[k];
+          jobs.push(DB.put("meta", typeof v === "string" ? sanitize(v) : v, k));
+        });
         Promise.all(jobs).then(function(){
           toast("Sauvegarde restaurée — rechargement");
           setTimeout(function(){ location.reload(); }, 900);
@@ -2735,7 +2990,7 @@ a.missing{color:#ff6b6b!important}
       var t = document.createElement("div");
       t.className = "wg-tile";
       t.style.animationDelay = (i * 50) + "ms";
-      t.innerHTML = '<button class="wg-del" aria-label="Retirer cette image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><img src="' + a.data + '" alt=""><span>' + (a.name || ("Image " + (i + 1))) + '</span>';
+      t.innerHTML = '<button class="wg-del" aria-label="Retirer cette image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><img src="' + a.data + '" alt=""><span>' + esc(a.name || ("Image " + (i + 1))) + '</span>';
       t.querySelector("img").addEventListener("click", function(){ openLightbox(a); });
       t.querySelector(".wg-del").addEventListener("click", function(ev){
         ev.stopPropagation();
@@ -2836,7 +3091,7 @@ a.missing{color:#ff6b6b!important}
         return compressFile(f, 700, .8).then(function(data){
           var rec = {
             id: "gal-" + Date.now() + "-" + i,
-            worldId: "cielemara", kind: "gallery", ord: base + i,
+            worldId: currentWorldId, kind: "gallery", ord: base + i,
             name: f.name.replace(/\.[^.]+$/, ""), data: data
           };
           assetCache[rec.id] = data;
@@ -2865,9 +3120,9 @@ a.missing{color:#ff6b6b!important}
     compressFile(f, 800, .8).then(function(data){
       var id = "thumb-" + Date.now();
       assetCache[id] = data;
-      return DB.put("assets", { id:id, worldId:"cielemara", kind:"thumb", data:data }).then(function(){
+      return DB.put("assets", { id:id, worldId:currentWorldId, kind:"thumb", data:data }).then(function(){
         for (var i = 0; i < projects.length; i++){
-          if (projects[i].id === "cielemara"){
+          if (projects[i].id === currentWorldId){
             projects[i].thumbAsset = id;
             DB.put("worlds", projects[i]);
           }
@@ -2875,7 +3130,7 @@ a.missing{color:#ff6b6b!important}
         renderProjects();
         logEvent("cover", "Miniature du monde", "", null);
         setSaveState("saved");
-        toast("Miniature de Cieléméra mise à jour");
+        toast("Miniature mise à jour");
       });
     }).catch(function(){ toast("Image illisible"); });
   });
@@ -2892,9 +3147,9 @@ a.missing{color:#ff6b6b!important}
     compressFile(f, 1600, .82).then(function(data){
       var id = "cover-" + Date.now();
       assetCache[id] = data;
-      return DB.put("assets", { id:id, worldId:"cielemara", kind:"cover", data:data }).then(function(){
+      return DB.put("assets", { id:id, worldId:currentWorldId, kind:"cover", data:data }).then(function(){
         for (var i = 0; i < projects.length; i++){
-          if (projects[i].id === "cielemara"){
+          if (projects[i].id === currentWorldId){
             projects[i].coverAsset = id;
             DB.put("worlds", projects[i]);
           }
@@ -2903,7 +3158,7 @@ a.missing{color:#ff6b6b!important}
         renderProjects();
         logEvent("cover", "Couverture du monde", "", null);
         setSaveState("saved");
-        toast("Couverture de Cieléméra mise à jour");
+        toast("Couverture du monde mise à jour");
       });
     }).catch(function(){ toast("Image illisible"); });
   });
@@ -2995,9 +3250,9 @@ a.missing{color:#ff6b6b!important}
     var base = null;
     wArticles.concat(wImportant).forEach(function(a){ if (a.title === title) base = a; });
     return {
-      intro: base ? base.snip : "Page en cours de rédaction.",
+      intro: base ? esc(base.snip) : "Page en cours de rédaction.",
       secs:[{ h:"Notes", p:"Cette page n'a pas encore de contenu structuré. Touchez <b>MODIFIER</b> pour l'écrire." }],
-      tags:["#" + (base ? base.cat.toLowerCase() : "brouillon")],
+      tags:["#" + (base ? esc(base.cat.toLowerCase()) : "brouillon")],
       rel:[], cats: base ? [base.cat] : []
     };
   }
@@ -3005,6 +3260,8 @@ a.missing{color:#ff6b6b!important}
   var artEditOn = false;
   var artTimer;
   function openArticle(title){
+    /* Ferme les overlays (recherche, sheets…) avant d'ouvrir l'article */
+    closeAll(true);
     var exists = allPages().some(function(p){ return p.title === title; });
     if (!exists){
       editTarget = null;
@@ -3033,6 +3290,12 @@ a.missing{color:#ff6b6b!important}
     });
   }
   function renderArticle(){
+    /* Lie le contexte au monde RÉEL de l'article (Inbox compris) :
+       sinon le thème, le fil d'Ariane et la clé de contenu visent
+       le mauvais monde quand on ouvre l'article depuis une autre vue. */
+    var artWorld = null;
+    allPages().forEach(function(p){ if (p.title === currentArt) artWorld = p.worldId || "inbox"; });
+    currentWorldId = artWorld || currentWorldId;
     var d = artData(currentArt);
     var accent = THEMES[themeIdx].accent;
     viewArticle.style.setProperty("--art-accent", accent);
@@ -3042,25 +3305,35 @@ a.missing{color:#ff6b6b!important}
       DB.get("meta", "txtc-" + currentWorldId),
       DB.get("meta", "font-" + currentWorldId)
     ]).then(function(v){
+      var artBg = (v[1] && v[1] !== "transparent") ? v[1] : null;
       viewArticle.style.setProperty("--art-lk", v[0] || "");
       viewArticle.style.setProperty("--art-txt", v[2] || "");
       viewArticle.style.setProperty("--art-txt-hi", v[2] ? "#fff" : "");
-      if (v[1] && v[1] !== "transparent") viewArticle.style.backgroundImage = "linear-gradient(180deg," + v[1] + " 0%, var(--bg) 460px)";
       if (v[3]){
         var fam = "Cinzel, serif";
         TH_FONTS.forEach(function(f){ if (f[0] === v[3]) fam = f[2]; });
         viewArticle.style.setProperty("--disp-font", fam);
       }
+      viewArticle.style.backgroundColor = "var(--bg)";
+      viewArticle.style.backgroundImage = artBg
+        ? "linear-gradient(180deg," + artBg + " 0%, var(--bg) 460px)"
+        : "linear-gradient(180deg," + hexToRgba(accent, .15) + " 0%, rgba(20,21,25,0) 420px)";
     });
-    viewArticle.style.backgroundColor = "var(--bg)";
-    viewArticle.style.backgroundImage = "linear-gradient(180deg," + hexToRgba(accent, .15) + " 0%, rgba(20,21,25,0) 420px)";
-    var cover = document.getElementById("artCover");
-    if (d.cover){ cover.src = d.cover; cover.hidden = false; viewArticle.classList.add("has-cover"); }
-    else { cover.hidden = true; viewArticle.classList.remove("has-cover"); }
-    document.getElementById("artTitle").textContent = currentArt;
     var pgMeta = null;
     wArticles.concat(wImportant).forEach(function(a){ if (a.title === currentArt) pgMeta = a; });
-    document.getElementById("artMeta").textContent = "par Michaz · " + (pgMeta ? "modifié " + (pgMeta.updated || "à l'instant") : "brouillon") + " · " + (pgMeta ? pgMeta.cat : "—");
+    var cover = document.getElementById("artCover");
+    /* Couverture : personnalisée > seed > codée en dur (démo).
+       SAUF si coverRemoved est posé → pas de couverture du tout. */
+    var covSrc = null;
+    if (pgMeta && !pgMeta.coverRemoved){
+      covSrc = assetCache[pgMeta.coverAsset] || pgMeta.img || null;
+    }
+    if (!covSrc && !(pgMeta && pgMeta.coverRemoved)) covSrc = d.cover || null;
+    if (covSrc){ cover.src = covSrc; cover.hidden = false; viewArticle.classList.add("has-cover"); }
+    else { cover.hidden = true; viewArticle.classList.remove("has-cover"); }
+    document.getElementById("artTitle").textContent = currentArt;
+    var pgTime = pgMeta ? (pgMeta.mts ? timeAgo(pgMeta.mts) : (pgMeta.updated || "à l'instant")) : "";
+    document.getElementById("artMeta").textContent = "par Michaz · " + (pgMeta ? "modifié " + pgTime : "brouillon") + " · " + (pgMeta ? pgMeta.cat : "—");
     var body = document.getElementById("artContent");
     var html = '<p class="art-p">' + d.intro + '</p>';
     (d.secs || []).forEach(function(s, i){
@@ -3074,16 +3347,19 @@ a.missing{color:#ff6b6b!important}
     body.classList.remove("editing");
     artEditOn = false;
     markLinks();
-    DB.get("meta", "artbody-" + currentArt).then(function(v){ if (v) body.innerHTML = v; markLinks(); });
-    document.getElementById("artTags").innerHTML = (d.tags || []).map(function(t){ return '<span class="art-tag">' + t + '</span>'; }).join("");
+    DB.get("meta", "artbody-" + artKey(currentWorldId, currentArt)).then(function(v){
+      if (v) body.innerHTML = sanitize(v);
+      markLinks();
+    });
+    document.getElementById("artTags").innerHTML = (d.tags || []).map(function(t){ return '<span class="art-tag">' + esc(t) + '</span>'; }).join("");
     var relBox = document.getElementById("artRelated");
     var relCard = document.getElementById("artRelatedCard");
     if ((d.rel || []).length){
       relCard.style.display = "";
-      relBox.innerHTML = d.rel.map(function(r){ return '<a href="#" class="art-rel" data-link="' + r + '">' + r + '</a>'; }).join("");
+      relBox.innerHTML = d.rel.map(function(r){ return '<a href="#" class="art-rel" data-link="' + esc(r) + '">' + esc(r) + '</a>'; }).join("");
     } else relCard.style.display = "none";
     var toc = document.getElementById("artToc");
-    toc.innerHTML = (d.secs || []).map(function(s, i){ return '<li data-sec="sec-' + i + '">' + s.h + '</li>'; }).join("");
+    toc.innerHTML = (d.secs || []).map(function(s, i){ return '<li data-sec="sec-' + i + '">' + esc(s.h) + '</li>'; }).join("");
     toc.hidden = false;
     document.getElementById("tocToggle").textContent = "[masquer]";
     var tocCard = toc.closest(".art-card");
@@ -3093,30 +3369,208 @@ a.missing{color:#ff6b6b!important}
     crumbEl.innerHTML = "";
     var wb = document.createElement("button");
     wb.textContent = "← " + (wNow ? wNow.title : "Mondes");
-    wb.addEventListener("click", function(){ openWorld(currentWorldId); });
+    wb.addEventListener("click", function(){
+      /* L'Inbox est une liste, pas un projet : on y va directement */
+      if (currentWorldId === "inbox") gotoView("inbox");
+      else openWorld(currentWorldId);
+    });
     crumbEl.appendChild(wb);
     var sep2 = document.createElement("span");
     sep2.textContent = "· ce projet";
     crumbEl.appendChild(sep2);
     loadCats(currentWorldId, renderCatMod);
-    DB.get("meta", "pin-" + currentArt).then(function(v){
+    DB.get("meta", "pin-" + artKey(currentWorldId, currentArt)).then(function(v){
       document.getElementById("artPin").classList.toggle("off", v === "0");
     });
   }
   document.getElementById("artBack").addEventListener("click", function(){ history.back(); });
-  document.getElementById("artMore").addEventListener("click", function(){ toast("Options de page — bientôt"); });
-  document.getElementById("artTheme").addEventListener("click", function(){
-    closeAll();
+  /* ---- Menu 3 points de l'article ---- */
+  var thArticleMode = false;
+  function openThemeSheet(fromArticle){
+    closeAll(true);
+    thArticleMode = !!fromArticle;
     var w = worldById(currentWorldId) || {};
-    document.getElementById("thSheetTitle").textContent = "Personnaliser " + (w.title || "");
+    document.getElementById("thSheetTitle").textContent = (thArticleMode && currentArt) ? "Personnaliser " + currentArt : "Personnaliser " + (w.title || "");
     buildThControls(w);
+    /* Section couverture d'article : visible seulement depuis un article */
+    var fld = document.getElementById("artCovField");
+    var pg = thArticleMode ? findPage(currentArt) : null;
+    if (fld) fld.style.display = (thArticleMode && pg) ? "" : "none";
+    var lbl = document.getElementById("artCovLbl");
+    if (lbl) lbl.textContent = pg && (pg.coverAsset || pg.img) ? "Image actuelle — toucher pour remplacer" : "Aucune — toucher pour ajouter";
     document.getElementById("themeSheet").classList.add("open");
     backdrop.classList.add("show");
     ovPush();
+  }
+  function findPage(title){
+    var found = null;
+    [wArticles, wImportant].forEach(function(arr){
+      arr.forEach(function(p){ if (p.title === title) found = p; });
+    });
+    return found;
+  }
+  function renderAll(){
+    renderWiki();
+    renderFeed();
+    updateCounts();
+    renderProjects();
+    if (typeof renderArticlesView === "function") renderArticlesView();
+    if (typeof renderResume === "function") renderResume();
+  }
+  function renamePage(title){
+    var pg = findPage(title);
+    if (!pg) return;
+    var n = prompt("Nouveau titre de la page :", title);
+    if (n === null || !n.trim() || n.trim() === title) return;
+    n = n.trim();
+    var wid = pg.worldId || "inbox";
+    var oldKey = "artbody-" + artKey(wid, title);
+    var newKey = "artbody-" + artKey(wid, n);
+    DB.get("meta", oldKey).then(function(v){
+      if (v) DB.put("meta", v, newKey);
+      DB.del("meta", oldKey);
+    });
+    var oldPin = "pin-" + artKey(wid, title);
+    var newPin = "pin-" + artKey(wid, n);
+    DB.get("meta", oldPin).then(function(v){
+      if (v) DB.put("meta", v, newPin);
+      DB.del("meta", oldPin);
+    });
+    pg.title = n;
+    pg.updated = "à l'instant";
+    pg.mts = Date.now();
+    DB.put("pages", pg);
+    logEvent("edit", n, pg.cat || "", n);
+    renderAll();
+    toast("Page renommée : " + n);
+    openArticle(n);
+  }
+  function duplicatePageTo(title, destWid){
+    var pg = findPage(title);
+    if (!pg) return;
+    var newTitle = title + " (copie)";
+    var wid = destWid || pg.worldId || "inbox";
+    var copy = {
+      id: "pg-" + Date.now(), worldId: wid, important: !!pg.important,
+      ord: wArticles.length, title: newTitle, cat: pg.cat || "",
+      cats: (pg.cats || []).slice(), snip: pg.snip || "",
+      updated: "à l'instant", mts: Date.now(), img: pg.img, coverAsset: pg.coverAsset, coverRemoved: pg.coverRemoved
+    };
+    if (copy.important) wImportant.push(copy); else wArticles.push(copy);
+    DB.put("pages", copy);
+    DB.get("meta", "artbody-" + artKey(pg.worldId || "inbox", title)).then(function(v){
+      if (v) DB.put("meta", v, "artbody-" + artKey(wid, newTitle));
+    });
+    logEvent("create", newTitle, copy.cat, newTitle);
+    renderAll();
+    toast("Page dupliquée : " + newTitle);
+    openArticle(newTitle);
+  }
+  function duplicatePage(title){
+    /* Sheet de destination pour la copie */
+    document.getElementById("moveSheetTitle").textContent = "Dupliquer vers…";
+    var box = document.getElementById("moveSheetList");
+    box.innerHTML = "";
+    function addDupBtn(wid, label){
+      var b = document.createElement("button");
+      b.className = "sheet__opt";
+      b.innerHTML = '<span class="action__ico ico-green">' + P_ICONS.compass + '</span><span><b>' + esc(label) + '</b><small>' + (wid === (findPage(title) || {}).worldId ? "projet actuel" : "créer la copie ici") + '</small></span>';
+      b.addEventListener("click", function(){
+        closeAll(true);
+        duplicatePageTo(title, wid);
+      });
+      box.appendChild(b);
+    }
+    addDupBtn("inbox", "Inbox (sans projet)");
+    projects.forEach(function(pr){ addDupBtn(pr.id, pr.title); });
+    closeAll(true);
+    document.getElementById("moveSheet").classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+  }
+  function movePage(title){
+    var pg = findPage(title);
+    if (!pg) return;
+    document.getElementById("moveSheetTitle").textContent = "Déplacer vers…";
+    var box = document.getElementById("moveSheetList");
+    box.innerHTML = "";
+    function addMoveBtn(wid, label){
+      var b = document.createElement("button");
+      b.className = "sheet__opt";
+      b.innerHTML = '<span class="action__ico ico-gold">' + P_ICONS.compass + '</span><span><b>' + esc(label) + '</b><small>' + (wid === (pg.worldId || "inbox") ? "projet actuel" : "déplacer ici") + '</small></span>';
+      b.addEventListener("click", function(){
+        doMovePage(title, wid);
+      });
+      box.appendChild(b);
+    }
+    addMoveBtn("inbox", "Inbox (sans projet)");
+    projects.forEach(function(pr){ addMoveBtn(pr.id, pr.title); });
+    closeAll(true);
+    document.getElementById("moveSheet").classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
+  }
+  function doMovePage(title, wid){
+    var pg = findPage(title);
+    if (!pg) return;
+    var oldWid = pg.worldId || "inbox";
+    pg.worldId = wid;
+    pg.updated = "à l'instant";
+    pg.mts = Date.now();
+    DB.put("pages", pg);
+    if (oldWid !== wid){
+      var oldKey = "artbody-" + artKey(oldWid, title);
+      var newKey = "artbody-" + artKey(wid, title);
+      DB.get("meta", oldKey).then(function(v){
+        if (v) DB.put("meta", v, newKey);
+        DB.del("meta", oldKey);
+      });
+      var oldPin = "pin-" + artKey(oldWid, title);
+      var newPin = "pin-" + artKey(wid, title);
+      DB.get("meta", oldPin).then(function(v){
+        if (v) DB.put("meta", v, newPin);
+        DB.del("meta", oldPin);
+      });
+    }
+    logEvent("edit", title, pg.cat || "", title);
+    closeAll();
+    currentWorldId = wid;
+    renderAll();
+    toast("Page déplacée vers « " + (worldById(wid) ? worldById(wid).title : "Inbox") + " »");
+    openArticle(title);
+  }
+  function trashPage(title){
+    if (!window.confirm("Envoyer « " + title + " » dans la corbeille ?")) return;
+    var pg = findPage(title);
+    if (!pg) return;
+    pg.trashed = true;
+    pg.trashedAt = Date.now();
+    var idx = wArticles.indexOf(pg);
+    if (idx > -1) wArticles.splice(idx, 1);
+    var idx2 = wImportant.indexOf(pg);
+    if (idx2 > -1) wImportant.splice(idx2, 1);
+    DB.put("pages", pg);
+    DB.del("meta", "pin-" + artKey(pg.worldId || "inbox", title));
+    closeAll(true);
+    renderAll();
+    if (location.hash.indexOf("article/") === 0) history.back();
+    toast("Page envoyée dans la corbeille");
+  }
+  document.getElementById("artMore").addEventListener("click", function(){
+    closeAll(true);
+    document.getElementById("artSheetTitle").textContent = "Options — " + currentArt;
+    document.getElementById("artSheet").classList.add("open");
+    backdrop.classList.add("show");
+    ovPush();
   });
+  document.getElementById("artOptTheme").addEventListener("click", function(){ openThemeSheet(true); });
+  document.getElementById("artOptRename").addEventListener("click", function(){ closeAll(true); renamePage(currentArt); });
+  document.getElementById("artOptMove").addEventListener("click", function(){ movePage(currentArt); });
+  document.getElementById("artOptDup").addEventListener("click", function(){ closeAll(true); duplicatePage(currentArt); });
+  document.getElementById("artOptDel").addEventListener("click", function(){ trashPage(currentArt); });
   document.getElementById("artPin").addEventListener("click", function(){
     var off = this.classList.toggle("off");
-    DB.put("meta", off ? "0" : "1", "pin-" + currentArt);
+    DB.put("meta", off ? "0" : "1", "pin-" + artKey(currentWorldId, currentArt));
     setSaveState("saved");
   });
   document.getElementById("artEdit").addEventListener("click", function(){ openEditor(currentArt); });
@@ -3132,7 +3586,7 @@ a.missing{color:#ff6b6b!important}
     setSaveState("saving");
     clearTimeout(artTimer);
     artTimer = setTimeout(function(){
-      DB.put("meta", document.getElementById("artContent").innerHTML, "artbody-" + currentArt).then(function(){ setSaveState("saved"); });
+      DB.put("meta", document.getElementById("artContent").innerHTML, "artbody-" + artKey(currentWorldId, currentArt)).then(function(){ setSaveState("saved"); });
     }, 800);
   });
   document.getElementById("tocToggle").addEventListener("click", function(){
@@ -3164,7 +3618,6 @@ a.missing{color:#ff6b6b!important}
   });
   var worldBody = document.querySelector("#view-world .wiki-body");
   if (worldBody) worldBody.addEventListener("click", function(e){
-    if (homeEditing) return;
     var img = e.target.closest("img");
     if (!img) return;
     e.preventDefault();
@@ -3190,7 +3643,7 @@ a.missing{color:#ff6b6b!important}
     (pg ? pageCats(pg) : []).forEach(function(cn){
       var c = document.createElement("button");
       c.className = "acm-chip";
-      c.innerHTML = cn + ' <b>✕</b>';
+      c.innerHTML = esc(cn) + ' <b>✕</b>';
       c.querySelector("b").addEventListener("click", function(ev){
         ev.stopPropagation();
         pg.cats = pageCats(pg).filter(function(x){ return x !== cn; });
@@ -3276,18 +3729,18 @@ a.missing{color:#ff6b6b!important}
       var el = document.createElement("article");
       el.className = "world";
       el.innerHTML = '<div class="world__cover" style="background:linear-gradient(150deg,' + m.bg + ',' + m.color + ')">' +
-        '<span class="world__chip">' + (p.cat || "Inbox") + '</span>' +
+        '<span class="world__chip">' + esc(p.cat || "Inbox") + '</span>' +
         (W_ICONS[m.icon] || W_ICONS.folder) +
-        '</div><div class="world__body"><h4 class="world__title">' + p.title + '</h4>' +
-        '<p class="world__desc">' + (p.snip || "") + '</p>' +
-        '<div class="world__foot"><span>' + (w ? w.title : "") + '</span><span>' + timeAgo(p.mts) + '</span></div></div>';
+        '</div><div class="world__body"><h4 class="world__title">' + esc(p.title) + '</h4>' +
+        '<p class="world__desc">' + esc(p.snip || "") + '</p>' +
+        '<div class="world__foot"><span>' + esc(w ? w.title : "") + '</span><span>' + esc(timeAgo(p.mts)) + '</span></div></div>';
       el.addEventListener("click", function(){ openArticle(p.title); });
       box.appendChild(el);
     });
   }
   function updateCounts(){
     renderResume();
-    var total = wArticles.length + wImportant.length;
+    var total = allPages().length;
     [["statProjets", projects.length], ["statArticles", total], ["statCats", wCats.length]].forEach(function(pair){
       var el = document.getElementById(pair[0]);
       if (!el) return;
@@ -3320,11 +3773,30 @@ a.missing{color:#ff6b6b!important}
   var maState = { cat: "Tous", q: "" };
   function allPages(){
     var seen = {};
+    if (!wArticles || !wImportant) return [];
     return wArticles.concat(wImportant).filter(function(a){
-      if (seen[a.title]) return false;
-      seen[a.title] = 1;
+      if (a.trashed) return false;
+      /* Dédup par (monde :: titre) — jamais par id seul : les bases
+         existantes peuvent contenir des doublons id différents. */
+      var key = (a.worldId || "inbox") + "::" + (a.title || "");
+      if (seen[key]) return false;
+      seen[key] = 1;
       return true;
     });
+  }
+  /* Statistiques temps réel d'un monde : nombre de pages & dernière
+     modification, calculés depuis les pages réelles (plus de valeurs
+     figées dans les cartes / la recherche / les épinglés). */
+  function worldStats(w){
+    if (!w) return { pages: 0, updated: "—", latestMts: 0 };
+    if (!wArticles || !wImportant) return { pages: w.pages || 0, updated: w.updated || "—", latestMts: w.mts || 0 };
+    var list = allPages().filter(function(a){ return (a.worldId || "inbox") === w.id; });
+    var pages = list.length;
+    /* La date du projet lui-même compte aussi (renommage, thème…) */
+    var latest = w.mts || 0;
+    list.forEach(function(a){ if (a.mts && a.mts > latest) latest = a.mts; });
+    if (pages === 0) return { pages: w.pages || 0, updated: w.updated || "—", latestMts: w.mts || 0 };
+    return { pages: pages, updated: latest ? timeAgo(latest) : (w.updated || "—"), latestMts: latest };
   }
   function renderArticlesView(){
     var q = maState.q.toLowerCase();
@@ -3332,6 +3804,9 @@ a.missing{color:#ff6b6b!important}
       var okC = maState.cat === "Tous" || effCats(a).indexOf(maState.cat) > -1;
       var okQ = !q || a.title.toLowerCase().indexOf(q) > -1 || (a.snip || "").toLowerCase().indexOf(q) > -1;
       return okC && okQ;
+    }).sort(function(a, b){
+      /* Tri par dernière modification, du plus récent au plus vieux */
+      return (b.mts || 0) - (a.mts || 0);
     });
     document.getElementById("maCount").textContent = list.length;
     var chips = document.getElementById("maChips");
@@ -3343,7 +3818,7 @@ a.missing{color:#ff6b6b!important}
       if (c !== "Tous" && n === 0) return;
       var b = document.createElement("button");
       b.className = "p-chip" + (maState.cat === c ? " is-active" : "");
-      b.innerHTML = c + " <b>" + n + "</b>";
+      b.innerHTML = esc(c) + " <b>" + n + "</b>";
       b.addEventListener("click", function(){ maState.cat = c; renderArticlesView(); });
       chips.appendChild(b);
     });
@@ -3355,19 +3830,19 @@ a.missing{color:#ff6b6b!important}
       el.className = "arow";
       el.style.animationDelay = (i * 40) + "ms";
       el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span>' +
-        '<span class="arow__txt"><b>' + a.title + '</b><span>' + (a.snip || "") + '</span></span>' +
-        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + a.cat + '</span><span class="arow__time">' + (a.updated || "") + '</span></span>';
+        '<span class="arow__txt"><b>' + esc(a.title) + '</b><span>' + esc(a.snip || "") + '</span></span>' +
+        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + esc(a.cat) + '</span><span class="arow__time">' + esc(a.mts ? timeAgo(a.mts) : (a.updated || "")) + '</span></span>';
       el.addEventListener("click", function(){ openArticle(a.title); });
       box.appendChild(el);
     });
   }
-  document.getElementById("maSearch").addEventListener("input", function(){ maState.q = this.value; renderArticlesView(); });
+  document.getElementById("maSearch").addEventListener("input", debounce(function(){ maState.q = this.value; renderArticlesView(); }, 160));
   document.getElementById("maBack").addEventListener("click", function(){ history.back(); });
 
   /* ---------- Recherche globale ---------- */
   var searchOv = document.getElementById("searchOv");
   function openSearch(){
-    closeAll();
+    closeAll(true);
     searchOv.classList.add("open");
     ovPush();
     var inp = document.getElementById("gsInput");
@@ -3384,17 +3859,26 @@ a.missing{color:#ff6b6b!important}
       return;
     }
     var ws = projects.filter(function(p){ return p.title.toLowerCase().indexOf(q) > -1; });
+    /* L'Inbox est aussi un "monde" cherchable (ses articles y sont listés) */
+    var inboxHits = allPages().filter(function(a){ return (a.worldId || "inbox") === "inbox"; }).length;
+    if (!q || "inbox".indexOf(q) > -1 || (inboxHits && "articles sans projet".indexOf(q) > -1)){
+      ws.push({ id: "inbox", title: "Inbox", cat: "", pages: inboxHits, desc: "Articles sans projet" });
+    }
     var ps = allPages().filter(function(a){ return a.title.toLowerCase().indexOf(q) > -1; });
     if (!ws.length && !ps.length){
-      res.innerHTML = '<p class="wiki-none" style="padding:20px 4px">Aucun résultat pour « ' + q + ' »</p>';
+      res.innerHTML = '<p class="wiki-none" style="padding:20px 4px">Aucun résultat pour « ' + esc(q) + ' »</p>';
       return;
     }
     if (ws.length){
       var g1 = document.createElement("div"); g1.className = "search-grp"; g1.textContent = "Mondes"; res.appendChild(g1);
       ws.forEach(function(p){
         var el = document.createElement("div"); el.className = "arow";
-        el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + p.title + '</b><span>' + p.pages + ' pages</span></span>';
-        el.addEventListener("click", function(){ closeAll(); gotoView("world"); });
+        var isInbox = p.id === "inbox";
+        el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + esc(p.title) + '</b><span>' + (isInbox ? (inboxHits + ' articles sans projet') : (worldStats(p).pages + ' pages')) + '</span></span>';
+        el.addEventListener("click", function(){
+          if (isInbox){ closeAll(true); gotoView("inbox"); }
+          else { closeAll(true); openWorld(p.id); }
+        });
         res.appendChild(el);
       });
     }
@@ -3402,14 +3886,16 @@ a.missing{color:#ff6b6b!important}
       var g2 = document.createElement("div"); g2.className = "search-grp"; g2.textContent = "Articles"; res.appendChild(g2);
       ps.forEach(function(a){
         var m = wCatMeta(a.cat);
+        var wid = a.worldId || "inbox";
+        var wname = wid === "inbox" ? "Inbox" : (worldById(wid) || { title: "" }).title;
         var el = document.createElement("div"); el.className = "arow";
-        el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + a.title + '</b><span>' + a.cat + '</span></span>';
-        el.addEventListener("click", function(){ closeAll(); openArticle(a.title); });
+        el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + esc(a.title) + '</b><span>' + esc(a.cat || "Inbox") + ' · ' + esc(wname) + '</span></span>';
+        el.addEventListener("click", function(){ openArticle(a.title); });
         res.appendChild(el);
       });
     }
   }
-  document.getElementById("gsInput").addEventListener("input", function(){ renderSearch(this.value); });
+  document.getElementById("gsInput").addEventListener("input", debounce(function(){ renderSearch(this.value); }, 160));
   document.getElementById("gsCancel").addEventListener("click", closeAll);
   document.querySelectorAll(".js-search").forEach(function(b){
     b.addEventListener("click", function(e){ e.stopPropagation(); openSearch(); });
@@ -3449,16 +3935,22 @@ a.missing{color:#ff6b6b!important}
     var ep = document.getElementById("edProj");
     document.getElementById("edProjWrap").style.display = "";
     ep.innerHTML = "";
+    /* Inbox d'abord : destination des pages sans projet */
+    var oi = document.createElement("option");
+    oi.value = "inbox";
+    oi.textContent = "Inbox (sans projet)";
+    ep.appendChild(oi);
     projects.forEach(function(pr){
       var o = document.createElement("option");
       o.value = pr.id;
       o.textContent = pr.title;
       ep.appendChild(o);
     });
-    ep.value = pg0 ? pg0.worldId : currentWorldId;
+    var selVal = pg0 ? pg0.worldId : currentWorldId;
+    ep.value = ep.querySelector('option[value="' + selVal + '"]') ? selVal : "inbox";
     if (title){
-      DB.get("meta", "artbody-" + title).then(function(v){
-        edBody.innerHTML = v || bodyHTML(artData(title));
+      DB.get("meta", "artbody-" + artKey(currentWorldId, title)).then(function(v){
+        edBody.innerHTML = sanitize(v || bodyHTML(artData(title)));
       });
     } else {
       edBody.innerHTML = "";
@@ -3491,7 +3983,7 @@ a.missing{color:#ff6b6b!important}
         var name = prompt("Nom de la page à lier :");
         if (name && name.trim()){
           name = name.trim();
-          document.execCommand("insertHTML", false, '<a href="#" class="wiki-a" data-link="' + name + '">' + name + '</a>&nbsp;');
+          document.execCommand("insertHTML", false, '<a href="#" class="wiki-a" data-link="' + esc(name) + '">' + esc(name) + '</a>&nbsp;');
         }
       }
       else if (cmd === "image"){ document.getElementById("edImgFile").click(); }
@@ -3529,11 +4021,28 @@ a.missing{color:#ff6b6b!important}
     var title = edName.value.trim();
     if (!title){ toast("Donne un nom à la page"); edName.focus(); return; }
     var html = edBody.innerHTML;
-    if (edMode === "source") edBody.innerHTML = document.getElementById("edSource").value;
+    if (edMode === "source") edBody.innerHTML = sanitize(document.getElementById("edSource").value);
     if (editTarget && editTarget.indexOf("home:") === 0){
       var wid = editTarget.slice(5);
-      DB.put("meta", html, "homebody-" + wid).then(function(){
-        document.getElementById("homeBody").innerHTML = html;
+      var tmp = document.createElement("div");
+      tmp.innerHTML = html;
+      var lbls = {};
+      ["imp", "gal", "act"].forEach(function(key){
+        var el = tmp.querySelector('[data-lbl="' + key + '"]');
+        if (el) { lbls[key] = el.textContent.trim(); el.remove(); }
+      });
+      var bodyOnly = tmp.innerHTML;
+      Promise.all([
+        DB.put("meta", bodyOnly, "homebody-" + wid),
+        DB.put("meta", JSON.stringify(lbls), "lbls-" + wid)
+      ]).then(function(){
+        document.getElementById("homeBody").innerHTML = sanitize(bodyOnly);
+        var lblImpEl = document.getElementById("lblImp");
+        if (lblImpEl && lblImpEl.firstChild) lblImpEl.firstChild.nodeValue = lbls.imp || "Articles importants";
+        var lblGalEl = document.getElementById("lblGal");
+        if (lblGalEl && lblGalEl.firstChild) lblGalEl.firstChild.nodeValue = (lbls.gal || "Galerie") + " ";
+        var lblActEl = document.getElementById("lblAct");
+        if (lblActEl && lblActEl.firstChild) lblActEl.firstChild.nodeValue = lbls.act || "Activité récente";
         logEvent("edit", "Accueil du monde", "", null);
         closeEditor();
         setSaveState("saved");
@@ -3541,17 +4050,17 @@ a.missing{color:#ff6b6b!important}
       });
       return;
     }
-    DB.put("meta", html, "artbody-" + title);
+    var widK = document.getElementById("edProj").value || currentWorldId;
+    DB.put("meta", html, "artbody-" + artKey(widK, title));
     if (editTarget && editTarget !== title){
-      DB.del("meta", "artbody-" + editTarget);
+      DB.del("meta", "artbody-" + artKey(widK, editTarget));
       [wArticles, wImportant].forEach(function(arr){
         arr.forEach(function(p){ if (p.title === editTarget){ p.title = title; DB.put("pages", p); } });
       });
     }
     if (!editTarget){
-      var wid = document.getElementById("edProj").value || currentWorldId;
       var rec = {
-        id: "pg-" + Date.now(), worldId: wid, important: false,
+        id: "pg-" + Date.now(), worldId: widK, important: false,
         ord: wArticles.length, title: title, cat: edCat || "",
         cats: edCat ? [edCat] : [],
         snip: textSnippet(html), updated: "à l'instant", mts: Date.now()
@@ -3559,18 +4068,26 @@ a.missing{color:#ff6b6b!important}
       wArticles.push(rec);
       DB.put("pages", rec);
     } else {
-      var wid2 = document.getElementById("edProj").value || currentWorldId;
       [wArticles, wImportant].forEach(function(arr){
         arr.forEach(function(p){
-          if (p.title === title){ p.cat = edCat || p.cat; p.updated = "à l'instant"; p.mts = Date.now(); p.worldId = wid2; DB.put("pages", p); }
+          if (p.title === title){ p.cat = edCat || p.cat; p.updated = "à l'instant"; p.mts = Date.now(); p.worldId = widK; DB.put("pages", p); }
         });
       });
+    }
+    /* Rafraîchit le monde lui-même : nombre de pages réel + dernière activité */
+    var wRec = worldById(widK);
+    if (wRec){
+      wRec.pages = allPages().filter(function(a){ return (a.worldId || "cielemara") === widK; }).length;
+      wRec.updated = "à l'instant";
+      wRec.mts = Date.now();
+      DB.put("worlds", wRec);
     }
     logEvent(editTarget ? "edit" : "create", title, edCat || "", title);
     closeEditor();
     renderWiki();
     renderFeed();
     updateCounts();
+    renderProjects();
     toast("Page « " + title + " » enregistrée");
     openArticle(title);
   });
@@ -3583,7 +4100,7 @@ a.missing{color:#ff6b6b!important}
   function logEvent(kind, title, cat, pageTitle){
     DB.put("events", {
       id: "ev-" + Date.now() + "-" + Math.floor(Math.random() * 1e4),
-      ts: Date.now(), worldId: "cielemara",
+      ts: Date.now(), worldId: currentWorldId,
       kind: kind, title: title, cat: cat || "", pageTitle: pageTitle || null
     });
   }
@@ -3608,7 +4125,7 @@ a.missing{color:#ff6b6b!important}
         el.className = "arow";
         el.style.animationDelay = (i * 40) + "ms";
         el.innerHTML = '<span class="arow__ico ico-gold">' + (e.kind === "create" ? W_ICONS.gem : e.kind === "wind" ? W_ICONS.wind : PEN_SVG) + '</span>' +
-          '<span class="arow__txt"><b>' + (e.title || "") + '</b><span>' + ((FEED_LBL && FEED_LBL[e.kind]) || "Activité") + '</span></span>' +
+          '<span class="arow__txt"><b>' + esc(e.title || "") + '</b><span>' + ((FEED_LBL && FEED_LBL[e.kind]) || "Activité") + '</span></span>' +
           '<span class="arow__side"><span class="arow__time">' + timeAgo(e.ts) + '</span></span>';
         if (e.pageTitle) el.addEventListener("click", function(){ openArticle(e.pageTitle); });
         box.appendChild(el);
@@ -3627,13 +4144,14 @@ a.missing{color:#ff6b6b!important}
     pw.forEach(function(p){
       var el = document.createElement("div");
       el.className = "arow";
-      el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + p.title + '</b><span>' + p.pages + ' pages · monde</span></span>';
+      el.innerHTML = '<span class="arow__ico ico-gold">' + P_ICONS.compass + '</span><span class="arow__txt"><b>' + esc(p.title) + '</b><span>' + worldStats(p).pages + ' pages · monde</span></span>';
       el.addEventListener("click", function(){ gotoView("world"); });
       wBox.appendChild(el);
     });
     DB.keys("meta").then(function(keys){
-      var pks = (keys || []).filter(function(k){ return typeof k === "string" && k.indexOf("pin-") === 0; });
-      return Promise.all(pks.map(function(k){ return DB.get("meta", k).then(function(v){ return { t: k.slice(4), v: v }; }); }));
+      var prefix = "pin-" + currentWorldId + "::";
+      var pks = (keys || []).filter(function(k){ return typeof k === "string" && k.indexOf(prefix) === 0; });
+      return Promise.all(pks.map(function(k){ return DB.get("meta", k).then(function(v){ return { t: k.slice(prefix.length), v: v }; }); }));
     }).then(function(list){
       var pinned = (list || []).filter(function(x){ return x.v === "1"; });
       aBox.innerHTML = "";
@@ -3644,12 +4162,12 @@ a.missing{color:#ff6b6b!important}
         var el = document.createElement("div");
         el.className = "arow";
         el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span>' +
-          '<span class="arow__txt"><b>' + x.t + '</b><span>' + (pg ? pg.cat : "page") + '</span></span>' +
+          '<span class="arow__txt"><b>' + esc(x.t) + '</b><span>' + esc(pg ? pg.cat : "page") + '</span></span>' +
           '<button class="unpin" aria-label="Désépingler"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 2l2.9 6.26 6.6.56-5 4.36 1.5 6.45L12 16.9 5.99 19.6l1.5-6.45-5-4.36 6.6-.56z"/></svg></button>';
         el.querySelector(".arow__txt").addEventListener("click", function(){ openArticle(x.t); });
         el.querySelector(".unpin").addEventListener("click", function(ev){
           ev.stopPropagation();
-          DB.put("meta", "0", "pin-" + x.t).then(function(){ renderPinned(); toast("« " + x.t + " » désépinglé"); });
+          DB.put("meta", "0", "pin-" + artKey(currentWorldId, x.t)).then(function(){ renderPinned(); toast("« " + x.t + " » désépinglé"); });
         });
         aBox.appendChild(el);
       });
@@ -3659,11 +4177,14 @@ a.missing{color:#ff6b6b!important}
 
   /* ---------- Multi-mondes ---------- */
   var currentWorldId = "cielemara";
+  function artKey(worldId, title){ return (worldId || currentWorldId) + "::" + title; }
   function worldById(id){
+    if (id === "inbox") return { id: "inbox", title: "Inbox", desc: "Les pages sans projet sont rassemblées ici.", cat: "", sym: "" };
     for (var i = 0; i < projects.length; i++) if (projects[i].id === id) return projects[i];
     return null;
   }
   function openWorld(id){
+    closeAll(true);
     currentWorldId = id || "cielemara";
     if (location.hash === "#world") renderWorldHome();
     else gotoView("world");
@@ -3695,10 +4216,10 @@ a.missing{color:#ff6b6b!important}
     applyWorldTheme(w);
     DB.get("meta", "homebody-" + w.id).then(function(v){
       var el = document.getElementById("homeBody");
-      if (v){ el.innerHTML = v; return; }
+      if (v){ el.innerHTML = sanitize(v); return; }
       DB.get("meta", "welcome-" + w.id).then(function(wv){
-        var base = wv || ("<h2 style=\"text-align:center\">Bienvenue sur le wiki " + w.title + " !</h2><p>" + (w.desc || "") + "</p>");
-        el.innerHTML = '<h3 class="hb-title">Accueil</h3>' + base;
+        var base = wv || ("<h2 style=\"text-align:center\">Bienvenue sur le wiki " + esc(w.title) + " !</h2><p>" + esc(w.desc || "") + "</p>");
+        el.innerHTML = '<h3 class="hb-title">Accueil</h3>' + sanitize(base);
       });
     });
     renderWiki();
@@ -3730,21 +4251,221 @@ a.missing{color:#ff6b6b!important}
     });
   });
 
+  /* ---------- Purge automatique : corbeille > 14 jours ---------- */
+  function purgeTrash(){
+    if (!DB || !DB.getAll) return;
+    var LIMIT = 14 * 86400000;
+    DB.getAll("pages").then(function(pages){
+      (pages || []).forEach(function(p){
+        if (p.trashed && p.trashedAt && Date.now() - p.trashedAt > LIMIT){
+          DB.del("pages", p.id);
+          DB.del("meta", "artbody-" + artKey(p.worldId || "inbox", p.title));
+        }
+      });
+    });
+    DB.getAll("worlds").then(function(worlds){
+      (worlds || []).forEach(function(w){
+        if (w.trashed && w.trashedAt && Date.now() - w.trashedAt > LIMIT){
+          DB.del("worlds", w.id);
+        }
+      });
+    });
+  }
+
+  /* ---------- Inbox : articles sans projet ---------- */
+  function renderInbox(){
+    var list = allPages().filter(function(a){ return (a.worldId || "inbox") === "inbox"; })
+      .sort(function(a, b){ return (b.mts || 0) - (a.mts || 0); });
+    var box = document.getElementById("inboxList");
+    box.innerHTML = "";
+    list.forEach(function(a, i){
+      var m = wCatMeta(a.cat);
+      var el = document.createElement("div");
+      el.className = "arow";
+      el.style.animationDelay = (i * 40) + "ms";
+      el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span>' +
+        '<span class="arow__txt"><b>' + esc(a.title) + '</b><span>' + esc(a.snip || "") + '</span></span>' +
+        '<span class="arow__side"><span class="arow__cat" style="color:' + m.color + '">' + esc(a.cat || "Inbox") + '</span><span class="arow__time">' + esc(a.mts ? timeAgo(a.mts) : (a.updated || "")) + '</span></span>';
+      el.addEventListener("click", function(){ openArticle(a.title); });
+      box.appendChild(el);
+    });
+    document.getElementById("inboxCount").textContent = list.length;
+    document.getElementById("inboxEmpty").hidden = list.length > 0;
+    box.style.display = list.length ? "" : "none";
+  }
+  document.getElementById("inboxBack").addEventListener("click", function(){ history.back(); });
+  document.getElementById("drawerInbox").addEventListener("click", function(){
+    closeAll(true);
+    gotoView("inbox");
+  });
+
+  /* ---------- Corbeille : projets + pages ---------- */
+  function renderTrash(){
+    if (!DB || !DB.getAll) return;
+    Promise.all([DB.getAll("worlds"), DB.getAll("pages")]).then(function(r){
+      var trashedWorlds = (r[0] || []).filter(function(w){ return w.trashed; })
+        .sort(function(a, b){ return (b.trashedAt || 0) - (a.trashedAt || 0); });
+      var trashedPages = (r[1] || []).filter(function(p){ return p.trashed; })
+        .sort(function(a, b){ return (b.trashedAt || 0) - (a.trashedAt || 0); });
+      var total = trashedWorlds.length + trashedPages.length;
+      var wTitle = {};
+      trashedWorlds.forEach(function(w){ wTitle[w.id] = w.title; });
+      var box = document.getElementById("trashList");
+      box.innerHTML = "";
+
+      var g1 = document.createElement("div");
+      g1.className = "search-grp";
+      g1.textContent = "Projets (" + trashedWorlds.length + ")";
+      box.appendChild(g1);
+      if (!trashedWorlds.length){
+        var n1 = document.createElement("p");
+        n1.className = "wiki-none";
+        n1.style.padding = "8px 4px";
+        n1.textContent = "Aucun projet dans la corbeille.";
+        box.appendChild(n1);
+      }
+      trashedWorlds.forEach(function(w, i){
+        var el = document.createElement("div");
+        el.className = "arow";
+        el.style.animationDelay = (i * 40) + "ms";
+        el.innerHTML = '<span class="arow__ico ico-gold" style="background:rgba(238,191,77,.13);color:var(--gold)">' + P_ICONS.compass + '</span>' +
+          '<span class="arow__txt"><b>' + esc(w.title) + '</b><span>Projet · supprimé ' + (w.trashedAt ? timeAgo(w.trashedAt) : "") + '</span></span>' +
+          '<span class="arow__side" style="display:flex;gap:6px">' +
+          '<button class="unpin" style="width:auto;padding:0 10px;color:var(--green);background:rgba(76,195,138,.12)" data-restore="1" aria-label="Restaurer le projet">↩</button>' +
+          '<button class="unpin" style="width:auto;padding:0 10px" data-del="1" aria-label="Supprimer définitivement">✕</button>' +
+          '</span>';
+        el.querySelector("[data-restore]").addEventListener("click", function(ev){
+          ev.stopPropagation();
+          w.trashed = false;
+          w.trashedAt = null;
+          DB.put("worlds", w).then(function(){
+            projects.push(w);
+            projects.sort(function(a, b){ return (a.ord || 0) - (b.ord || 0); });
+            /* Restaure aussi les pages du projet */
+            return DB.getAll("pages");
+          }).then(function(pages){
+            var jobs = [];
+            (pages || []).forEach(function(p){
+              if ((p.worldId || "inbox") === w.id && p.trashed){
+                p.trashed = false;
+                p.trashedAt = null;
+                jobs.push(DB.put("pages", p));
+              }
+            });
+            return Promise.all(jobs).then(function(){
+              /* Re-synchronise les listes mémoire (pages restaurées) */
+              (pages || []).forEach(function(p){
+                if ((p.worldId || "inbox") !== w.id) return;
+                var inArr = wArticles.concat(wImportant).some(function(x){ return x.id === p.id; });
+                if (inArr) return;
+                var item = { id: p.id, title: p.title, cat: p.cat, snip: p.snip, updated: "à l'instant", worldId: p.worldId || "inbox", cats: p.cats, mts: p.mts || Date.now(), img: p.img, important: !!p.important };
+                if (item.important) wImportant.push(item); else wArticles.push(item);
+              });
+            });
+          }).then(function(){
+            renderAll();
+            renderTrash();
+            toast("Projet restauré : " + w.title);
+          });
+        });
+        el.querySelector("[data-del]").addEventListener("click", function(ev){
+          ev.stopPropagation();
+          if (!window.confirm("Supprimer définitivement « " + w.title + " » et toutes ses pages ?")) return;
+          DB.del("worlds", w.id);
+          DB.getAll("pages").then(function(pages){
+            (pages || []).forEach(function(p){
+              if ((p.worldId || "inbox") === w.id){
+                DB.del("pages", p.id);
+                DB.del("meta", "artbody-" + artKey(w.id, p.title));
+              }
+            });
+          }).then(function(){ renderTrash(); toast("Projet supprimé définitivement"); });
+        });
+        box.appendChild(el);
+      });
+
+      var g2 = document.createElement("div");
+      g2.className = "search-grp";
+      g2.style.marginTop = "18px";
+      g2.textContent = "Pages (" + trashedPages.length + ")";
+      box.appendChild(g2);
+      if (!trashedPages.length){
+        var n2 = document.createElement("p");
+        n2.className = "wiki-none";
+        n2.style.padding = "8px 4px";
+        n2.textContent = "Aucune page dans la corbeille.";
+        box.appendChild(n2);
+      }
+      trashedPages.forEach(function(p, i){
+        var wname = wTitle[p.worldId] || (worldById(p.worldId) || { title: "Inbox" }).title;
+        var el = document.createElement("div");
+        el.className = "arow";
+        el.style.animationDelay = (i * 40) + "ms";
+        el.innerHTML = '<span class="arow__ico ico-red" style="background:rgba(255,93,93,.12);color:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>' +
+          '<span class="arow__txt"><b>' + esc(p.title) + '</b><span>' + esc(wname) + ' · supprimé ' + (p.trashedAt ? timeAgo(p.trashedAt) : "") + '</span></span>' +
+          '<span class="arow__side" style="display:flex;gap:6px">' +
+          '<button class="unpin" style="width:auto;padding:0 10px;color:var(--green);background:rgba(76,195,138,.12)" data-restore="1" aria-label="Restaurer">↩</button>' +
+          '<button class="unpin" style="width:auto;padding:0 10px" data-del="1" aria-label="Supprimer définitivement">✕</button>' +
+          '</span>';
+        el.querySelector("[data-restore]").addEventListener("click", function(ev){
+          ev.stopPropagation();
+          p.trashed = false;
+          p.trashedAt = null;
+          DB.put("pages", p).then(function(){
+            /* Remet la page dans les listes mémoire */
+            var item = { id: p.id, title: p.title, cat: p.cat, snip: p.snip, updated: "à l'instant", worldId: p.worldId || "inbox", cats: p.cats, mts: p.mts || Date.now(), img: p.img, important: !!p.important };
+            if (item.important) wImportant.push(item); else wArticles.push(item);
+            renderAll();
+            renderTrash();
+            toast("Page restaurée : " + p.title);
+          });
+        });
+        el.querySelector("[data-del]").addEventListener("click", function(ev){
+          ev.stopPropagation();
+          if (!window.confirm("Supprimer définitivement « " + p.title + " » ?")) return;
+          DB.del("pages", p.id);
+          DB.del("meta", "artbody-" + artKey(p.worldId || "inbox", p.title));
+          renderTrash();
+          toast("Page supprimée définitivement");
+        });
+        box.appendChild(el);
+      });
+      document.getElementById("trashCount").textContent = total;
+      document.getElementById("trashEmpty").hidden = total > 0;
+      box.style.display = total ? "" : "none";
+    });
+  }
+  document.getElementById("trashBack").addEventListener("click", function(){ history.back(); });
+  document.getElementById("drawerTrash").addEventListener("click", function(){
+    closeAll(true);
+    gotoView("trash");
+  });
+
   /* ---------- Page Catégories ---------- */
   function renderCategories(){
     var box = document.getElementById("catGrid");
     box.innerHTML = "";
-    catsNow().forEach(function(c, i){
+    /* Tri des catégories par dernière modification de leur page la plus récente */
+    var catsSorted = catsNow().slice().sort(function(a, b){
+      var ma = 0, mb = 0;
+      allPages().forEach(function(p){
+        if ((p.worldId || "inbox") !== currentWorldId) return;
+        if (effCats(p).indexOf(a.name) > -1 && p.mts && p.mts > ma) ma = p.mts;
+        if (effCats(p).indexOf(b.name) > -1 && p.mts && p.mts > mb) mb = p.mts;
+      });
+      return mb - ma;
+    });
+    catsSorted.forEach(function(c, i){
       var n = allPages().filter(function(a){ return a.worldId === currentWorldId && effCats(a).indexOf(c.name) > -1; }).length;
       var el = document.createElement("button");
       el.className = "cat-card";
       el.style.setProperty("--cc", c.color);
       el.style.animationDelay = (i * 45) + "ms";
-      el.innerHTML = "<b>" + c.name + "</b><span>" + n + " page" + (n > 1 ? "s" : "") + "</span>";
+      el.innerHTML = "<b>" + esc(c.name) + "</b><span>" + n + " page" + (n > 1 ? "s" : "") + "</span>";
       el.addEventListener("click", function(){ maState.cat = c.name; gotoView("articles"); });
       box.appendChild(el);
     });
-    document.getElementById("catCount").textContent = wCats.length;
+    document.getElementById("catCount").textContent = catsNow().length;
   }
   function addCategory(n){
     n = (n || "").trim();
@@ -3793,7 +4514,7 @@ a.missing{color:#ff6b6b!important}
     subs.forEach(function(c){
       var el = document.createElement("div");
       el.className = "arow";
-      el.innerHTML = '<span class="arow__ico" style="background:' + c.bg + ';color:' + c.color + '">' + (W_ICONS[c.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + c.name + '</b><span>sous-catégorie</span></span>';
+      el.innerHTML = '<span class="arow__ico" style="background:' + c.bg + ';color:' + c.color + '">' + (W_ICONS[c.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + esc(c.name) + '</b><span>sous-catégorie</span></span>';
       el.addEventListener("click", function(){ openCategory(c.name); });
       sub.appendChild(el);
     });
@@ -3805,7 +4526,7 @@ a.missing{color:#ff6b6b!important}
       var m = wCatMeta(p.cat);
       var el = document.createElement("div");
       el.className = "arow";
-      el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + p.title + '</b><span>' + (p.snip || "") + '</span></span>';
+      el.innerHTML = '<span class="arow__ico" style="background:' + m.bg + ';color:' + m.color + '">' + (W_ICONS[m.icon] || W_ICONS.folder) + '</span><span class="arow__txt"><b>' + esc(p.title) + '</b><span>' + esc(p.snip || "") + '</span></span>';
       el.addEventListener("click", function(){ openArticle(p.title); });
       list.appendChild(el);
     });
@@ -3874,12 +4595,12 @@ a.missing{color:#ff6b6b!important}
   });
   function preWelcome(model, name, desc){
     if (model === "world"){
-      return '<h2 style="text-align:center">Bienvenue sur le wiki ' + name + ' !</h2><p>' + (desc || "Un univers à documenter.") + '</p><ul><li><b>Explorer les catégories</b> (navigation)</li><li><b>Cartes interactives</b></li><li><b>Créer une nouvelle page</b></li><li><b>Éditer en Wikitext</b></li></ul><p>Ce wiki est votre espace personnel : reliez vos pages entre elles avec des liens, étiquetez-les avec des catégories, et retrouvez tout via la recherche et le menu Explorer.</p>';
+      return '<h2 style="text-align:center">Bienvenue sur le wiki ' + esc(name) + ' !</h2><p>' + esc(desc || "Un univers à documenter.") + '</p><ul><li><b>Explorer les catégories</b> (navigation)</li><li><b>Cartes interactives</b></li><li><b>Créer une nouvelle page</b></li><li><b>Éditer en Wikitext</b></li></ul><p>Ce wiki est votre espace personnel : reliez vos pages entre elles avec des liens, étiquetez-les avec des catégories, et retrouvez tout via la recherche et le menu Explorer.</p>';
     }
     if (model === "vrac"){
-      return '<h2>Bienvenue dans ' + name + '</h2><p>' + (desc || "Notes, idées et essais.") + '</p><p>Un espace souple : touchez MODIFIER pour écrire, insérez des images et des galeries librement.</p>';
+      return '<h2>Bienvenue dans ' + esc(name) + '</h2><p>' + esc(desc || "Notes, idées et essais.") + '</p><p>Un espace souple : touchez MODIFIER pour écrire, insérez des images et des galeries librement.</p>';
     }
-    return '<p><b>' + name + '</b>.</p><p>' + (desc || "") + '</p>';
+    return '<p><b>' + esc(name) + '</b>.</p><p>' + esc(desc || "") + '</p>';
   }
   document.getElementById("wsCreate").addEventListener("click", function(){
     try {
@@ -3922,7 +4643,7 @@ a.missing{color:#ff6b6b!important}
       src.style.display = "block";
       edBody.style.display = "none";
     } else {
-      edBody.innerHTML = src.value;
+      edBody.innerHTML = sanitize(src.value);
       edBody.style.display = "";
       src.style.display = "none";
     }
