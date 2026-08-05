@@ -11,8 +11,16 @@ const APP_SHELL_FILES = [
   './',
   './index.html',
   './manifest.json',
-  './icon.svg'
+  './icon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
+  './hero.jpg'
 ];
+
+// Limite du cache runtime (images/fonts externes) : on ne garde que les 60
+// dernières entrées pour ne pas laisser le cache grossir sans fin.
+const RUNTIME_MAX = 60;
 
 // ---------- INSTALL : met en cache l'app shell ----------
 self.addEventListener('install', (event) => {
@@ -81,7 +89,15 @@ self.addEventListener('fetch', (event) => {
       fetch(req)
         .then((res) => {
           const resClone = res.clone();
-          caches.open(RUNTIME_CACHE).then((cache) => cache.put(req, resClone));
+          caches.open(RUNTIME_CACHE).then((cache) => {
+            cache.put(req, resClone);
+            cache.keys().then((keys) => {
+              while (keys.length > RUNTIME_MAX) {
+                cache.delete(keys[0]);
+                keys.shift();
+              }
+            });
+          });
           return res;
         })
         .catch(() => caches.match(req))
