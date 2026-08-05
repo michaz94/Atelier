@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
-<title>Atelier — Vos mondes vous attendent</title>
+<title>Atelier — Vos projets vous attendent</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- PWA -->
@@ -941,7 +941,7 @@ textarea:focus-visible, select:focus-visible{
   <!-- Salutation -->
   <section class="reveal">
     <p class="greet__hi" id="greetHi">Bon après-midi, Michaz</p>
-    <h1 class="greet__title">Vos mondes vous <em>attendent</em></h1>
+    <h1 class="greet__title">Vos projets vous <em>attendent</em></h1>
   </section>
 
   <!-- Stats HUD -->
@@ -989,7 +989,7 @@ textarea:focus-visible, select:focus-visible{
 
       <article class="world" data-toast="Ouverture de « Les Marées d'Obsidienne »">
         <div class="world__cover cover-marees">
-          <span class="world__chip">Monde</span>
+          <span class="world__chip">Fiction</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg>
         </div>
         <div class="world__body">
@@ -1011,7 +1011,7 @@ textarea:focus-visible, select:focus-visible{
         Épinglé
       </span>
       <h2 class="pinned__title">Chroniques de Cieléméra</h2>
-      <p class="pinned__meta">Monde · 47 pages · Un archipel d'îles flottantes tenu par les Gardiens du Vent.</p>
+      <p class="pinned__meta">Fiction · 47 pages · Un archipel d'îles flottantes tenu par les Gardiens du Vent.</p>
       <div class="pinned__xp">
         <div class="xp-bar"><i data-width="67"></i></div>
         <span class="xp-label">47 / 70 pages</span>
@@ -1087,7 +1087,7 @@ textarea:focus-visible, select:focus-visible{
   <div class="view" id="view-projects" hidden>
     <section class="p-head">
       <div class="p-head__row">
-        <h2 class="p-head__title">Vos mondes</h2>
+        <h2 class="p-head__title">Vos projets</h2>
         <span class="p-head__count" id="pCount">6</span>
       </div>
       <p class="p-head__sub" id="pSub">6 univers · 128 pages écrites · 2 en cours de forge</p>
@@ -1111,7 +1111,7 @@ textarea:focus-visible, select:focus-visible{
     <section>
       <button class="p-new" id="pNew">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-        Forger un nouveau monde
+        Forger un nouveau projet
       </button>
     </section>
   </div>
@@ -1350,6 +1350,53 @@ textarea:focus-visible, select:focus-visible{
     </section>
   </div>
 
+    <!-- Aide & guide -->
+    <div class="view" id="view-help" hidden>
+      <section>
+        <button class="w-back" id="helpBack" style="position:static;display:inline-flex;margin-bottom:12px">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          Retour
+        </button>
+        <div class="p-head__row">
+          <h2 class="p-head__title">Aide & guide</h2>
+        </div>
+        <p class="p-head__sub">Tout ce qu'il faut savoir pour naviguer et créer dans l'Atelier.</p>
+
+        <div class="w-list" id="helpList">
+          <div class="arow" data-help="bases">
+            <span class="arow__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/></svg></span>
+            <span class="arow__txt"><b>Les bases</b><span>Projets, pages, navigation — démarrage rapide</span></span>
+          </div>
+          <div class="arow" data-help="projets">
+            <span class="arow__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span>
+            <span class="arow__txt"><b>Créer un projet</b><span>Les 5 modèles : Fiction, Recherche, Idées, Vrac, Vierge</span></span>
+          </div>
+          <div class="arow" data-help="pages">
+            <span class="arow__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg></span>
+            <span class="arow__txt"><b>Les pages</b><span>Créer, éditer, renommer, déplacer, dupliquer, supprimer</span></span>
+          </div>
+          <div class="arow" data-help="liens">
+            <span class="arow__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span>
+            <span class="arow__txt"><b>Liens & catégories</b><span>Relier les pages entre elles, les classer</span></span>
+          </div>
+          <div class="arow" data-help="themes">
+            <span class="arow__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
+            <span class="arow__txt"><b>Personnaliser</b><span>Thème, couleurs, couvertures de projet et d'article</span></span>
+          </div>
+          <div class="arow" data-help="donnees">
+            <span class="arow__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></span>
+            <span class="arow__txt"><b>Données & sauvegardes</b><span>Export, import, protection, corbeille, purge 14 jours</span></span>
+          </div>
+          <div class="arow" data-help="pwa">
+            <span class="arow__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></span>
+            <span class="arow__txt"><b>Installer & hors-ligne</b><span>PWA : ajouter à l'écran d'accueil, mode avion</span></span>
+          </div>
+        </div>
+
+        <div id="helpDetail"></div>
+      </section>
+    </div>
+
     <!-- Sheet de personnalisation -->
     <div class="sheet" id="themeSheet">
       <div class="sheet__grab"></div>
@@ -1480,7 +1527,7 @@ textarea:focus-visible, select:focus-visible{
   </button>
   <button class="sheet__opt" id="sheetNewWorld">
     <span class="action__ico ico-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg></span>
-    <span><b>Monde</b><small>Un nouvel univers à cartographier</small></span>
+    <span><b>Fiction</b><small>Roman, manga, série web — un univers à construire</small></span>
   </button>
   <button class="sheet__opt" data-toast="Création d'une catégorie… (test)">
     <span class="action__ico ico-green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/><path d="M12 10v6"/><path d="M9 13h6"/></svg></span>
@@ -1506,6 +1553,7 @@ textarea:focus-visible, select:focus-visible{
   <button class="drawer__item" data-toast="Carnet d'idées (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>Carnet d'idées</button>
   <button class="drawer__item" id="drawerInbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>Inbox</button>
   <button class="drawer__item" id="drawerTrash"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Corbeille</button>
+  <button class="drawer__item" id="drawerHelp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>Aide & guide</button>
   <button class="drawer__item" data-toast="À bientôt, Michaz ✦ (test)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Déconnexion</button>
 </div>
 
@@ -1535,8 +1583,10 @@ textarea:focus-visible, select:focus-visible{
   <div class="sheet__grab"></div>
   <h4 class="sheet__title">Nouveau projet</h4>
   <div class="ws-field"><span>Modèle</span></div>
-  <button class="ws-model is-on" data-model="world"><b>Worldbuilding</b><span>Un univers complet avec des catégories prêtes à remplir.</span></button>
-  <button class="ws-model" data-model="vrac"><b>Vrac / Prompts</b><span>Un projet souple pour les notes, idées et essais.</span></button>
+  <button class="ws-model is-on" data-model="fiction"><b>Fiction</b><span>Roman, manga, série web — personnages, lieux, intrigue, chronologie.</span></button>
+  <button class="ws-model" data-model="recherche"><b>Recherche / Tests</b><span>Protocoles, résultats, conclusions — pour tes tests IA et recherches.</span></button>
+  <button class="ws-model" data-model="idees"><b>Idées / Goûts</b><span>Listes légères, tags et favoris — sans structure lourde.</span></button>
+  <button class="ws-model" data-model="vrac"><b>Vrac / Références</b><span>Le fourre-tout pour capturer vite, à ranger plus tard.</span></button>
   <button class="ws-model" data-model="vierge"><b>Vierge</b><span>Un projet vide à organiser entièrement.</span></button>
   <label class="ws-field" style="margin-top:12px">Nom du projet
     <input id="wsName" maxlength="60" placeholder="Mon univers, mes prompts…" autocomplete="off">
@@ -1559,7 +1609,7 @@ textarea:focus-visible, select:focus-visible{
   <h4 class="sheet__title" id="artSheetTitle">Options de la page</h4>
   <button class="sheet__opt" id="artOptTheme">
     <span class="action__ico ico-purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></span>
-    <span><b>Thème</b><small>Personnaliser l'apparence du monde</small></span>
+    <span><b>Thème</b><small>Personnaliser l'apparence du projet</small></span>
   </button>
   <button class="sheet__opt" id="artOptRename">
     <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
@@ -1596,7 +1646,7 @@ textarea:focus-visible, select:focus-visible{
   </button>
   <button class="sheet__opt" id="wOptRename">
     <span class="action__ico ico-blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></span>
-    <span><b>Renommer le projet</b><small>Changer le nom du monde</small></span>
+    <span><b>Renommer le projet</b><small>Changer le nom du projet</small></span>
   </button>
   <button class="sheet__opt" id="wOptDel" style="color:var(--red)">
     <span class="action__ico ico-red" style="background:rgba(255,93,93,.12);color:var(--red)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
@@ -1954,14 +2004,16 @@ textarea:focus-visible, select:focus-visible{
     if (viewTrash) viewTrash.hidden = name !== "trash";
     var viewInbox = document.getElementById("view-inbox");
     if (viewInbox) viewInbox.hidden = name !== "inbox";
-    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : name === "pinned" ? viewPinned : name === "categories" ? viewCategories : name === "category" ? viewCategory : name === "trash" ? viewTrash : name === "inbox" ? viewInbox : viewArticle;
+    var viewHelp = document.getElementById("view-help");
+    if (viewHelp) viewHelp.hidden = name !== "help";
+    var v = name === "home" ? viewHome : name === "projects" ? viewProjects : name === "world" ? viewWorld : name === "articles" ? viewArticles : name === "pinned" ? viewPinned : name === "categories" ? viewCategories : name === "category" ? viewCategory : name === "trash" ? viewTrash : name === "inbox" ? viewInbox : name === "help" ? viewHelp : viewArticle;
     v.style.animation = "none";
     void v.offsetWidth;
     v.style.animation = "";
     window.scrollTo({ top: 0 });
   }
   function syncNav(name){
-    if (name === "trash" || name === "inbox"){
+    if (name === "trash" || name === "inbox" || name === "help"){
       tabs.forEach(function(t){ t.classList.remove("is-active"); });
       document.querySelectorAll(".rail__btn").forEach(function(b){ b.classList.remove("is-active"); });
       return;
@@ -1987,7 +2039,7 @@ textarea:focus-visible, select:focus-visible{
       syncNav("article");
       return;
     }
-    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles" && h !== "pinned" && h !== "categories" && h !== "trash" && h !== "inbox") h = "home";
+    if (h !== "home" && h !== "projects" && h !== "world" && h !== "articles" && h !== "pinned" && h !== "categories" && h !== "trash" && h !== "inbox" && h !== "help") h = "home";
     showView(h);
     syncNav(h);
     if (h === "articles" && THEMES) renderArticlesView();
@@ -1995,6 +2047,7 @@ textarea:focus-visible, select:focus-visible{
     if (h === "categories" && THEMES) renderCategories();
     if (h === "trash" && THEMES) renderTrash();
     if (h === "inbox" && THEMES) renderInbox();
+    if (h === "help") renderHelp();
     if (h === "world" && THEMES) renderWorldHome();
   }
   function gotoView(name){
@@ -2469,7 +2522,7 @@ textarea:focus-visible, select:focus-visible{
     applyThemeObj(w, thDraft);
     syncThUI(w);
     /* L'accent fait partie de l'identité du projet : on le synchronise
-       avec le record du monde + la grille « Vos mondes » en direct. */
+       avec le record du projet + la grille « Vos projets » en direct. */
     if (key === "acc" && w && w.id !== "inbox"){
       w.accent = val;
       w.mts = Date.now();
@@ -4299,6 +4352,80 @@ textarea:focus-visible, select:focus-visible{
     gotoView("inbox");
   });
 
+  /* ---------- Aide & guide ---------- */
+  var HELP_CONTENT = {
+    bases: [
+      ["Vue d'ensemble", "L'Atelier est votre carnet de travail privé : projets (fiction, recherches, idées…), pages reliées entre elles, le tout stocké sur votre téléphone, hors-ligne, avec sauvegarde JSON."],
+      ["Écran d'accueil", "Salutation, statistiques, projets récents, actions rapides et prompt du jour. La barre du bas navigue : Accueil, Projets, Épinglés, Réglages."],
+      ["Le menu (⋮ à gauche)", "Inbox (pages sans projet), Corbeille, Aide, Réglages & données, Carnet d'idées."],
+      ["Le bouton + (en bas à droite)", "Ouvre le menu de création : Article, Fiction (projet), Catégorie."]
+    ],
+    projets: [
+      ["Les 5 modèles", "Fiction (personnages, lieux, intrigue), Recherche/Tests (protocoles, résultats, conclusions), Idées/Goûts (léger, tags), Vrac/Références (fourre-tout), Vierge (libre)."],
+      ["Créer", "Bouton + → Fiction (projet) → choisis le modèle, le nom, la couleur, l'icône → Créer."],
+      ["Catégories automatiques", "Chaque modèle crée ses catégories par défaut (ex. Fiction : Personnages, Lieux, Histoire, Intrigue, Objets)."],
+      ["Personnaliser", "Depuis le ⋮ d'un projet : thème, couleurs, police, couverture du projet."],
+      ["Supprimer", "Le ⋮ → Supprimer : le projet et ses pages vont dans la Corbeille (restaurables 14 jours)."]
+    ],
+    pages: [
+      ["Créer une page", "Depuis un projet : bouton + page, ou « + Article ». Choisis le projet dans le sélecteur (Inbox si tu hésites)."],
+      ["Éditer", "Bouton MODIFIER ou le crayon : éditeur visuel (gras, italique, titres, listes, liens, images) ou onglet WIKITEXT."],
+      ["Renommer / Déplacer / Dupliquer / Supprimer", "Tout se passe dans le menu ⋮ de l'article : renommer, déplacer vers un autre projet, dupliquer vers…, supprimer (corbeille)."],
+      ["La couverture", "⋮ article → Thème → section « Couverture de l'article » : ajouter, remplacer ou retirer."],
+      ["Épingler", "L'étoile en haut de l'article l'ajoute à vos Épinglés."]
+    ],
+    liens: [
+      ["Liens entre pages", "Dans l'éditeur, bouton lien (ou [[Titre]] en wikitext) : une page liée inexistante devient un lien rouge → touche-le pour la créer."],
+      ["Pages liées", "En bas de chaque article : les pages qui le mentionnent (backlinks)."],
+      ["Catégories", "En bas d'article : ajouter/retirer des catégories. Chaque projet a les siennes (par défaut selon le modèle)."],
+      ["Sommaire", "Généré automatiquement à partir des sections (H2) de l'article."]
+    ],
+    themes: [
+      ["Personnaliser un projet", "⋮ projet → Personnaliser : thèmes prêts, accent, police des titres, fond, couverture, couleurs (fond, nav, liens, texte, articles)."],
+      ["Contraste", "L'app vérifie la lisibilité des couleurs (WCAG) et vous alerte si le contraste liens/fond est trop faible."],
+      ["Aperçu", "Bouton « Aperçu de la page » pour voir le résultat, puis « Reprendre l'édition »."],
+      ["Couverture d'article", "Depuis ⋮ article → Thème : changer ou retirer la couverture de la page en cours."]
+    ],
+    donnees: [
+      ["Sauvegarde locale", "Tout est stocké dans votre téléphone (IndexedDB). Rien ne part sur un serveur."],
+      ["Exporter", "Réglages → Exporter : un fichier JSON complet (projets, pages, images, thèmes). À faire régulièrement."],
+      ["Importer", "Réglages → Importer : restaure un fichier exporté (fusion par clé)."],
+      ["Protéger le stockage", "Réglages → Protéger : empêche le navigateur d'effacer vos données."],
+      ["Corbeille & purge", "Les éléments supprimés vont dans la Corbeille (drawer), restaurables pendant 14 jours, puis supprimés définitivement automatiquement."],
+      ["Compteur", "Réglages : « Données de sauvegarde » = vos vraies données ; « Stockage navigateur » inclut les caches (images consultées)."]
+    ],
+    pwa: [
+      ["Installer", "Chrome Android : menu ⋮ du navigateur → « Ajouter à l'écran d'accueil » (ou « Installer l'application »). L'app s'ouvre alors en plein écran."],
+      ["Hors-ligne", "Le service worker met en cache l'app et les images consultées : tout fonctionne en mode avion (les nouvelles images distantes ne se chargeront qu'en ligne)."],
+      ["Mises à jour", "À chaque nouveau déploiement, le service worker se met à jour automatiquement (vercel.json force le rafraîchissement)."],
+      ["Vider le cache", "Si l'app semble lente ou le stockage plein : Chrome → Paramètres du site → Atelier → Effacer les données (pensez à exporter d'abord)."]
+    ]
+  };
+  function renderHelp(){
+    var detail = document.getElementById("helpDetail");
+    var section = location.hash.replace("#help/", "");
+    if (!section || !HELP_CONTENT[section]){
+      detail.innerHTML = "";
+      return;
+    }
+    var h = '<div class="search-grp" style="margin-top:18px">' + esc(section) + '</div>';
+    (HELP_CONTENT[section] || []).forEach(function(pair){
+      h += '<div class="arow" style="cursor:default;animation:none"><span class="arow__txt"><b>' + esc(pair[0]) + '</b><span>' + esc(pair[1]) + '</span></span></div>';
+    });
+    detail.innerHTML = h;
+    detail.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.getElementById("helpBack").addEventListener("click", function(){ history.back(); });
+  document.getElementById("drawerHelp").addEventListener("click", function(){
+    closeAll(true);
+    gotoView("help");
+  });
+  document.querySelectorAll("#helpList .arow[data-help]").forEach(function(el){
+    el.addEventListener("click", function(){
+      gotoView("help/" + el.getAttribute("data-help"));
+    });
+  });
+
   /* ---------- Corbeille : projets + pages ---------- */
   function renderTrash(){
     if (!DB || !DB.getAll) return;
@@ -4540,12 +4667,34 @@ textarea:focus-visible, select:focus-visible{
     if (addCategory(n)){ renderCategories(); toast("Catégorie « " + n.trim() + " » créée"); }
   });
 
-  /* ---------- Création de monde ---------- */
+  /* ---------- Création de projet (modèles par type) ---------- */
   var WS_COLORS = ["#ffc500", "#4cc9b0", "#66c26e", "#4d9bff", "#a78bfa", "#ff6b6b", "#ff9f43", "#f25ce0"];
   var wsAccent = WS_COLORS[0];
-  var wsModel = "world";
+  var wsModel = "fiction";
   var WS_ICONS = ["compass", "swords", "fingerprint", "waves", "crown"];
   var wsIcon = WS_ICONS[0];
+  /* Catégories par défaut selon le modèle de projet */
+  var MODEL_CATS = {
+    fiction: ["Personnages", "Lieux", "Histoire", "Intrigue", "Objets"],
+    recherche: ["Protocoles", "Résultats", "Conclusions", "Références"],
+    idees: ["Favoris", "À creuser"],
+    vrac: ["Entrée", "À ranger"],
+    vierge: []
+  };
+  var MODEL_DESC = {
+    fiction: "Roman, manga, série web — un univers à construire.",
+    recherche: "Protocoles, résultats, conclusions — pour tes tests et recherches.",
+    idees: "Listes légères, tags et favoris.",
+    vrac: "Le fourre-tout pour capturer vite.",
+    vierge: "Un projet vide à organiser entièrement."
+  };
+  var MODEL_CAT_FIELD = {
+    fiction: "Fiction",
+    recherche: "Recherche",
+    idees: "Idées",
+    vrac: "Vrac",
+    vierge: ""
+  };
   function buildSwatches(){
     var box = document.getElementById("wsSwatches");
     if (!box) return;
@@ -4582,7 +4731,7 @@ textarea:focus-visible, select:focus-visible{
   document.getElementById("sheetNewWorld").addEventListener("click", function(){
     hideOverlays();
     wsAccent = WS_COLORS[0];
-    wsModel = "world";
+    wsModel = "fiction";
     wsIcon = WS_ICONS[0];
     document.getElementById("wsName").value = "";
     var sym = document.getElementById("wsSym"); if (sym) sym.value = "";
@@ -4594,13 +4743,20 @@ textarea:focus-visible, select:focus-visible{
     ovPush();
   });
   function preWelcome(model, name, desc){
-    if (model === "world"){
-      return '<h2 style="text-align:center">Bienvenue sur le wiki ' + esc(name) + ' !</h2><p>' + esc(desc || "Un univers à documenter.") + '</p><ul><li><b>Explorer les catégories</b> (navigation)</li><li><b>Cartes interactives</b></li><li><b>Créer une nouvelle page</b></li><li><b>Éditer en Wikitext</b></li></ul><p>Ce wiki est votre espace personnel : reliez vos pages entre elles avec des liens, étiquetez-les avec des catégories, et retrouvez tout via la recherche et le menu Explorer.</p>';
+    var d = esc(desc || MODEL_DESC[model] || "");
+    if (model === "fiction"){
+      return '<h2 style="text-align:center">Bienvenue dans « ' + esc(name) + ' » !</h2><p>' + d + '</p><ul><li><b>Personnages, lieux, intrigue</b> : crée tes pages et relie-les entre elles.</li><li><b>Chronologie</b> : suis la progression de ton histoire.</li><li><b>Édite en visuel ou en wikitext</b> selon ton envie.</li></ul><p>Chaque page peut avoir sa couverture, ses catégories et ses liens.</p>';
+    }
+    if (model === "recherche"){
+      return '<h2 style="text-align:center">Bienvenue dans « ' + esc(name) + ' » !</h2><p>' + d + '</p><ul><li><b>Protocoles, résultats, conclusions</b> : documente tes tests.</li><li><b>Date chaque entrée</b> pour suivre son évolution.</li><li><b>Relie tes conclusions</b> à tes protocoles.</li></ul>';
+    }
+    if (model === "idees"){
+      return '<h2 style="text-align:center">Bienvenue dans « ' + esc(name) + ' » !</h2><p>' + d + '</p><ul><li><b>Capture vite</b> : une page par idée, un tag pour la retrouver.</li><li><b>Favoris</b> : épingle ce qui compte.</li></ul>';
     }
     if (model === "vrac"){
-      return '<h2>Bienvenue dans ' + esc(name) + '</h2><p>' + esc(desc || "Notes, idées et essais.") + '</p><p>Un espace souple : touchez MODIFIER pour écrire, insérez des images et des galeries librement.</p>';
+      return '<h2>Bienvenue dans ' + esc(name) + '</h2><p>' + d + '</p><p>Un espace souple : touche MODIFIER pour écrire, insère des images et des galeries librement.</p>';
     }
-    return '<p><b>' + esc(name) + '</b>.</p><p>' + esc(desc || "") + '</p>';
+    return '<p><b>' + esc(name) + '</b>.</p><p>' + d + '</p>';
   }
   document.getElementById("wsCreate").addEventListener("click", function(){
     try {
@@ -4608,15 +4764,18 @@ textarea:focus-visible, select:focus-visible{
     if (!name){ toast("Donne un nom à ton projet"); document.getElementById("wsName").focus(); return; }
     var symEl = document.getElementById("wsSym");
     var sym = symEl ? symEl.value.trim() : "";
-    var desc = wsModel === "world" ? "Un univers complet avec des catégories prêtes à remplir." : wsModel === "vrac" ? "Un projet souple pour les notes, idées et essais." : "Un projet vide à organiser entièrement.";
+    var desc = MODEL_DESC[wsModel] || "Un projet à organiser.";
     var newId = "w" + Date.now();
     var rec = {
-      id: newId, title: name, desc: desc, cat: "Monde", sym: sym,
+      id: newId, title: name, desc: desc, cat: MODEL_CAT_FIELD[wsModel] || "", sym: sym,
       pages: 0, updated: "à l'instant", progress: 0, ord: projects.length,
-      accent: wsAccent, icon: (wsIcon && P_ICONS[wsIcon]) ? wsIcon : "compass", coverAsset: null, placeholderCover: true, pinned: false
+      accent: wsAccent, icon: (wsIcon && P_ICONS[wsIcon]) ? wsIcon : "compass", coverAsset: null, placeholderCover: true, pinned: false,
+      model: wsModel
     };
     projects.push(rec);
-    var jobs = [DB.put("worlds", rec), DB.put("meta", preWelcome(wsModel, name, ""), "welcome-" + newId), DB.put("meta", wsAccent, "acc-" + newId), DB.put("meta", wsAccent, "coverc-" + newId), DB.put("meta", wsAccent, "lkc-" + newId), DB.put("meta", JSON.stringify(wCats.map(function(c){ return { name: c.name, parent: null }; })), "cats-" + newId)];
+    /* Catégories par défaut selon le modèle */
+    var defCats = (MODEL_CATS[wsModel] || []).map(function(c){ return { name: c, parent: null }; });
+    var jobs = [DB.put("worlds", rec), DB.put("meta", preWelcome(wsModel, name, ""), "welcome-" + newId), DB.put("meta", wsAccent, "acc-" + newId), DB.put("meta", wsAccent, "coverc-" + newId), DB.put("meta", wsAccent, "lkc-" + newId), DB.put("meta", JSON.stringify(defCats), "cats-" + newId)];
     Promise.all(jobs).then(function(){
       updateCounts();
       renderProjects();
